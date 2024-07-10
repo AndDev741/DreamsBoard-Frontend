@@ -24,7 +24,7 @@ function Login(){
                             <input name="email"
                             id="email"
                             type="text"
-                            className="bg-[#EEEBEA] border border-lightRed rounded-lg w-[80vw] lg:w-[450px] h-[60px] md:h-[70px] lg:h-[60px] text-2xl md:text-3xl pl-4
+                            className="bg-[#EEEBEA] border border-lightRed rounded-lg w-[80vw] lg:w-[450px] h-[60px] md:h-[70px] lg:h-[60px] text-2xl md:text-2xl pl-4
                             focus:ring-redFont focus:border-redFont"
                             placeholder="email@gmail.com"/>
                         </div>
@@ -35,7 +35,7 @@ function Login(){
                             <input name="password"
                             id="password"
                             type="password"
-                            className="bg-[#EEEBEA] border border-lightRed rounded-lg w-[80vw] lg:w-[450px] h-[60px] md:h-[70px] lg:h-[60px] text-2xl md:text-3xl pl-4
+                            className="bg-[#EEEBEA] border border-lightRed rounded-lg w-[80vw] lg:w-[450px] h-[60px] md:h-[70px] lg:h-[60px] text-2xl md:text-2xl pl-4
                             focus:ring-redFont focus:border-redFont"
                             />
                         </div>
