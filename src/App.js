@@ -1,7 +1,8 @@
 import {BrowserRouter, Routes, Route } from 'react-router-dom'
 import './App.css';
 import './pages/authentication/login.js'
-import RenderForms from './pages/authentication/renderForms';
+import Login from './pages/authentication/login.js';
+import Register from './pages/authentication/register.js';
 
 function App() {
   return (
@@ -11,7 +12,8 @@ function App() {
       </div>
       <div className='font-mainFont'>
         <Routes>
-          <Route path='/' element={<RenderForms/>} />
+          <Route path='/' element={<Login/>} />
+          <Route path='/register' element={<Register/>} />
         </Routes>
 
       </div>

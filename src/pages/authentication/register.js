@@ -2,7 +2,8 @@ import loginPC from '../../assets/loginPC.png';
 import { Link } from 'react-router-dom';
 import {useState} from 'react'
 
-function Login(){
+function Register(){
+    const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
@@ -10,11 +11,11 @@ function Login(){
     function handleSubmit(e){
         e.preventDefault();
 
-        const loginData = {email: email, password: password};
-        fetch('http://localhost:8080/login', {
+        const registerData = {name: name, email: email, password: password};
+        fetch('http://localhost:8080/register', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify(loginData)
+            body: JSON.stringify(registerData)
         })
         .then((response) => {
             if (!response.ok){
@@ -24,16 +25,15 @@ function Login(){
             
         })
         .then((data) => {
-            if(!data.status === 'success') {
-                setErrorMessage("Unknown error");
+            if(data.status === 'error') {
+                setErrorMessage("O email já está sendo utilizado");
+            }else{
+                setErrorMessage('');
             }
+            
         })
         .catch((error) => {
-            if(error.status === 401) {
-                setErrorMessage("Invalid Email or Password");
-            } else {
-                setErrorMessage("Login Failed. Please try again");   
-            }
+            setErrorMessage("Register Failed. Please try again");   
         })
     }
 
@@ -42,19 +42,32 @@ function Login(){
             <div className='flex flex-col lg:flex-row-reverse items-center justify-center w-full h-full'>
                 
                 <div className='flex flex-col items-center justify-center lg:w-[550px] lg:h-[580px] lg:bg-[#EEFCC7] lg:rounded-r-lg'>
-                    <div className="mt-2 text-redFont text-4xl md:text-5xl lg:text-5xl font-black text-center">
-                        <h1 className="">Bem vindo</h1>
-                        <h1>de volta!</h1>
+                    <div className="mt-2 text-redFont text-4xl md:text-5xl lg:text-4xl font-black text-center">
+                        <h1 className="">Seja bem vindo</h1>
+                        <h1>ao Dreams Board!</h1>
                     </div>
 
-                    <div className="mt-3 text-lightRed font-medium text-3xl md:text-4xl lg:text-3xl text-center">
+                    <div className="mt-3 lg:mt-1 text-lightRed font-medium text-3xl md:text-2xl lg:text-3xl text-center">
                         <h3>Crie e gerencie seus</h3>
                         <h3>quadros de sonhos</h3>
                     </div>
 
                     <form className='flex flex-col items-center justify-center'
                     onSubmit={handleSubmit}>
-                        <div className="mt-5">
+                        <div className="mt-5 lg:mt-1">
+                            <label htmlFor="name" 
+                            className="text-ligthGray text-xl md:text-3xl">Nome</label>
+                            <br/>
+                            <input name="name"
+                            value={name}
+                            onChange={(e) => setName(e.target.value)}
+                            id="name"
+                            type="text"
+                            className="bg-[#EEEBEA] border border-lightRed rounded-lg w-[80vw] lg:w-[450px] h-[60px] md:h-[70px] lg:h-[60px] text-2xl md:text-2xl pl-4
+                            focus:ring-redFont focus:border-redFont"
+                            placeholder="And Dev"/>
+                        </div>
+                        <div className="mt-5 lg:mt-1">
                             <label htmlFor="email" 
                             className="text-ligthGray text-xl md:text-3xl">Email</label>
                             <br/>
@@ -67,7 +80,7 @@ function Login(){
                             focus:ring-redFont focus:border-redFont"
                             placeholder="email@gmail.com"/>
                         </div>
-                        <div className="mt-5 md:mt-5">
+                        <div className="mt-5 lg:mt-1">
                             <label htmlFor="password" 
                             className="text-ligthGray text-xl md:text-3xl">Senha</label>
                             <br/>
@@ -80,19 +93,19 @@ function Login(){
                             focus:ring-redFont focus:border-redFont"
                             />
                         </div>
-                        <div className="flex items-center justify-center mt-5">
+                        <div className="flex items-center justify-center mt-5 lg:mt-2">
                             <div>
                                 <input type="submit"
                                 id="submit"
                                 name="submit"
-                                value="Entrar"
+                                value="Criar conta"
                                 className="bg-redFont hover:bg-lightRed
-                                w-[207px] md:w-[307px] lg:w-[250px] h-[51px] md:h-[70px] lg:h-[60px]
-                                text-white text-xl md:text-3xl font-bold rounded-lg cursor-pointer"/>
+                                w-[207px] md:w-[307px] lg:w-[220px] h-[51px] md:h-[70px] lg:h-[50px]
+                                text-white text-xl md:text-3xl lg:text-2xl font-bold rounded-lg cursor-pointer"/>
                             </div>
                         </div>
-                        <div className="flex flex-col items-center justify-center mt-3">
-                            <Link to={"/register"} className="text-redFont text-xl md:text-3xl underline cursor-pointer">Registre-se</Link>
+                        <div className="flex flex-col items-center justify-center mt-3 mt:mt-1">
+                            <Link to={'/'} className="text-redFont text-xl md:text-3xl underline cursor-pointer">Fazer Login</Link>
                             <p className='text-xl text-red-900 font-semibold'>{errorMessage}</p>
                         </div>
                     </form>
@@ -111,4 +124,4 @@ function Login(){
     )
 }
 
-export default Login;
+export default Register;
