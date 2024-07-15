@@ -16,7 +16,9 @@ export default {
       colors: {
         redFont: "#D13755",
         lightRed: '#ED4A6A',
-        ligthGray: '#8B7E7E'
+        ligthGray: '#8B7E7E',
+        bgColor: '#EEFCC7',
+        bgSecondary: '#D9AB91'
         
       },
       border: {

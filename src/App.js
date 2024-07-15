@@ -3,6 +3,8 @@ import './App.css';
 import './pages/authentication/login.js'
 import Login from './pages/authentication/login.js';
 import Register from './pages/authentication/register.js';
+import Dashboard from './pages/dashboard/dashboard';
+import NewBoard from './pages/dashboard/newBoard';
 
 function App() {
   return (
@@ -14,6 +16,8 @@ function App() {
         <Routes>
           <Route path='/' element={<Login/>} />
           <Route path='/register' element={<Register/>} />
+          <Route path='/dashboard' element={<Dashboard/>} />
+          <Route path='/newBoard'  element={<NewBoard/>}/>
         </Routes>
 
       </div>
