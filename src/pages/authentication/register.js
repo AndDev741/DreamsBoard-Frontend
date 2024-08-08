@@ -1,4 +1,6 @@
 import loginPC from '../../assets/loginPC.png';
+import axios from 'axios';
+import { redirect } from 'react-router-dom'
 import { Link } from 'react-router-dom';
 import {useState} from 'react'
 
@@ -12,28 +14,24 @@ function Register(){
         e.preventDefault();
 
         const registerData = {name: name, email: email, password: password};
-        fetch('http://localhost:8080/register', {
-            method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify(registerData)
+
+        axios({
+            url: "http://localhost:8080/register",
+            method: "POST",
+            headers: {
+                "Content-Type": 'application/json'
+            },
+            data: registerData
         })
-        .then((response) => {
-            if (!response.ok){
-                throw response;
-            }
-            return response.json();
-            
-        })
+        .then(response => response.json())
         .then((data) => {
-            if(data.status === 'error') {
-                setErrorMessage("O email já está sendo utilizado");
-            }else{
-                setErrorMessage('');
-            }
-            
+            console.log(data)
+              if(data.status == "success"){
+                redirect("/")
+              }
         })
         .catch((error) => {
-            setErrorMessage("Register Failed. Please try again");   
+            setErrorMessage("O email já está sendo utilizado");   
         })
     }
 

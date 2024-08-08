@@ -1,40 +1,35 @@
 import loginPC from '../../assets/loginPC.png';
-import { Link } from 'react-router-dom';
+import axios from '../../axiosConfig';
+import { Link, useNavigate } from 'react-router-dom';
 import {useState} from 'react'
+import { useDispatch } from 'react-redux';
+import { idEnter, img_linkEnter, nameEnter, perfil_phraseEnter} from './loginSlice'
 
 function Login(){
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
 
-    function handleSubmit(e){
+    const handleSubmit = async (e) => {
         e.preventDefault();
-
-        const loginData = {email: email, password: password};
-        fetch('http://localhost:8080/login', {
-            method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify(loginData)
-        })
-        .then((response) => {
-            if (!response.ok){
-                throw response;
+        try {
+            const response = await axios.post('http://localhost:8080/login', {
+                email,
+                password
+            });
+            if(response.data.id){
+                dispatch(idEnter(response.data.id));
+                dispatch(img_linkEnter(response.data.img_link));
+                dispatch(nameEnter(response.data.name));
+                dispatch(perfil_phraseEnter(response.data.perfil_phrase));
+                navigate("/dashboard");
             }
-            return response.json();
-            
-        })
-        .then((data) => {
-            if(!data.status === 'success') {
-                setErrorMessage("Unknown error");
+        } catch (error) {
+                console.error('Erro durante o login: ', error);
+                setErrorMessage("Email or password incorrect");
             }
-        })
-        .catch((error) => {
-            if(error.status === 401) {
-                setErrorMessage("Invalid Email or Password");
-            } else {
-                setErrorMessage("Login Failed. Please try again");   
-            }
-        })
     }
 
     return(
@@ -93,7 +88,7 @@ function Login(){
                         </div>
                         <div className="flex flex-col items-center justify-center mt-3">
                             <Link to={"/register"} className="text-redFont text-xl md:text-3xl underline cursor-pointer">Registre-se</Link>
-                            <p className='text-xl text-red-900 font-semibold'>{errorMessage}</p>
+                            <p className='text-xl text-center text-red-900 font-semibold'>{errorMessage}</p>
                         </div>
                     </form>
                 </div>
