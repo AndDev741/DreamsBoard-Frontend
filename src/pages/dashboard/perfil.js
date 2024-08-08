@@ -1,6 +1,6 @@
 import settingsIcon from '../../assets/settingsIcon.png';
 
-function Perfil(){
+function Perfil({img_Link, name, perfil_phrase}){
     return(
         <div>
             <div className='flex items-center justify-between pt-5'>
@@ -8,10 +8,10 @@ function Perfil(){
                     <div className="flex items-center ml-3">
                         <img alt='Profile pic'
                         className="w-[66px] rounded-full"
-                        src="https://i.pinimg.com/564x/e0/87/7c/e0877c5fbec4d096a4334a09bbe25ef5.jpg" />
+                        src={`${img_Link}`} />
                         <div className="ml-3">
-                            <h2 className="text-xl text-redFont font-black">Bom dia André Luiz</h2>
-                            <p className='text-redFont font-medium'>Be your best version</p>
+                            <h2 className="text-xl text-redFont font-black">Good Morning {name}</h2>
+                            <p className='text-redFont font-medium'>{perfil_phrase}</p>
                         </div>
                     </div>
                 </div>
