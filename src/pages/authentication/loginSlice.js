@@ -27,6 +27,7 @@ const initialState = loadState() || {
     img_link: '',
     name: '',
     perfil_phrase: '',
+    registerPhrase: '',
 }
 
 const loginSlice = createSlice({
@@ -52,9 +53,14 @@ const loginSlice = createSlice({
             const perfil_phrase = action.payload;
             saveState(state);
             return {...state, perfil_phrase};
+        },
+        registerEnter(state, action){
+            const registerPhrase = action.payload;
+            saveState(state);
+            return {...state, registerPhrase};
         }
     }
 })
 
-export const {idEnter, img_linkEnter, nameEnter, perfil_phraseEnter} = loginSlice.actions;
+export const {idEnter, img_linkEnter, nameEnter, perfil_phraseEnter, registerEnter} = loginSlice.actions;
 export default loginSlice.reducer;

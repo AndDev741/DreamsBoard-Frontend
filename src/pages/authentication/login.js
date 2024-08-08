@@ -2,13 +2,14 @@ import loginPC from '../../assets/loginPC.png';
 import axios from '../../axiosConfig';
 import { Link, useNavigate } from 'react-router-dom';
 import {useState} from 'react'
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { idEnter, img_linkEnter, nameEnter, perfil_phraseEnter} from './loginSlice'
 
 function Login(){
+    const registerPhrase = useSelector(state => state.login.registerPhrase)
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [errorMessage, setErrorMessage] = useState('');
+    const [errorMessage, setErrorMessage] = useState(registerPhrase);
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
@@ -88,7 +89,7 @@ function Login(){
                         </div>
                         <div className="flex flex-col items-center justify-center mt-3">
                             <Link to={"/register"} className="text-redFont text-xl md:text-3xl underline cursor-pointer">Registre-se</Link>
-                            <p className='text-xl text-center text-red-900 font-semibold'>{errorMessage}</p>
+                            <p className='text-xl text-center text-red-900 font-semibold underline'>{errorMessage}</p>
                         </div>
                     </form>
                 </div>

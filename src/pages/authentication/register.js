@@ -1,38 +1,35 @@
 import loginPC from '../../assets/loginPC.png';
-import axios from 'axios';
-import { redirect } from 'react-router-dom'
+import axios from '../../axiosConfig';
+import { useNavigate } from 'react-router-dom'
 import { Link } from 'react-router-dom';
 import {useState} from 'react'
+import { useDispatch } from 'react-redux';
+import { registerEnter } from './loginSlice';
 
 function Register(){
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
 
-    function handleSubmit(e){
+    async function handleSubmit(e){
         e.preventDefault();
 
         const registerData = {name: name, email: email, password: password};
 
-        axios({
-            url: "http://localhost:8080/register",
-            method: "POST",
-            headers: {
-                "Content-Type": 'application/json'
-            },
-            data: registerData
-        })
-        .then(response => response.json())
-        .then((data) => {
-            console.log(data)
-              if(data.status == "success"){
-                redirect("/")
-              }
-        })
-        .catch((error) => {
-            setErrorMessage("O email já está sendo utilizado");   
-        })
+        try{
+            const response = await axios.post("http://localhost:8080/register", registerData);
+            console.log(response)
+            if(response.data.status === "success"){
+                dispatch(registerEnter("Now, use your new account to make login!"));
+                navigate("/");
+            }
+        }catch(err){
+            console.error(err);
+            setErrorMessage("Email is already in use");
+        }
     }
 
     return(
