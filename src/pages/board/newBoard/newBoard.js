@@ -1,6 +1,7 @@
 import React, { useState, useCallback } from 'react';
 import { Link } from 'react-router-dom';
-import axios from '../../../axiosConfig';
+import customAxios from '../../../axiosConfig';
+import axios from 'axios';
 import MainSection from './mainSection';
 import MainObjectiveSection from './mainObjectiveSection';
 import ObjectiveSection from './objective';
@@ -30,28 +31,62 @@ function NewBoard() {
 
     const [error, setError] = useState("");
 
+    const uploadImageToCloudinary = async (file) => {
+        const formData = new FormData();
+        formData.append('file', file);
+        formData.append('upload_preset', 'cf6ccdpv');
+
+        const response = await axios.post('https://api.cloudinary.com/v1_1/drplvqymz/image/upload', formData);
+
+        return response.data;
+    }
+
     const handleUpload = async (e) => {
         e.preventDefault();
         const formData = new FormData();
         const reasonsData = new FormData();
 
-        const reasons = [
-            { title: reason1, img: reasonImg1, text: reasonText1 },
-            { title: reason2, img: reasonImg2, text: reasonText2 },
-            { title: reason3, img: reasonImg3, text: reasonText3 }
-        ];
+        const reasons = [];
 
         formData.append('userId', userId);
-        formData.append('background_img', background_img);
         formData.append('title', title);
-        formData.append('mainObjective_img', mainObjective_img);
         formData.append('mainObjective_text', mainObjective_text);
         formData.append('objective_text', objective_text);
-        formData.append('objective_img', objective_img);
         formData.append('reason_title', reasonTitle);
 
+        //Upar imagens na nuvem
         try {
-            const response = axios.post('http://localhost:8080/dreamboard', formData, {
+            if(background_img) {
+                const backgroundImgResponse = await uploadImageToCloudinary(background_img);
+                formData.append('background_img', backgroundImgResponse.secure_url);
+            }
+            if(mainObjective_img){
+                const mainObjectiveImgResponse = await uploadImageToCloudinary(mainObjective_img);
+                formData.append('mainObjective_img', mainObjectiveImgResponse.secure_url);
+            }
+            if(objective_img){
+                const objectiveImgResponse = await uploadImageToCloudinary(objective_img);
+                formData.append('objective_img', objectiveImgResponse.secure_url);
+            }
+            if(reasonImg1){
+                const reasonImg1Response = await uploadImageToCloudinary(reasonImg1);
+                reasons.push({title: reason1, img: reasonImg1Response.secure_url, text: reasonText1})
+            }
+            if(reasonImg2){
+                const reasonImg2Response = await uploadImageToCloudinary(reasonImg2);
+                reasons.push({title: reason2, img:reasonImg2Response.secure_url, text: reasonText2});
+            }
+            if(reasonImg3){
+                const reasonImg3Response = await uploadImageToCloudinary(reasonImg3);
+                reasons.push({title: reason3, img: reasonImg3Response.secure_url, text: reasonText3});
+            }
+            console.log(reasons)
+        }catch(err){
+            console.error(err)
+        }
+        
+        try {
+            const response = customAxios.post('http://localhost:8080/dreamboard', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 }})
@@ -59,13 +94,14 @@ function NewBoard() {
                 try{
                     if(dreamboardId != null){
                         reasonsData.append("dreamboardId", dreamboardId)
+
                         reasons.forEach((reason, index) => {
                             reasonsData.append(`${index}[title]`, reason.title);
                             reasonsData.append(`${index}[img]`, reason.img);
                             reasonsData.append(`${index}[text]`, reason.text);
                         });
 
-                        const response = axios.post(`http://localhost:8080/dreamboard/reasons`, reasonsData, { 
+                        const response = customAxios.post(`http://localhost:8080/dreamboard/reasons`, reasonsData, { 
                         headers: {
                             'Content-Type': 'multipart/form-data'
                         }})
@@ -79,7 +115,7 @@ function NewBoard() {
                     if(err.status === "errorMissing"){
                         setError("Please, include all the images and text necessaries");
                     }else{
-                        setError("Ocorreu um erro ao salvar o DreamBoard");
+                        setError("An error ocurred trying to save the dreamBoard");
                     }
                     
                 }
@@ -92,8 +128,6 @@ function NewBoard() {
                 setError("An error ocurred trying to save the dreamBoard");
             }
         }
-        
-
         
     };
 
