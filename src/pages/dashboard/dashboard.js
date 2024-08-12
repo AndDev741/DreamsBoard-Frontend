@@ -2,7 +2,7 @@ import AddBoard from "./addBoard";
 import Perfil from "./perfil"
 import Board from "./board";
 import axios from '../../axiosConfig';
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 
@@ -25,6 +25,7 @@ function Dashboard() {
         navigate("/")
        })
     }, [])
+    
 
     return(
         <div className="bg-[#EEFCC7] w-[100%] min-h-[100vh] pb-8">
@@ -34,7 +35,7 @@ function Dashboard() {
                 <div className="flex flex-col lg:flex-row flex-wrap items-center justify-center">
                     {dashboards.length > 0 ? (
                         dashboards.map((dashboard, index) => (
-                            <Board background_img={dashboard.background_img} title={dashboard.title}/>
+                            <Board id={dashboard.id} background_img={dashboard.background_img} title={dashboard.title}/>
                         ))
                     ) : null}
                     <AddBoard/>
