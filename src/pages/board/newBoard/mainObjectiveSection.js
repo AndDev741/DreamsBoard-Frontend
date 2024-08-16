@@ -1,8 +1,8 @@
 import { useState, useCallback } from "react";
 import { useDropzone } from 'react-dropzone';
 
-function MainObjectiveSection({setMainObjective_img, mainObjective_text, setMainObjective_text}) {
-    const [backgroundImage, setBackgroundImage] = useState(null);
+function MainObjectiveSection({mainObjective_img, setMainObjective_img, mainObjective_text, setMainObjective_text}) {
+    const [backgroundImage, setBackgroundImage] = useState(mainObjective_img || null);
 
     const onDrop = useCallback((acceptedFiles) => {
         const selectedFile = acceptedFiles[0];

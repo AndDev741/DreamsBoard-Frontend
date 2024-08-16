@@ -33,7 +33,7 @@ const dreamBoardSlice = createSlice({
     reducers: {
         idEnter(state, action){
             const id = action.payload;
-            saveState(state);
+            saveState({id: id});
             return {...state, id}
         },
     }

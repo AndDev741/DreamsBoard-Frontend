@@ -1,11 +1,16 @@
 import customAxios from '../../axiosConfig';
 import { useEffect, useState } from "react";
-import { useSelector, UseSelector } from "react-redux";
-import { Link } from 'react-router-dom';
+import { useSelector, useDispatch } from "react-redux";
+import { Link, useNavigate } from 'react-router-dom';
+import { editModeEnter, userIdEnter, background_imgEnter, titleEnter, mainObjective_imgEnter, mainObjective_textEnter, objective_imgEnter, objective_textEnter, reasonTitleEnter, reasonsEnter, dreamBoardIdEnter } from './newBoard/newBoardSlice';
 
 function DreamBoard(){
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+
     const dreamboardId = useSelector(state => state.dreamBoard.id);
-    console.log(dreamboardId)
+    const userId = useSelector(state => state.login.id);
+
     const [backgroundImg, setBackgroundImg] = useState('');
     const [mainObjectiveImg, setMainObjectiveImg] = useState('');
     const [mainObjectiveText, setMainObjectiveText] = useState('');
@@ -15,6 +20,7 @@ function DreamBoard(){
     const [reasons, setReasons] = useState([]);
     const [title, setTitle] = useState('');
 
+    const [loading, setLoading] = useState(true);
     const [modal, setModal] = useState(true);
     const [modal1, setModal1] = useState(true);
     const [modal2, setModal2] = useState(true);
@@ -24,24 +30,43 @@ function DreamBoard(){
         try{
             async function getDreamBoard() {
                 const response = customAxios.get(`http://localhost:8080/dreamboard/getDreamBoard/${dreamboardId}`);
-                setBackgroundImg((await response).data.background_img)
-                setMainObjectiveImg((await response).data.mainObjectiveImg)
+                setBackgroundImg((await response).data.background_img);
+                setMainObjectiveImg((await response).data.mainObjectiveImg);
                 setMainObjectiveText((await response).data.mainObjective_text);
                 setObjectiveImg((await response).data.objective_img);
                 setObjectiveText((await response).data.objective_text);
                 setReasonTitle((await response).data.reason_title);
                 setReasons((await response).data.reasons);
                 setTitle((await response).data.title);
+                setLoading(false);
             }
             getDreamBoard();
         }catch (err){
-            alert("Error trying get DreamBoard");
+            navigate("/dashboard");
         }
         
     }, [])
+
+    const handleEdit = () => {
+        dispatch(dreamBoardIdEnter(dreamboardId));
+        dispatch(editModeEnter(true));
+        dispatch(userIdEnter(userId));
+        dispatch(background_imgEnter(backgroundImg));
+        dispatch(titleEnter(title));
+        dispatch(mainObjective_imgEnter(mainObjectiveImg));
+        dispatch(mainObjective_textEnter(mainObjectiveText));
+        dispatch(objective_imgEnter(objectiveImg));
+        dispatch(objective_textEnter(objectiveText));
+        dispatch(reasonTitleEnter(reasonTitle));
+        dispatch(reasonsEnter(reasons));
+
+        navigate("/newBoard");
+    }
+
     return(
         <div className="md:flex items-center justify-center bg-bgColor">
-            <div className="pb-6 md:w-[80vw] lg:w-[50vw]">
+            {loading == false ? (
+                <div className="pb-6 md:w-[80vw] lg:w-[50vw]">
 
                 <div className="bg-bgSecondary rounded-b-md">
                     <div className={`flex flex-col items-center justify-center w-full h-[241px] bg-bgSecondary lg:w-[100%] bg-cover rounded-b-md`}
@@ -99,10 +124,14 @@ function DreamBoard(){
                                 Cancel
                             </button>
                         </Link>
-                        <button className="text-white font-medium w-[180px] h-[40px] bg-redFont rounded-md text-xl hover:bg-lightRed">Edit</button>
+                        <button onClick={handleEdit}
+                        className="text-white font-medium w-[180px] h-[40px] bg-redFont rounded-md text-xl hover:bg-lightRed">Edit</button>
                 </div>
 
             </div>
+            ) : (
+                <h1>Loading...</h1>
+            )}
         </div>
             
     )

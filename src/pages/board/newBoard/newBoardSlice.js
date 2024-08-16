@@ -1,51 +1,105 @@
 import { createSlice } from "@reduxjs/toolkit";
-import loginSlice from "../../authentication/loginSlice";
 
-const initialState = {
+function saveState(state){
+    try{
+        const serializedState = JSON.stringify(state);
+        sessionStorage.setItem('redux-newBoard-state', serializedState);
+    }catch(err){
+        console.error(err);
+    }
+}
+
+function loadState(){
+    try{
+        const serializedState = sessionStorage.getItem('redux-newBoard-state');
+        console.log(serializedState)
+        if(serializedState === null){
+            console.log("null como?")
+            return undefined;
+        }
+        return JSON.parse(serializedState);
+    }catch(err){
+        console.err(err);
+    }
+}
+
+const initialState = loadState() || {
+    dreamBoardId: null,
+    editMode: false,
     userId: null,
     background_img : null,
     title : '',
-    secondary_img : null,
-    secondary_phrase : null,
+    mainObjective_img : null,
+    mainObjective_textEnter : '',
+    objective_img: null,
+    objective_text: '',
+    reasonTitle: '',
     reasons:[],
-    mainElements:[]
 }
 
 const newBoardSlice = createSlice({
     name: 'newBoard',
     initialState,
     reducers: {
+        dreamBoardIdEnter(state, action){
+            const dreamBoardId = action.payload;
+            saveState(state);
+            return {...state, dreamBoardId};
+        },
+        editModeEnter(state, action){
+            const editMode = action.payload;
+            saveState(state);
+            return {...state, editMode};
+        },
         userIdEnter(state, action){
             const userId = action.payload;
+            saveState(state);
             return {...state, userId}
         },
         background_imgEnter(state, action){
             const background_img = action.payload;
+            saveState(state);
             return {...state, background_img}
         },
         titleEnter(state, action){
             const title = action.payload;
+            saveState(state);
             return {...state, title}
         },
-        secondary_imgEnter(state, action){
-            const secondary_img = action.payload;
-            return {...state, secondary_img}
+        mainObjective_imgEnter(state, action){
+            const mainObjective_img = action.payload;
+            saveState(state);
+            return {...state, mainObjective_img}
         },
-        secondary_phraseEnter(state, action){
-            const secondary_phrase = action.payload;
-            return {...state, secondary_phrase};
+        mainObjective_textEnter(state, action){
+            const mainObjective_text = action.payload;
+            saveState(state);
+            return {...state, mainObjective_text};
+        },
+        objective_imgEnter(state, action){
+            const objective_img = action.payload;
+            saveState(state);
+            return {...state, objective_img};
+        },
+        objective_textEnter(state, action){
+            const objective_text = action.payload;
+            saveState(state);
+            return {...state, objective_text};
+        },
+        reasonTitleEnter(state, action){
+            const reasonTitle = action.payload;
+            saveState(state);
+            return {...state, reasonTitle};
         },
         reasonsEnter(state, action){
             const reasons = action.payload;
+            saveState(state);
             return {...state, reasons};
         },
-        mainElementsEnter(state, action){
-            const mainElements = action.payload;
-            return {...state, mainElements};
-        }
+        
     }
 })
 
-export const {userIdEnter, background_imgEnter, titleEnter, secondary_imgEnter, secondary_phraseEnter, reasonsEnter, mainElementsEnter} = newBoardSlice.actions;
+export const {dreamBoardIdEnter ,editModeEnter, userIdEnter, background_imgEnter, titleEnter, mainObjective_imgEnter, mainObjective_textEnter, objective_imgEnter, objective_textEnter, reasonTitleEnter, reasonsEnter} = newBoardSlice.actions;
 
 export default newBoardSlice.reducer;

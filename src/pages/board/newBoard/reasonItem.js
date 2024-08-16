@@ -1,7 +1,7 @@
 import { useState, useCallback } from "react";
 import { useDropzone } from 'react-dropzone';
 function ReasonItem({reason, setReason, reasonImg, setReasonImg, reasonText, setReasonText}){
-    const [backgroundImg, setBackgroundImg] = useState(null);
+    const [backgroundImg, setBackgroundImg] = useState(reasonImg);
     const [modal, setModal] = useState(false);
 
     const onDrop = useCallback((acceptedFiles) => {

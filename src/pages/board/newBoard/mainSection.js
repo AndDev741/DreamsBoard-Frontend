@@ -3,10 +3,10 @@ import { useDropzone } from 'react-dropzone';
 import { useDispatch } from 'react-redux';
 import { background_imgEnter } from "./newBoardSlice";
 
-function MainSection({setBackground_img}){
+function MainSection({background_img, setBackground_img}){
     const dispatch = useDispatch();
     const [file, setFile] = useState();
-    const [backgroundImage, setBackgroundImage] = useState('');
+    const [backgroundImage, setBackgroundImage] = useState(background_img || '');
 
     const onDrop = useCallback((acceptedFiles) => {
         const selectedFile = acceptedFiles[0];
