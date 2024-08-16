@@ -47,7 +47,7 @@ function NewBoard() {
     const [reason3, setReason3] = useState(editReasons.length > 0 ? editReasons[2].title : 'edit here');
     const [reasonImg3, setReasonImg3] = useState(editReasons.length > 0 ? editReasons[2].img : null);
     const [reasonText3, setReasonText3] = useState(editReasons.length > 0 ? editReasons[2].text : 'Edit here with the text of your reason');
-    
+
     
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
