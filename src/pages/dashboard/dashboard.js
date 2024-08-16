@@ -12,6 +12,7 @@ function Dashboard() {
     const img_link = useSelector(state => state.login.img_link);
     const name = useSelector(state => state.login.name);
     const perfil_phrase = useSelector(state => state.login.perfil_phrase);
+    const [loading, setLoading] = useState(true);
 
     const [dashboards, setDashboard] = useState([]);
 
@@ -19,6 +20,7 @@ function Dashboard() {
        axios.get(`/dreamboard/${id}`)
        .then(response => {
             setDashboard(response.data);
+            setLoading(false);
        })
        .catch(error => {
         console.error(error);
@@ -26,12 +28,13 @@ function Dashboard() {
        })
     }, [])
     
-
     return(
         <div className="bg-[#EEFCC7] w-[100%] min-h-[100vh] pb-8">
             <Perfil img_Link={img_link} name={name} perfil_phrase={perfil_phrase}/>
             <h1 className="mt-2 text-center text-3xl font-bold">Your Dreams Boards</h1>
-            <div className="flex flex-col items-center justify-center"> 
+            {/* Loading logic */}
+            {loading == false ? (
+                <div className="flex flex-col items-center justify-center"> 
                 <div className="flex flex-col lg:flex-row flex-wrap items-center justify-center">
                     {dashboards.length > 0 ? (
                         dashboards.map((dashboard, index) => (
@@ -41,6 +44,10 @@ function Dashboard() {
                     <AddBoard/>
                 </div>
             </div>
+            ) : (
+            <h1>Loading data</h1>
+            )}
+
         </div>
     )
 }

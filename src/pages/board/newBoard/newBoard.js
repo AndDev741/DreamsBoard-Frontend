@@ -30,6 +30,7 @@ function NewBoard() {
     const [reasonText3, setReasonText3] = useState('Edit here with the text of your reason');
 
     const [error, setError] = useState("");
+    const [loading, setLoading] = useState(false);
 
     const uploadImageToCloudinary = async (file) => {
         const formData = new FormData();
@@ -56,6 +57,7 @@ function NewBoard() {
 
         //Upar imagens na nuvem
         try {
+            setLoading(true)
             if(background_img) {
                 const backgroundImgResponse = await uploadImageToCloudinary(background_img);
                 formData.append('background_img', backgroundImgResponse.secure_url);
@@ -80,7 +82,6 @@ function NewBoard() {
                 const reasonImg3Response = await uploadImageToCloudinary(reasonImg3);
                 reasons.push({title: reason3, img: reasonImg3Response.secure_url, text: reasonText3});
             }
-            console.log(reasons)
         }catch(err){
             console.error(err)
         }
@@ -164,6 +165,7 @@ function NewBoard() {
                             Save
                         </button>
                     </div>
+                    {loading ? <h1 className="text-3xl text-redFont font-black text-center animate-pulse mt-3">Sending data...</h1> : null}
                     <p className='text-xl text-center text-red-900 font-semibold my-4'>{error}</p>
                 </div>
             </div>
