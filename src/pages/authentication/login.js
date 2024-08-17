@@ -49,20 +49,20 @@ function Login(){
                 
                 <div className='flex flex-col items-center justify-center lg:w-[550px] lg:h-[580px] lg:bg-[#EEFCC7] lg:rounded-r-lg'>
                     <div className="mt-2 text-redFont text-4xl md:text-5xl lg:text-5xl font-black text-center">
-                        <h1 className="">Bem vindo</h1>
-                        <h1>de volta!</h1>
+                        <h1 className="">Welcome</h1>
+                        <h1>again!</h1>
                     </div>
 
                     <div className="mt-3 text-lightRed font-medium text-3xl md:text-4xl lg:text-3xl text-center">
-                        <h3>Crie e gerencie seus</h3>
-                        <h3>quadros de sonhos</h3>
+                        <h3>Create and manage your</h3>
+                        <h3>DreamBoards</h3>
                     </div>
 
                     <form className='flex flex-col items-center justify-center'
                     onSubmit={handleSubmit}>
                         <div className="mt-5">
                             <label htmlFor="email" 
-                            className="text-ligthGray text-xl md:text-3xl">Email</label>
+                            className="text-ligthGray text-xl md:text-2xl">Email</label>
                             <br/>
                             <input name="email"
                             value={email}
@@ -75,7 +75,7 @@ function Login(){
                         </div>
                         <div className="mt-5 md:mt-5">
                             <label htmlFor="password" 
-                            className="text-ligthGray text-xl md:text-3xl">Senha</label>
+                            className="text-ligthGray text-xl md:text-2xl">Password</label>
                             <br/>
                             <input name="password"
                              value={password}
@@ -91,14 +91,14 @@ function Login(){
                                 <input type="submit"
                                 id="submit"
                                 name="submit"
-                                value="Entrar"
+                                value="Enter"
                                 className="bg-redFont hover:bg-lightRed
                                 w-[207px] md:w-[307px] lg:w-[250px] h-[51px] md:h-[70px] lg:h-[60px]
                                 text-white text-xl md:text-3xl font-bold rounded-lg cursor-pointer"/>
                             </div>
                         </div>
                         <div className="flex flex-col items-center justify-center mt-3">
-                            <Link to={"/register"} className="text-redFont text-xl md:text-3xl underline cursor-pointer">Registre-se</Link>
+                            <Link to={"/register"} className="text-center text-redFont text-xl md:text-2xl underline cursor-pointer">If you dont have an account, Register</Link>
                             <p className='text-xl text-center text-red-900 font-semibold underline'>{errorMessage}</p>
                         </div>
                     </form>
@@ -108,7 +108,7 @@ function Login(){
                     <img src={loginPC}
                     alt="homan in a playground"
                     className={'w-[100vw]'}/>
-                    <p className='text-white font-black text-3xl text-center w-[470px] mb-12 hidden lg:block'>A melhor maneira de gerir seus sonhos</p>
+                    <p className='text-white font-black text-3xl text-center w-[470px] mb-12 hidden lg:block'>The best way of manage your DreamBoards</p>
                 </div>
             </div>
         </div>
