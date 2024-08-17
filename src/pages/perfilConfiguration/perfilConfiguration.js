@@ -12,6 +12,7 @@ function PerfilConfiguration(){
     const navigate = useNavigate();
     const [error, setError] = useState("");
     const [success, setSuccess] = useState("");
+    const [deleteModal, setDeleteModal] = useState(false);
 
     const id = useSelector(state => state.login.id);
     const img_link = useSelector(state => state.login.img_link);
@@ -74,6 +75,10 @@ function PerfilConfiguration(){
         }
 
     }
+
+    const handleConfirmDelete = () => {
+        setDeleteModal(!deleteModal);
+    }
    
 
     return(
@@ -94,8 +99,49 @@ function PerfilConfiguration(){
                     Logout
                 </button>
             </div>
+            <div className="flex items-center justify-center">
+            <button onClick={handleConfirmDelete}
+                className="text-white font-medium w-[180px] h-[40px] bg-red-900 rounded-md text-xl hover:bg-red-800 my-2">
+                    Delete account
+                </button>
+            </div>
+            <div className="flex items-center justify-center">
+                <DeleteModal handleConfirmDelete={handleConfirmDelete} setError={setError} id={id} deleteModal={deleteModal}/>
+            </div>
             <p className='text-xl text-center text-red-900 font-semibold underline'>{error}</p>
             <p className='text-xl text-center text-blue-900 font-semibold underline'>{success}</p>
+        </div>
+    )
+}
+
+function DeleteModal({handleConfirmDelete, setError, id, deleteModal}){
+    const navigate = useNavigate();
+
+    const handleDelete = (e) => {
+        e.preventDefault();
+
+        try{
+            customAxios.delete(`/user/${id}`);
+            navigate("/");
+        }catch(e){
+            console.error(e);
+            handleConfirmDelete();
+            setError("Error trying delete Account, try again")
+        }
+    }
+    return(
+        <div className={`${deleteModal === true ? 'block' : 'hidden'} flex flex-col items-center justify-start rounded-md w-[100vw] h-[400px] bg-bgSecondary fixed top-0`}>
+            <h2 className="mt-2 text-2xl font-bold text-center">Are you sure that you want to delete your account?</h2>
+            <div className="flex items-center justify-center mt-5">
+                <button onClick={handleConfirmDelete}
+                className="text-white mx-4 font-medium w-[180px] h-[40px] bg-red-900 rounded-md text-xl hover:bg-red-800 my-2">
+                    Cancel
+                </button>
+                <button onClick={handleDelete}
+                className="text-white mx-4 font-medium w-[180px] h-[40px] bg-red-900 rounded-md text-xl hover:bg-red-800 my-2">
+                    Delete account
+                </button>
+            </div>
         </div>
     )
 }

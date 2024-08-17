@@ -121,7 +121,7 @@ function DreamBoard(){
                 <div className="flex items-center justify-evenly w-full mt-5">
                         <Link to={'/dashboard'}>
                             <button className="text-white font-medium w-[180px] h-[40px] bg-redFont rounded-md text-xl hover:bg-lightRed">
-                                Cancel
+                                Back
                             </button>
                         </Link>
                         <button onClick={handleEdit}
