@@ -1,8 +1,7 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
 import { Link } from "react-router-dom";
-import logoutIcon from '../../assets/logout.png';
 import axios from "axios";
 import customAxios from '../../axiosConfig';
 import EditPerfil from "./editPerfil";

@@ -1,15 +1,14 @@
-import React, { useState, useCallback, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import customAxios from '../../../axiosConfig';
 import axios from 'axios';
-import { editModeEnter, userIdEnter, background_imgEnter, titleEnter, mainObjective_imgEnter, mainObjective_textEnter, objective_imgEnter, objective_textEnter, reasonTitleEnter, reasonsEnter, dreamBoardIdEnter } from './newBoardSlice';
+import { editModeEnter, userIdEnter, background_imgEnter, titleEnter, mainObjective_imgEnter, mainObjective_textEnter, objective_imgEnter, objective_textEnter, reasonTitleEnter, reasonsEnter} from './newBoardSlice';
 import MainSection from './mainSection';
 import MainObjectiveSection from './mainObjectiveSection';
 import ObjectiveSection from './objective';
 import Reasons from './reasons';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import trashIcon from '../../../assets/trashIcon.png';
 
 function NewBoard() {
     const edit = useSelector(state => state.newBoard.editMode);
@@ -175,9 +174,9 @@ function NewBoard() {
         
     };
 
-    const handleDelete = () => {
+    const handleDelete = async () => {
         try{
-            const response = customAxios.delete(`http://localhost:8080/dreamboard/${dreamBoardId}`);
+            await customAxios.delete(`http://localhost:8080/dreamboard/${dreamBoardId}`);
             navigate("/dashboard");
         }catch(e){
             console.error("Error trying delete Dreamboard", e);

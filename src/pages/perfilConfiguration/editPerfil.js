@@ -1,7 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
-import { Link } from 'react-router-dom';
-import axios from '../../axiosConfig';
 import editIcon from '../../assets/editIcon.png';
 
 
@@ -53,7 +51,8 @@ function EditPerfil({id, newPerfilImg, newName, newPerfilPhrase, setNewName, set
                         alt='Profile pic'
                         className="flex items-start justify-end w-[66px] h-[66px] rounded-full bg-cover cursor-pointer px-5"
                         style={{backgroundImage: PerfilImg ? `url(${PerfilImg})` : ''}} >
-                            <img className='w-[20px] h-[20px]' 
+                            <img alt='Edit icon (A pencil)' 
+                            className='w-[20px] h-[20px]' 
                             src={editIcon} />
                             <input {...getInputProps()} className="hidden" />
                         </div>

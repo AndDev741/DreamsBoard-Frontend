@@ -1,10 +1,9 @@
 import { useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import settingsIcon from '../../assets/settingsIcon.png';
 
 function Perfil({img_Link, name, perfil_phrase}){
     const [greeting, setGreeting] = useState('');
-    const navigate = useNavigate();
     useEffect(() => {
         const date = new Date().getHours();
         getHourMessage(date);
@@ -36,7 +35,8 @@ function Perfil({img_Link, name, perfil_phrase}){
                 </div>
                 <Link to={"/configuration"}>
                     <div className='flex flex-col items-center justify-center mr-5 cursor-pointer'>
-                        <img src={settingsIcon}
+                        <img alt='Settings icon'
+                        src={settingsIcon}
                         className="w-[50px]"/>
                     </div>
                 </Link>

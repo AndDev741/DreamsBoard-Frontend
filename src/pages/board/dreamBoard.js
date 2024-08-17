@@ -65,7 +65,7 @@ function DreamBoard(){
 
     return(
         <div className="md:flex items-center justify-center bg-bgColor">
-            {loading == false ? (
+            {loading === false ? (
                 <div className="pb-6 md:w-[80vw] lg:w-[50vw]">
 
                 <div className="bg-bgSecondary rounded-b-md">
@@ -108,10 +108,10 @@ function DreamBoard(){
                                 <div className={`flex flex-col items-center mx-6 lg:mx-9 cursor-pointer mt-2`}>
                                     <button className="w-[60px] h-[60px] rounded-full bg-bgSecondary bg-cover"
                                     style={{backgroundImage: `url(${reason.img})`}}
-                                    onClick={e => index == 0 ? setModal(!modal) : index == 1 ? setModal1(!modal1) : setModal2(!modal2)}></button>
+                                    onClick={e => index === 0 ? setModal(!modal) : index === 1 ? setModal1(!modal1) : setModal2(!modal2)}></button>
                                     <h3 className="bg-transparent w-[85px] text-center">{reason.title}</h3>
                                 </div>
-                                <ReasonDetails img={reason.img} text={reason.text} modal={index == 0 ? modal : index == 1 ? modal1 : modal2} />
+                                <ReasonDetails img={reason.img} text={reason.text} modal={index === 0 ? modal : index === 1 ? modal1 : modal2} />
                                 
                             </div>
                         ))}

@@ -2,7 +2,7 @@ import AddBoard from "./addBoard";
 import Perfil from "./perfil"
 import Board from "./board";
 import axios from '../../axiosConfig';
-import { Link, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 
@@ -33,7 +33,7 @@ function Dashboard() {
             <Perfil img_Link={img_link} name={name} perfil_phrase={perfil_phrase}/>
             <h1 className="mt-2 text-center text-3xl font-bold">Your Dreams Boards</h1>
             {/* Loading logic */}
-            {loading == false ? (
+            {loading === false ? (
                 <div className="flex flex-col items-center justify-center"> 
                 <div className="flex flex-col lg:flex-row flex-wrap items-center justify-center">
                     {dashboards.length > 0 ? (

@@ -1,5 +1,3 @@
-import { useState, useCallback } from "react";
-import { useDropzone } from 'react-dropzone';
 import ReasonItem from "./reasonItem";
 
 function Reasons({reasonTitle, setReasonTitle, 

@@ -1,10 +1,7 @@
 import { useState, useCallback } from "react";
 import { useDropzone } from 'react-dropzone';
-import { useDispatch } from 'react-redux';
-import { background_imgEnter } from "./newBoardSlice";
 
 function MainSection({background_img, setBackground_img}){
-    const dispatch = useDispatch();
     const [file, setFile] = useState();
     const [backgroundImage, setBackgroundImage] = useState(background_img || '');
 
