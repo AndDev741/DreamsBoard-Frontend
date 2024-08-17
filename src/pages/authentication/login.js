@@ -1,5 +1,6 @@
 import loginPC from '../../assets/loginPC.png';
-import axios from '../../axiosConfig';
+import customAxios from '../../axiosConfig';
+import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
 import {useState} from 'react'
 import { useDispatch, useSelector } from 'react-redux';
@@ -15,8 +16,15 @@ function Login(){
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        sessionStorage.clear();
+        try{
+            await axios.post("http://localhost:8080/logout");      
+        }catch(e){
+            console.error(e);
+        }
+        
         try {
-            const response = await axios.post('http://localhost:8080/login', {
+            const response = await customAxios.post('http://localhost:8080/login', {
                 email,
                 password
             });
@@ -31,7 +39,9 @@ function Login(){
                 console.error('Erro durante o login: ', error);
                 setErrorMessage("Email or password incorrect");
             }
+        
     }
+    
 
     return(
         <div className="flex flex-col lg:flex-row items-center justify-center bg-[#EEFCC7] lg:bg-white min-h-screen">

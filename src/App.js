@@ -6,6 +6,7 @@ import Register from './pages/authentication/register.js';
 import Dashboard from './pages/dashboard/dashboard';
 import NewBoard from './pages/board/newBoard/newBoard';
 import DreamBoard from './pages/board/dreamBoard';
+import PerfilConfiguration from './pages/perfilConfiguration/perfilConfiguration';
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
           <Route path='/dashboard' element={<Dashboard/>} />
           <Route path='/newBoard'  element={<NewBoard/>}/>
           <Route path='/dreamBoard' element={<DreamBoard/>} />
+          <Route path='/configuration' element={<PerfilConfiguration/>} />
         </Routes>
 
       </div>
