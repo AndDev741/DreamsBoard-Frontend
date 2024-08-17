@@ -45,7 +45,7 @@ function Dashboard() {
                 </div>
             </div>
             ) : (
-            <h1>Loading data</h1>
+            <h1 className="text-xl text-center">Loading data</h1>
             )}
 
         </div>
