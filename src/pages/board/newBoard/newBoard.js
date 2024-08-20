@@ -11,13 +11,31 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 function NewBoard() {
+    const navigate = useNavigate();
+    const userId = useSelector(state => state.login.id);
+    async function veirifyLogin() {
+        try {
+            const response = await customAxios.get(`/user/verify/${userId}`);
+            if(response.data.success){
+                return null;
+            }else{
+                navigate("/");
+            }
+        } catch(e){
+            console.error(e);
+            navigate("/");
+        }
+    }
+    useEffect( () => {
+        veirifyLogin();
+    }, [])
+
     const edit = useSelector(state => state.newBoard.editMode);
     const [editMode, setEditMode] = useState(edit);
     const dispatch = useDispatch();
-    const navigate = useNavigate();
+    
     
     const dreamBoardId = useSelector(state => state.newBoard.dreamBoardId);
-    const userId = useSelector(state => state.login.id);
     const editBackground_img = useSelector(state => state.newBoard.background_img);
     const [background_img, setBackground_img] = useState(editBackground_img || null);
     const editTitle = useSelector(state => state.newBoard.title);

@@ -27,24 +27,23 @@ function DreamBoard(){
 
 
     useEffect(() => {
-        try{
             async function getDreamBoard() {
-                const response = customAxios.get(`http://localhost:8080/dreamboard/getDreamBoard/${dreamboardId}`);
-                setBackgroundImg((await response).data.background_img);
-                setMainObjectiveImg((await response).data.mainObjectiveImg);
-                setMainObjectiveText((await response).data.mainObjective_text);
-                setObjectiveImg((await response).data.objective_img);
-                setObjectiveText((await response).data.objective_text);
-                setReasonTitle((await response).data.reason_title);
-                setReasons((await response).data.reasons);
-                setTitle((await response).data.title);
-                setLoading(false);
+                try{
+                    const response = customAxios.get(`http://localhost:8080/dreamboard/getDreamBoard/${dreamboardId}`);
+                    setBackgroundImg((await response).data.background_img);
+                    setMainObjectiveImg((await response).data.mainObjectiveImg);
+                    setMainObjectiveText((await response).data.mainObjective_text);
+                    setObjectiveImg((await response).data.objective_img);
+                    setObjectiveText((await response).data.objective_text);
+                    setReasonTitle((await response).data.reason_title);
+                    setReasons((await response).data.reasons);
+                    setTitle((await response).data.title);
+                    setLoading(false);
+                }catch (err){
+                    navigate("/");
+                }
             }
             getDreamBoard();
-        }catch (err){
-            navigate("/dashboard");
-        }
-        
     }, [])
 
     const handleEdit = () => {

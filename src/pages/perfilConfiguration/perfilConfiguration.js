@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
 import { Link } from "react-router-dom";
@@ -10,11 +10,29 @@ import { img_linkEnter, nameEnter, perfil_phraseEnter } from "../authentication/
 function PerfilConfiguration(){
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const id = useSelector(state => state.login.id);
+    async function veirifyLogin() {
+        try {
+            const response = await customAxios.get(`/user/verify/${id}`);
+            if(response.data.success){
+                return null;
+            }else{
+                navigate("/");
+            }
+        } catch(e){
+            console.error(e);
+            navigate("/");
+        }
+    }
+    useEffect( () => {
+        veirifyLogin();
+    }, [veirifyLogin])
+
     const [error, setError] = useState("");
     const [success, setSuccess] = useState("");
     const [deleteModal, setDeleteModal] = useState(false);
 
-    const id = useSelector(state => state.login.id);
+    
     const img_link = useSelector(state => state.login.img_link);
     const name = useSelector(state => state.login.name);
     const perfil_phrase = useSelector(state => state.login.perfil_phrase);
