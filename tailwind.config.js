@@ -14,8 +14,7 @@ export default {
     prefix: "tw-",
     extend: {
       colors: {
-        redFont: "#D13755",
-        lightRed: '#ED4A6A',
+        greenMain: "#2C9C94",
         ligthGray: '#8B7E7E',
         bgColor: '#EEFCC7',
         bgSecondary: '#D9AB91'
