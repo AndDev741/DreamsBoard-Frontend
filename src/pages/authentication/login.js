@@ -25,7 +25,7 @@ function Login(){
         e.preventDefault();
         sessionStorage.clear();
         try{
-            await axios.post("http://localhost:8080/logout");      
+            await customAxios.post("http://localhost:8080/logout");      
         }catch(e){
             console.error(e);
         }
