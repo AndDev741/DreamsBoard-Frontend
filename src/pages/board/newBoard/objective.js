@@ -26,14 +26,14 @@ function ObjectiveSection({objective_img, setObjective_img, objective_text, setO
         <div className="flex items-center justify-between lg:justify-evenly">
             <div>
                 <div {...getRootProps()} 
-                className="flex items-center justify-center w-[173px] h-[216px] bg-bgSecondary rounded-md bg-cover border-2 border-dashed border-redFont cursor-pointer"
+                className="flex items-center justify-center w-[173px] lg:w-[200px] h-[270px] bg-[#31cac0] hover:bg-[#41e0d6] rounded-md bg-cover cursor-pointer ml-5 md:ml-0"
                 style={{backgroundImage: backgroundImage ? `url(${backgroundImage})` : '', border: backgroundImage ? 'none': ''}}>
-                    <p  className={`text-md text-redFont font-bold mt-2 ${backgroundImage ? 'hidden' : 'block'}`}>Add a image here</p>
+                    <p  className={`text-center text-xl text-redFont font-bold mt-2 p-1 ${backgroundImage ? 'hidden' : 'block'}`}>Add a image here</p>
                     <input {...getInputProps()} className="hidden" />
                 </div>
             </div>
             <div className="flex items-center justify-center w-[50vw] lg:w-[50%]">
-                <textarea className={`bg-transparent text-[18px] text-redFont font-bold min-h-[180px] md:min-h-[100px] text-center w-[40vw] ${objective_text.length < 1 ? "border-solid border-2 border-redFont rounded-md" : ""}`}
+                <textarea className={`bg-transparent text-[18px] text-redFont font-bold min-h-[150px] md:min-h-[100px] text-center w-[40vw] ${objective_text.length < 1 ? "border-solid border-2 border-redFont rounded-md" : ""}`}
                 value={objective_text}
                 onChange={e => setObjective_text(e.target.value)} />
             </div>
