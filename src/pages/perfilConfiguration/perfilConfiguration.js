@@ -40,7 +40,7 @@ function PerfilConfiguration(){
     const [newName, setNewName] = useState(name || "Put your name here!");
     const [newPerfilPhrase, setNewPerfilPhrase] = useState(perfil_phrase || "Put a nice phrase here!");
     const [newPerfilImg, setNewPerfilImg] = useState(img_link || null);
-    const [perfilImg, setPerfilImg] = useState("");
+    const [perfilImg, setPerfilImg] = useState(img_link);
 
     const handleLogout = async (e) => {
         e.preventDefault();
@@ -60,35 +60,38 @@ function PerfilConfiguration(){
         formData.append('file', file);
         formData.append('upload_preset', 'cf6ccdpv');
         const response = await axios.post('https://api.cloudinary.com/v1_1/drplvqymz/image/upload', formData);
-        return response.data;
+        return response.data.secure_url;
     }
 
     const handleEdit = async (e) => {
         e.preventDefault();
-        const editData = {
-            id: id,
-            name: newName,
-            perfil_phrase: newPerfilPhrase
-        }
-        try{
-            if(newPerfilImg){
-                const response = await uploadImageToCloudinary(newPerfilImg);
-                setPerfilImg((await response).secure_url);
-                editData.img_link = perfilImg;
-            }
-        }catch(e){
-            console.error("Error trying upload perfil photo", e);
-            setError("An error ocurred trying to edit, try again");
-        }
+        let updatedImgLink = img_link;
+        console.log(updatedImgLink)
 
         try{
+            if(newPerfilImg && newPerfilImg !== img_link){
+                updatedImgLink = await uploadImageToCloudinary(newPerfilImg)
+                setPerfilImg(updatedImgLink);
+            }
+
+            const editData = {
+                id: id,
+                img_link: updatedImgLink,
+                name: newName,
+                perfil_phrase: newPerfilPhrase
+            }
+
+
             const response = customAxios.put("/user/edit", editData);
-            dispatch(img_linkEnter(perfilImg));
+            dispatch(img_linkEnter(updatedImgLink));
             dispatch(nameEnter(newName));
             dispatch(perfil_phraseEnter(newPerfilPhrase));
+            setError("");
             setSuccess((await response).data.success);
+
         }catch(e){
             console.error("Erro", e);
+            setSuccess("");
             setError("An error ocurred trying to edit, try again");
         }
 
