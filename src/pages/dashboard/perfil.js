@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import settingsIcon from '../../assets/settingsIcon.png';
 
-function Perfil({img_Link, name, perfil_phrase}){
+function Perfil({img_Link, name}){
     const [greeting, setGreeting] = useState('');
     useEffect(() => {
         const date = new Date().getHours();
@@ -12,9 +12,9 @@ function Perfil({img_Link, name, perfil_phrase}){
     function getHourMessage(hour) {
         if (hour >= 18 || hour < 5) {
             setGreeting("Good Night");
-        } else if (hour >= 5 && hour < 10) {
+        } else if (hour >= 5 && hour < 11) {
             setGreeting("Good Morning");
-        } else if (hour >= 10 && hour < 18) {
+        } else if (hour >= 11 && hour < 18) {
             setGreeting("Good Evening");
         }
     }
@@ -28,20 +28,22 @@ function Perfil({img_Link, name, perfil_phrase}){
                         className="w-[70px] h-[70px] rounded-full"
                         src={`${img_Link}`} />
                         <div className="ml-3">
-                            <h2 className="text-xl text-redFont font-black">{greeting} - {name}</h2>
-                            <p className='text-redFont font-medium'>{perfil_phrase}</p>
+                            <h2 className="hidden md:block text-xl font-black">{greeting} <span className='text-[#3A807A]
+                            '>{name}</span></h2>
+                            <h2 className="block md:hidden text-xl font-black">{greeting} <br/> <span className='text-[#3A807A]
+                            '>{name}</span></h2>
                         </div>
                     </div>
                 </div>
                 <Link to={"/configuration"}>
-                    <div className='flex flex-col items-center justify-center mr-5 cursor-pointer'>
+                    <div className='flex flex-col items-center justify-center mr-5 md:mt-[-25px] cursor-pointer'>
                         <img alt='Settings icon'
                         src={settingsIcon}
                         className="w-[50px]"/>
                     </div>
                 </Link>
             </div>
-            <div className='mt-4 w-full border-solid border-[1px] border-redFont'></div>
+            <div className='mt-4 w-full border-solid border-[1px] border-[#2C9C94]'></div>
         </div>
     
     )

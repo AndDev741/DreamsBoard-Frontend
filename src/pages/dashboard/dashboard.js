@@ -29,12 +29,12 @@ function Dashboard() {
     }, [])
     
     return(
-        <div className="bg-[#EEFCC7] w-[100%] min-h-[100vh] pb-8">
-            <Perfil img_Link={img_link} name={name} perfil_phrase={perfil_phrase}/>
-            <h1 className="mt-2 text-center text-3xl font-bold">Your Dreams Boards</h1>
+        <div className="w-[100%] min-h-[100vh] pb-8">
+            <Perfil img_Link={img_link} name={name}/>
+            <h1 className="mt-2 text-center text-[36px] font-bold">Your Dreams Boards</h1>
+            <h2 className="text-center text-[24px] font-ligth">{perfil_phrase}</h2>
             {/* Loading logic */}
             {loading === false ? (
-                <div className="flex flex-col items-center justify-center"> 
                 <div className="flex flex-col lg:flex-row flex-wrap items-center justify-center">
                     {dashboards.length > 0 ? (
                         dashboards.map((dashboard, index) => (
@@ -43,7 +43,6 @@ function Dashboard() {
                     ) : null}
                     <AddBoard/>
                 </div>
-            </div>
             ) : (
             <h1 className="text-xl text-center">Loading data</h1>
             )}

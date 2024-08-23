@@ -3,8 +3,8 @@ import {Link} from 'react-router-dom'
 function AddBoard(){
     return(
         <Link to={'/newBoard'}>
-            <div className="w-[90vw] h-[240px] md:w-[500px] border-dashed border-redFont border-2 rounded-[6px] my-5 cursor-pointer mx-4">
-                <div className="flex items-center justify-center w-full h-full bg-[#D9D5A7] hover:bg-[#D9AB91] ">
+            <div className={`w-[90vw] h-[240px] md:w-[500px] border-dashed border-[#2C9C94] border-2 rounded-[6px] my-8 cursor-pointer lg:mx-10`}>
+                <div className="flex items-center justify-center w-full h-full bg-[#3CE5D9] hover:bg-[#3cd8ce] ">
                     <h1 className="text-3xl font-bold text-center">Add Dream Board</h1>
                 </div>
             </div>
