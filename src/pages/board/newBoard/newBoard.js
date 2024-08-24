@@ -266,18 +266,18 @@ function NewBoard() {
 
                     <div className="flex flex-wrap items-center justify-evenly w-full mt-5">
                         <Link to={'/dashboard'}>
-                            <button className="text-white font-bold w-[180px] h-[40px] bg-greenMain rounded-md text-xl hover:bg-lightRed">
+                            <button className="text-white font-bold w-[180px] h-[40px] bg-greenMain hover:bg-[#30b6ad] rounded-md text-xl hover:bg-lightRed">
                                 Cancel
                             </button>
                         </Link>
                         <button
-                            className="text-white font-bold w-[180px] h-[40px] bg-greenMain rounded-md text-xl hover:bg-lightRed"
+                            className="text-white font-bold w-[180px] h-[40px] bg-greenMain hover:bg-[#30b6ad] rounded-md text-xl hover:bg-lightRed"
                             onClick={handleUpload}
                         >
                             {editMode === true ? 'Edit' : 'Save'}
                         </button>
                         <button
-                            className={`flex items-center justify-evenly text-white font-medium w-[180px] h-[40px] bg-redFont rounded-md text-xl hover:bg-lightRed my-4 ${editMode === true ? 'block' : 'hidden'}`}
+                            className={`flex items-center justify-evenly text-white font-bold w-[180px] h-[40px] bg-greenMain hover:bg-[#30b6ad] rounded-md text-xl hover:bg-lightRed my-4 ${editMode === true ? 'block' : 'hidden'}`}
                             onClick={handleDelete}
                         >
                             {editMode === true ? 'Delete' : ''}

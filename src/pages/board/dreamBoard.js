@@ -63,37 +63,37 @@ function DreamBoard(){
     }
 
     return(
-        <div className="md:flex items-center justify-center bg-bgColor">
+        <div className="md:flex items-center justify-center">
             {loading === false ? (
                 <div className="pb-6 md:w-[80vw] lg:w-[50vw]">
 
-                <div className="bg-bgSecondary rounded-b-md">
-                    <div className={`flex flex-col items-center justify-center w-full h-[241px] bg-bgSecondary lg:w-[100%] bg-cover rounded-b-md`}
+                <div className="rounded-b-md">
+                    <div className={`flex flex-col items-center justify-center w-full h-[241px] lg:w-[100%] bg-cover rounded-b-md`}
                     style={{backgroundImage: `url(${backgroundImg})`}}>
                     </div>
                 </div>
 
                 <div className="flex flex-col items-center justify-center my-4">
-                    <h1 className={`text-2xl lg:text-3xl text-center text-redFont font-black underline flex-wrap w-[100%]`}>{title}</h1>
+                    <h1 className={`text-3xl text-center font-black underline flex-wrap w-[100%]`}>{title}</h1>
                 </div>
 
-                <div className="flex flex-col items-center justify-center my-6">
-                    <div className="flex items-center justify-center w-[80vw] lg:w-[450px] h-[169px] bg-bgSecondary rounded-md bg-cover"
+                <div className="flex flex-col items-center justify-center my-8">
+                    <div className="flex items-center justify-center w-[90vw] lg:w-[550px] h-[169px] lg:h-[250px]  rounded-md bg-cover"
                     style={{ backgroundImage:`url(${mainObjectiveImg})`}} >
                     </div>
 
                     <div className="flex items-center justify-center">
-                        <h2 className={`bg-transparent md:text-2xl text-redFont font-bold mt-2 text-center w-[90vw] md:w-[80vw] lg:w-[400px]`}>{mainObjectiveText}</h2>
+                        <h2 className={`bg-transparent text-2xl font-bold mt-2 text-center w-[90vw] md:w-[80vw] lg:w-[400px]`}>{mainObjectiveText}</h2>
                     </div>
                 </div>
 
-                <div className="flex items-center justify-between lg:justify-evenly">
+                <div className="flex items-center justify-between lg:justify-evenly my-6">
                     <div>
-                        <div className="flex items-center justify-center w-[173px] h-[216px] bg-bgSecondary rounded-md bg-cover"
+                        <div className="flex items-center justify-center w-[173px] lg:w-[200px] h-[270px] rounded-md bg-cover ml-5 md:ml-0"
                         style={{backgroundImage: `url(${objectiveImg})`}}></div>
                     </div>  
                     <div className="flex items-center justify-center w-[50vw] lg:w-[50%]">
-                        <h2 className={`bg-transparent text-[18px] text-redFont font-bold min-h-[180px] md:min-h-[100px] text-center w-[40vw]`}
+                        <h2 className={`bg-transparent text-[18px] font-bold min-h-[180px] md:min-h-[100px] text-center w-[40vw]`}
                          >{objectiveText}</h2>
                     </div>
                 </div>
@@ -105,7 +105,7 @@ function DreamBoard(){
                         {reasons.map((reason, index) => (
                             <div>
                                 <div className={`flex flex-col items-center mx-6 lg:mx-9 cursor-pointer mt-2`}>
-                                    <button className="w-[60px] h-[60px] rounded-full bg-bgSecondary bg-cover"
+                                    <button className="w-[60px] h-[60px] rounded-full bg-cover"
                                     style={{backgroundImage: `url(${reason.img})`}}
                                     onClick={e => index === 0 ? setModal(!modal) : index === 1 ? setModal1(!modal1) : setModal2(!modal2)}></button>
                                     <h3 className="bg-transparent w-[85px] text-center">{reason.title}</h3>
@@ -119,12 +119,12 @@ function DreamBoard(){
 
                 <div className="flex items-center justify-evenly w-full mt-5">
                         <Link to={'/dashboard'}>
-                            <button className="text-white font-medium w-[180px] h-[40px] bg-redFont rounded-md text-xl hover:bg-lightRed">
+                            <button className="text-white font-medium w-[180px] h-[40px] bg-greenMain hover:bg-[#30b6ad] rounded-md text-xl hover:bg-lightRed">
                                 Back
                             </button>
                         </Link>
                         <button onClick={handleEdit}
-                        className="text-white font-medium w-[180px] h-[40px] bg-redFont rounded-md text-xl hover:bg-lightRed">Edit</button>
+                        className="text-white font-medium w-[180px] h-[40px] bg-greenMain hover:bg-[#30b6ad] rounded-md text-xl hover:bg-lightRed">Edit</button>
                 </div>
 
             </div>
@@ -138,15 +138,15 @@ function DreamBoard(){
 
 function ReasonDetails({img, text, modal}){
     return(
-        <div className={`bg-[#D9AB91] w-[40vw] md:w-[185px] md:min-h-[225px] rounded-md border-redFont border-solid border-2 ${modal ? 'block' : 'hidden'} mx-1 md:mx-4 mt-2`}>
+        <div className={`bg-[#32dace] w-[40vw] md:w-[185px] min-h-[225px] rounded-md border-[#31cac0] border-solid border-2 ${modal ? 'block' : 'hidden'} mx-1 md:mx-4 mt-2 pb-4`}>
             <div className="flex flex-col items-center justify-evenly h-full px-1 py-2 md:px-3" >
                 <div>
-                    <div className={`flex items-center md:my-2 justify-center w-[80px] h-[80px] rounded-full bg-cover border-2 border-redFont`} 
+                    <div className={`flex items-center md:my-2 justify-center w-[80px] h-[80px] rounded-full bg-cover border-2 border-[#1d5f5b]`} 
                     style={{backgroundImage: `url(${img})`}}>
                     </div>
                 </div>
                 <div>
-                    <h3 className={`bg-transparent text-center text-redFont font-bold w-[100%] h-[100px] `}>{text}</h3>
+                    <h3 className={`bg-transparent text-center text-redFont font-bold w-[100%] h-[100px]`}>{text}</h3>
                 </div>
             </div>
         </div>
