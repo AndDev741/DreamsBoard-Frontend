@@ -132,7 +132,7 @@ function Register(){
                                 id="submit"
                                 name="submit"
                                 value="Create account"
-                                className="bg-greenMain hover:bg-greenMain
+                                className="bg-greenMain hover:bg-[#30b6ad]
                                 w-[207px] md:w-[307px] lg:w-[250px] h-[51px] md:h-[70px] lg:h-[60px]
                                 text-white text-xl md:text-3xl font-bold rounded-lg cursor-pointer"/>
                             </div>
