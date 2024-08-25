@@ -3,7 +3,7 @@ import { useDropzone } from 'react-dropzone';
 import editIcon from '../../assets/editIcon.png';
 
 
-function EditPerfil({id, newPerfilImg, newName, newPerfilPhrase, setNewName, setNewPerfilPhrase, setNewPerfilImg}){
+function EditPerfil({newPerfilImg, newName, newPerfilPhrase, setNewName, setNewPerfilPhrase, setNewPerfilImg}){
     const [greeting, setGreeting] = useState('');
 
     const [PerfilImg, setPerfilImg] = useState(newPerfilImg || null);
@@ -44,35 +44,66 @@ function EditPerfil({id, newPerfilImg, newName, newPerfilPhrase, setNewName, set
 
     return(
         <div>
-            <div className='flex items-center justify-between pt-5'>
+            <div className='flex items-center p-5'>
                 <div className="flex flex-col justify-center">
-                    <div className="flex items-center lg:ml-3">
-                        <div {...getRootProps()}
-                        alt='Profile pic'
-                        className="flex items-start justify-end w-[66px] h-[66px] rounded-full bg-cover cursor-pointer px-5"
-                        style={{backgroundImage: PerfilImg ? `url(${PerfilImg})` : ''}} >
-                            <img alt='Edit icon (A pencil)' 
-                            className='w-[20px] h-[20px]' 
-                            src={editIcon} />
-                            <input {...getInputProps()} className="hidden" />
-                        </div>
+                    <div className="flex flex-col items-center lg:ml-3">
                         
-                        <div className="ml-3">
-                            <div className='flex md:flex-nowrap flex-wrap items-start justify-start text-xl text-redFont font-black'>
-                                <p className='md:w-[60%]'>{greeting}</p>
-                                <input className='w-[100%] bg-transparent border-b-2 border-red-500 mt-1'
+                        <div className='md:flex md:items-center justify-center w-[100%]'>
+                            <div {...getRootProps()}
+                            className='flex flex-col items-center cursor-pointer'>
+                                <input {...getInputProps()}
+                                className='hidden' />
+                                <img
+                                alt='Profile pic'
+                                className="flex items-start w-[100px] md:w-[80px] h-[100px] md:h-[80px] rounded-full bg-cover"
+                                src={PerfilImg}
+                                />
+                                <div className='flex'>
+                                    <p className='text-center'>Edit you image</p>
+                                    <img src={editIcon}
+                                    className='w-[20px] h-[20px] ml-1' />
+                                </div>
+                            </div>
+
+                            {/* DESKTOP */}
+                            <div className='hidden md:flex items-center text-xl font-black md:mt-[-20px]'>
+                                <p>{greeting}</p>
+                                <input className='text-[#3A807A] bg-transparent border-b-2 border-greenMain w-[50%] ml-2'
                                 value={newName}
                                 onChange={e => setNewName(e.target.value)} />
+                                <img src={editIcon}
+                                className='w-[20px] h-[20px] ml-1' />
                             </div>
-                            <input className='bg-transparent border-b-2 border-red-500 text-redFont font-medium' 
-                            value={newPerfilPhrase}
-                            onChange={e => setNewPerfilPhrase(e.target.value)}/>
-                            
+                        </div>
+
+                        
+                        <div className='md:hidden text-xl font-black mt-5'>
+                            <p>{greeting}</p>
+                            <br/>
+                            <div className='flex items-center'>
+                                <input className='text-[#3A807A] bg-transparent border-b-2 border-greenMain w-[70%] mt-[-20px]'
+                                value={newName}
+                                onChange={e => setNewName(e.target.value)} />
+                                <img src={editIcon}
+                                className='w-[20px] h-[20px] ml-1' />
+                            </div>
+                        </div>
+
+                        
+
+                        <div className="flex flex-col items-center justify-center mt-5">
+                            <p className='text-xl'>Your perfil phrase:</p>
+                           <div className='flex items-center'>
+                            <input className='bg-transparent border-b-2 border-greenMain text-center text-[24px] font-ligth' 
+                                value={newPerfilPhrase}
+                                onChange={e => setNewPerfilPhrase(e.target.value)}/>
+                                <img src={editIcon}
+                                    className='w-[20px] h-[20px] ml-1' />
+                           </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div className='mt-4 w-full border-solid border-[1px] border-redFont'></div>
         </div>
     
     )
