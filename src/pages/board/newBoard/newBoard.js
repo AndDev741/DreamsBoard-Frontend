@@ -13,7 +13,7 @@ import { useNavigate } from 'react-router-dom';
 function NewBoard() {
     const navigate = useNavigate();
     const userId = useSelector(state => state.login.id);
-    async function veirifyLogin() {
+    async function verifyLogin() {
         try {
             const response = await customAxios.get(`/user/verify/${userId}`);
             if(response.data.success){
@@ -27,7 +27,7 @@ function NewBoard() {
         }
     }
     useEffect( () => {
-        veirifyLogin();
+        verifyLogin();
     }, [])
 
     const edit = useSelector(state => state.newBoard.editMode);

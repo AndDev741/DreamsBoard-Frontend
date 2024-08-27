@@ -15,7 +15,8 @@ function PerfilConfiguration(){
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const id = useSelector(state => state.login.id);
-    async function veirifyLogin() {
+    
+    async function verifyLogin() {
         try {
             const response = await customAxios.get(`/user/verify/${id}`);
             if(response.data.success){
@@ -29,8 +30,8 @@ function PerfilConfiguration(){
         }
     }
     useEffect( () => {
-        veirifyLogin();
-    }, [veirifyLogin])
+        verifyLogin();
+    }, [])
 
     const [error, setError] = useState("");
     const [success, setSuccess] = useState("");
