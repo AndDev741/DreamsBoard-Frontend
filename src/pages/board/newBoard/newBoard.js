@@ -74,65 +74,66 @@ function NewBoard() {
         formData.append('file', file);
         formData.append('upload_preset', 'cf6ccdpv');
         const response = await axios.post('https://api.cloudinary.com/v1_1/drplvqymz/image/upload', formData);
-        return response.data;
+        return response.data.secure_url;
     }
     const handleUpload = async (e) => {
         e.preventDefault();
-        const formData = new FormData();
-        const reasonsData = new FormData();
+        const formData = {
+            userId: userId,
+            title: title,
+            mainObjective_text: mainObjective_text,
+            objective_text: objective_text,
+            reason_title: reasonTitle,
+            background_img: null,
+            mainObjective_img: null,
+            objective_img: null,
+            reasons: []
+        }
         const reasons = [];
-        formData.append('userId', userId);
-        formData.append('title', title);
-        formData.append('mainObjective_text', mainObjective_text);
-        formData.append('objective_text', objective_text);
-        formData.append('reason_title', reasonTitle);
 
         //Upar imagens na nuvem
         try {
             setLoading(true)
             if(background_img) {
                 const backgroundImgResponse = await uploadImageToCloudinary(background_img);
-                formData.append('background_img', backgroundImgResponse.secure_url);
+                formData.background_img = backgroundImgResponse;
             }
             if(mainObjective_img){
                 const mainObjectiveImgResponse = await uploadImageToCloudinary(mainObjective_img);
-                formData.append('mainObjective_img', mainObjectiveImgResponse.secure_url);
+                formData.mainObjective_img = mainObjectiveImgResponse;
             }
             if(objective_img){
                 const objectiveImgResponse = await uploadImageToCloudinary(objective_img);
-                formData.append('objective_img', objectiveImgResponse.secure_url);
+                formData.objective_img = objectiveImgResponse;
             }
             if(reasonImg1){
                 const reasonImg1Response = await uploadImageToCloudinary(reasonImg1);
-                reasons.push({title: reason1, img: reasonImg1Response.secure_url, text: reasonText1})
+                reasons.push({title: reason1, img: reasonImg1Response, text: reasonText1})
             }
             if(reasonImg2){
                 const reasonImg2Response = await uploadImageToCloudinary(reasonImg2);
-                reasons.push({title: reason2, img:reasonImg2Response.secure_url, text: reasonText2});
+                reasons.push({title: reason2, img:reasonImg2Response, text: reasonText2});
             }
             if(reasonImg3){
                 const reasonImg3Response = await uploadImageToCloudinary(reasonImg3);
-                reasons.push({title: reason3, img: reasonImg3Response.secure_url, text: reasonText3});
+                reasons.push({title: reason3, img: reasonImg3Response, text: reasonText3});
             }
+
+            formData.reasons = reasons;
+
         }catch(err){
             console.error(err)
         }
         
         try {
-            if(editMode === true){
-                reasons.forEach((reason, index) => {
-                    formData.append(`${index}[title]`, reason.title);
-                    formData.append(`${index}[img]`, reason.img);
-                    formData.append(`${index}[text]`, reason.text);
-                });
 
+            if(editMode === true){
                 try{
-                    const response = customAxios.put(`http://localhost:8080/dreamboard/${dreamBoardId}`, formData, {
+                    const response = await customAxios.put(`http://localhost:8080/dreamboard/${dreamBoardId}`, formData, {
                     headers: {
-                        'Content-Type': 'multipart/form-data'
+                        'Content-Type': 'application/json'
                     }})
-                    console.log((await response).status);
-                    if((await response).status === 200){
+                    if(response.status === 200){
                         navigate("/dashboard");
                     }
                 }catch(e){
@@ -140,43 +141,18 @@ function NewBoard() {
                     setLoading(false)
                     setError("Error trying do edit DreamBoard, try again!");
                 }
-                
 
             }else {
-
-                const response = customAxios.post('http://localhost:8080/dreamboard', formData, {
-                headers: {
-                    'Content-Type': 'multipart/form-data'
-                }})
-                const dreamboardId = (await response).data;
                 try{
-                    if(dreamboardId != null){
-                        reasonsData.append("dreamboardId", dreamboardId)
-
-                        reasons.forEach((reason, index) => {
-                            reasonsData.append(`${index}[title]`, reason.title);
-                            reasonsData.append(`${index}[img]`, reason.img);
-                            reasonsData.append(`${index}[text]`, reason.text);
-                        });
-
-                        const response = customAxios.post(`http://localhost:8080/dreamboard/reasons`, reasonsData, { 
+                    const response = await customAxios.post('http://localhost:8080/dreamboard', formData, {
                         headers: {
-                            'Content-Type': 'multipart/form-data'
-                        }})
-
-                        if((await response).data.status === "success"){
-                            navigate("/dashboard");
-                        }
+                            'Content-Type': 'application/json'
+                    }})
+                    if(response.status === 200){
+                        navigate("/dashboard");
                     }
-                }catch(err){
-                    console.error(err.data.status);
-                    setLoading(false)
-                    if(err.status === "errorMissing"){
-                        setError("Please, include all the images and text necessaries");
-                    }else{
-                        setError("An error ocurred trying to save the dreamBoard");
-                    }
-                    
+                }catch(e){
+                    console.error(e);
                 }
             }
 
