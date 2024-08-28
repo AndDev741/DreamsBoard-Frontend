@@ -7,6 +7,13 @@ import customAxios from '../../axiosConfig';
 import EditPerfil from "./editPerfil";
 import backIcon from "../../assets/BackIcon.png";
 import perfilIcon from "../../assets/perfilIcon.png";
+import emailIcon from "../../assets/emailIcon.png";
+import editEmailIcon from "../../assets/editEmailIcon.png";
+import passwordIcon from "../../assets/passwordIcon.png";
+import seePassIcon from "../../assets/seePassIcon.png";
+import unSeePassIcon from "../../assets/unSeePassIcon.png";
+import oldPasswordIcon from "../../assets/oldPasswordIcon.png";
+import newPasswordIcon from "../../assets/newPasswordIcon.png";
 import deleteIcon from "../../assets/deleteIcon.png";
 import logoutIcon from "../../assets/logoutIcon.png";
 import { img_linkEnter, nameEnter, perfil_phraseEnter } from "../authentication/loginSlice";
@@ -33,7 +40,8 @@ function PerfilConfiguration(){
         verifyLogin();
     }, [])
 
-    const [error, setError] = useState("");
+    const [emailEditError, setEmailEditError] = useState("");
+    const [passwordEditError, setPasswordEditError] = useState("");
     const [success, setSuccess] = useState("");
     const [deleteModal, setDeleteModal] = useState(false);
 
@@ -46,6 +54,36 @@ function PerfilConfiguration(){
     const [newPerfilPhrase, setNewPerfilPhrase] = useState(perfil_phrase || "Put a nice phrase here!");
     const [newPerfilImg, setNewPerfilImg] = useState(img_link || null);
     const [perfilImg, setPerfilImg] = useState(img_link);
+
+    const [newEmail, setNewEmail] = useState('');
+
+    const [inputType ,setInputType] = useState('password');
+    const [seePassword, setSeePassword] = useState(seePassIcon);
+    const [seePassword2, setSeePassword2] = useState(seePassIcon);
+    const [inputType2 ,setInputType2] = useState('password');
+    
+    const [oldPassword, setOldPassword] = useState('');
+    const [newPassword, setNewPassword] = useState('');
+
+    const handleSeePassword = () => {
+        if(seePassword === seePassIcon){
+            setSeePassword(unSeePassIcon);
+            setInputType("text");
+        }else if (seePassword === unSeePassIcon){
+            setSeePassword(seePassIcon);
+            setInputType("password");
+        }
+    }
+
+    const handleSeePassword2 = () => {
+        if(seePassword2 === seePassIcon){
+            setSeePassword2(unSeePassIcon);
+            setInputType2("text");
+        }else if (seePassword2 === unSeePassIcon){
+            setSeePassword2(seePassIcon);
+            setInputType2("password");
+        }
+    }
 
     const handleLogout = async (e) => {
         e.preventDefault();
@@ -91,15 +129,48 @@ function PerfilConfiguration(){
             dispatch(img_linkEnter(updatedImgLink));
             dispatch(nameEnter(newName));
             dispatch(perfil_phraseEnter(newPerfilPhrase));
-            setError("");
             setSuccess((await response).data.success);
 
         }catch(e){
             console.error("Erro", e);
             setSuccess("");
-            setError("An error ocurred trying to edit, try again");
         }
 
+    }
+
+    const handleEmailEdit = async () => {
+        const editEmailData = {
+            id: id,
+            newEmail: newEmail
+        }
+
+        try{
+            const response = await customAxios.post("/user/editEmail", editEmailData);
+            if(response.data.success){
+                navigate("/");
+            }
+        }catch(e){
+            console.error("Error trying to edit email", e);
+            setEmailEditError(e.response.data.error);
+        }
+    }
+
+    const handlePasswordEdit = async () => {
+        const editPassData = {
+            id: id,
+            oldPass: oldPassword,
+            newPass: newPassword
+        }
+
+        try{
+            const response = await customAxios.post("/user/editPassword", editPassData);
+            if(response.data.success){
+                navigate("/");
+            }
+        }catch(e){
+            console.error("Error trying to edit the password", e);
+            setPasswordEditError(e.response.data.error);
+        }
     }
 
     const handleConfirmDelete = () => {
@@ -123,8 +194,8 @@ function PerfilConfiguration(){
                     className="w-[40px] mr-6 cursor-pointer" />
                 </Link>
             </div>
-            <div className="flex flex-col lg:flex-row lg:justify-evenly items-center">
-                <div className="flex flex-col items-center w-[90vw] lg:w-[45vw] min-h-[300px] border-2 border-greenMain rounded-md">
+            <div className="flex flex-col lg:flex-row lg:flex-wrap lg:justify-evenly items-center lg:items-start">
+                <div className="flex flex-col items-center w-[90vw] lg:w-[45vw] min-h-[310px] border-2 border-greenMain rounded-md">
                     <div className="flex items-center mt-3">
                         <img className="w-[30px] h-[30px] mr-2"
                         src={perfilIcon} />
@@ -136,35 +207,115 @@ function PerfilConfiguration(){
                     className=" text-white font-medium w-[180px] h-[40px] bg-greenMain hover:bg-[#30b6ad] rounded-md text-xl hover:bg-lightRed mb-3">Edit</button>
                 </div>
 
-                <div className="flex flex-col items-center justify-between w-[90vw] lg:w-[25vw] min-h-[300px] border-2 border-greenMain rounded-md mt-4">
-                    <div className="flex items-center mt-3">
-                        <img className="w-[30px] h-[30px] mr-2"
-                        src={logoutIcon} />
-                        <h2 className="text-center text-2xl">Make Logout</h2>
-                    </div>                   
-                    <div className="flex flex-col items-center">
-                        <p className="text-center text-2xl mb-4">You can make login later!</p>
-                        <button onClick={handleLogout}
-                        className="text-white font-medium w-[180px] h-[40px] bg-greenMain hover:bg-[#30b6ad] rounded-md text-xl hover:bg-lightRed mb-3">Logout</button>
-                    </div>
-                </div>
+                <div className="flex flex-col items-center justify-between w-[90vw] lg:w-[25vw] min-h-[310px] border-2 border-greenMain rounded-md mt-4 lg:mt-0">
+                        <div className="flex items-center mt-3">
+                            <img className="w-[30px] h-[30px] mr-2"
+                            src={editEmailIcon} />
+                            <h2 className="text-center text-2xl">Edit Email</h2>
+                        </div>
+                        
+                        <form>
+                            <label htmlFor="email" 
+                            className="flex items-center border-solid border-2 border-greenMain rounded-[6px] hover:border-cyan-600">
+                                <img className='w-[30px] h-[30px] mx-3 cursor-pointer'
+                                src={emailIcon}/>
+                                <input name="email"
+                                value={newEmail}
+                                onChange={(e) => setNewEmail(e.target.value)}
+                                id="email"
+                                type="text"
+                                className="bg-transparent w-[70vw] sm:w-[250px] h-[60px] md:h-[50px] text-[16px] pl-4 focus:outline-none"
+                                placeholder="YourNewEmail@email.com"/>
+                            </label>
+                        </form>   
 
-                <div className="flex flex-col items-center justify-between w-[90vw] lg:w-[25vw] min-h-[300px] border-2 border-greenMain rounded-md mt-4">
-                    <div className="flex items-center mt-3">
-                        <img className="w-[30px] h-[30px] mr-2"
-                        src={deleteIcon} />
-                        <h2 className="text-center text-2xl">Delete account</h2>
-                    </div>   
-                    <div className="flex flex-col items-center">
-                        <p className="text-center text-2xl mb-4">This action cannot be undone!</p>
-                        <button onClick={handleConfirmDelete}
-                        className="text-white font-medium w-[180px] h-[40px] bg-[#CD4D55] hover:bg-[#e26870] rounded-md text-xl hover:bg-lightRed mb-3">Delete</button>
+                        <div className="flex flex-col items-center">
+                            <p className="text-center text-xl mb-4">You gonna be redirected to make login again</p>
+                            <button onClick={handleEmailEdit}
+                            className="text-white font-medium w-[180px] h-[40px] bg-greenMain hover:bg-[#30b6ad] rounded-md text-xl hover:bg-lightRed mb-3">Edit email</button>
+                        </div>
+                    </div>
+
+                    <div className="flex flex-col items-center justify-between w-[90vw] lg:w-[25vw] min-h-[310px] border-2 border-greenMain rounded-md mt-4 lg:mt-0">
+                        <div className="flex items-center mt-3">
+                            <img className="w-[30px] h-[30px] mr-2"
+                            src={passwordIcon} />
+                            <h2 className="text-center text-2xl">Edit password</h2>
+                        </div>   
+                        <form className="mt-2">
+                            <label htmlFor="oldPassword" 
+                            className="flex items-center border-solid border-2 border-greenMain rounded-[6px] hover:border-cyan-600">
+                                <img className='w-[30px] h-[30px] mx-3 cursor-pointer'
+                                src={oldPasswordIcon} />
+                                <input name={"oldPassword"}
+                                value={oldPassword}
+                                onChange={(e) => setOldPassword(e.target.value)}
+                                id="oldPassword"
+                                type={inputType}
+                                placeholder="Your actual password"
+                                className="bg-transparent w-[55vw] sm:w-[100%] h-[60px] md:h-[50px] text-[16px] pl-4 focus:outline-none"
+                                />
+                                <img className='w-[33px] h-[33px] mx-3 cursor-pointer'
+                                src={seePassword}
+                                onClick={handleSeePassword}
+                                />
+                            </label>
+
+                            <label htmlFor="newPassword" 
+                            className="flex items-center border-solid border-2 border-greenMain rounded-[6px] hover:border-cyan-600 mt-3">
+                                <img className='w-[30px] h-[30px] mx-3 cursor-pointer'
+                                src={newPasswordIcon} />
+                                <input name={"newPassword"}
+                                value={newPassword}
+                                onChange={(e) => setNewPassword(e.target.value)}
+                                id="newPassword"
+                                type={inputType2}
+                                placeholder="Your new password"
+                                className="bg-transparent w-[55vw] sm:w-[100%] h-[60px] md:h-[50px] text-[16px] pl-4 focus:outline-none"
+                                />
+                                <img className='w-[33px] h-[33px] mx-3 cursor-pointer'
+                                src={seePassword2}
+                                onClick={handleSeePassword2}
+                                />
+                            </label>
+                        </form>   
+                        <div className="flex flex-col items-center">
+                            <p className="text-center text-xl mb-4">You gonna be redirected to make login again</p>
+                            <button onClick={handlePasswordEdit}
+                            className="text-white font-medium w-[180px] h-[40px] bg-greenMain hover:bg-[#30b6ad] rounded-md text-xl hover:bg-lightRed mb-3">Edit password</button>
+                        </div>
+                    </div>
+                
+                
+                <div className="flex flex-col lg:flex-row lg:justify-end items-center lg:w-[100%] lg:mt-[-30px]">
+                    <div className="flex flex-col items-center justify-between w-[90vw] lg:w-[25vw] min-h-[310px] border-2 border-greenMain rounded-md mt-4 lg:mt-0 lg:mr-[13px]">
+                        <div className="flex items-center mt-3">
+                            <img className="w-[30px] h-[30px] mr-2"
+                            src={logoutIcon} />
+                            <h2 className="text-center text-2xl">Make Logout</h2>
+                        </div>                   
+                        <div className="flex flex-col items-center">
+                            <p className="text-center text-2xl mb-4">You can make login later!</p>
+                            <button onClick={handleLogout}
+                            className="text-white font-medium w-[180px] h-[40px] bg-greenMain hover:bg-[#30b6ad] rounded-md text-xl hover:bg-lightRed mb-3">Logout</button>
+                        </div>
+                    </div>
+
+                    <div className="flex flex-col items-center justify-between w-[90vw] lg:w-[25vw] min-h-[310px] border-2 border-greenMain rounded-md mt-4 lg:mt-0 lg:mr-[13px]">
+                        <div className="flex items-center mt-3">
+                            <img className="w-[30px] h-[30px] mr-2"
+                            src={deleteIcon} />
+                            <h2 className="text-center text-2xl">Delete account</h2>
+                        </div>   
+                        <div className="flex flex-col items-center">
+                            <p className="text-center text-2xl mb-4">This action cannot be undone!</p>
+                            <button onClick={handleConfirmDelete}
+                            className="text-white font-medium w-[180px] h-[40px] bg-[#CD4D55] hover:bg-[#e26870] rounded-md text-xl hover:bg-lightRed mb-3">Delete</button>
+                        </div>
                     </div>
                 </div>
                 <DeleteModal deleteModal={deleteModal} handleConfirmDelete={handleConfirmDelete}/>
             </div>
-
-            
         </div>
     )
 }
