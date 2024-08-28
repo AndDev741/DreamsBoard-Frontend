@@ -137,8 +137,8 @@ function NewBoard() {
                         navigate("/dashboard");
                     }
                 }catch(e){
-                    console.error("Erro ao editar dreamboard", e);
                     setLoading(false)
+                    console.error("Erro ao editar dreamboard", e);
                     setError("Error trying do edit DreamBoard, try again!");
                 }
 
@@ -152,7 +152,15 @@ function NewBoard() {
                         navigate("/dashboard");
                     }
                 }catch(e){
+                    setLoading(false)
                     console.error(e);
+                    if(e.response.data.error === "errorDreamboard"){
+                        setError("Please, include all the images and phrases")
+                    }else if(e.response.data.error){
+                        setError(e.response.data.error);
+                    }else{
+                        setError("An unknown error ocurred");
+                    }
                 }
             }
 
@@ -247,7 +255,7 @@ function NewBoard() {
                             </button>
                         </Link>
                         <button
-                            className="text-white font-bold w-[180px] h-[40px] bg-greenMain hover:bg-[#30b6ad] rounded-md text-xl hover:bg-lightRed"
+                            className={`${reasonImg3 ? "block" : "hidden"} text-white font-bold w-[180px] h-[40px] bg-greenMain hover:bg-[#30b6ad] rounded-md text-xl hover:bg-lightRed`}
                             onClick={handleUpload}
                         >
                             {editMode === true ? 'Edit' : 'Save'}
@@ -260,7 +268,7 @@ function NewBoard() {
                         </button>
                     </div>
                     {loading ? <h1 className="text-3xl text-redFont font-black text-center animate-pulse mt-3">Sending data...</h1> : null}
-                    <p className='text-xl text-center text-red-900 font-semibold my-4'>{error}</p>
+                    <p className='text-2xl text-center text-red-900 font-semibold my-4'>{error}</p>
                 </div>
             </div>
         </div>

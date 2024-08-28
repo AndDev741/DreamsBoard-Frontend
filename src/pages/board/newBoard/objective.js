@@ -23,7 +23,7 @@ function ObjectiveSection({objective_img, setObjective_img, objective_text, setO
     });
 
     return(
-        <div className="flex items-center justify-between lg:justify-evenly">
+        <div className="flex items-center justify-between md:justify-evenly">
             <div>
                 <div {...getRootProps()} 
                 className="flex items-center justify-center w-[173px] lg:w-[200px] h-[270px] bg-[#31cac0] hover:bg-[#41e0d6] rounded-md bg-cover cursor-pointer ml-5 md:ml-0"
