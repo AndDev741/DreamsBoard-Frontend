@@ -35,7 +35,7 @@ function Register(){
             }
         }catch(err){
             console.error(err);
-            setErrorMessage("Email is already in use");
+            setErrorMessage(err.response.data.error);
         }
     }
 
@@ -135,8 +135,9 @@ function Register(){
                                 className="bg-greenMain hover:bg-[#30b6ad]
                                 w-[207px] md:w-[307px] lg:w-[250px] h-[51px] md:h-[70px] lg:h-[60px]
                                 text-white text-xl md:text-3xl font-bold rounded-lg cursor-pointer"/>
-                            </div>
+                            </div>                            
                         </div>
+                        <p className='my-2 text-2xl font-bold text-red-700'>{errorMessage}</p>
                     </form>
                 </div>
                 <div className='flex lg:flex-col items-center justify-between lg:w-[550px] lg:h-[580px] lg:bg-greenMain lg:rounded-l-lg'>

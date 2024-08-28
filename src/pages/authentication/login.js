@@ -28,6 +28,7 @@ function Login(){
             await customAxios.post("http://localhost:8080/logout");      
         }catch(e){
             console.error(e);
+            setErrorMessage(e.response.data.error);
         }
         
         try {
@@ -35,16 +36,17 @@ function Login(){
                 email,
                 password
             });
-            if(response.data.id){
-                dispatch(idEnter(response.data.id));
-                dispatch(img_linkEnter(response.data.img_link));
-                dispatch(nameEnter(response.data.name));
-                dispatch(perfil_phraseEnter(response.data.perfil_phrase));
+            if(response.data.success){
+                dispatch(idEnter(response.data.success.id));
+                dispatch(img_linkEnter(response.data.success.img_link));
+                dispatch(nameEnter(response.data.success.name));
+                dispatch(perfil_phraseEnter(response.data.success.perfil_phrase));
+                setErrorMessage("");
                 navigate("/dashboard");
             }
         } catch (error) {
                 console.error('Erro durante o login: ', error);
-                setErrorMessage("Email or password incorrect");
+                setErrorMessage(error.response.data.error);
             }
         
     }
@@ -136,7 +138,7 @@ function Login(){
                             </div>
                         </div>
 
-                        <p className='mt-2 text-xl font-bold text-red-800 text-center'>{errorMessage}</p>
+                        <p className='mt-2 text-2xl font-bold text-red-800 text-center'>{errorMessage}</p>
                     </form>
                 </div>
 

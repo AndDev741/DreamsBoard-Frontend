@@ -42,6 +42,7 @@ function PerfilConfiguration(){
 
     const [emailEditError, setEmailEditError] = useState("");
     const [passwordEditError, setPasswordEditError] = useState("");
+    const [perfilEditError, setPerfilEditError] = useState("");
     const [success, setSuccess] = useState("");
     const [deleteModal, setDeleteModal] = useState(false);
 
@@ -129,11 +130,14 @@ function PerfilConfiguration(){
             dispatch(img_linkEnter(updatedImgLink));
             dispatch(nameEnter(newName));
             dispatch(perfil_phraseEnter(newPerfilPhrase));
+            setSuccess("")
+            setPerfilEditError("");
             setSuccess((await response).data.success);
 
         }catch(e){
             console.error("Erro", e);
             setSuccess("");
+            setPerfilEditError(e.response.data.error);
         }
 
     }
@@ -204,7 +208,9 @@ function PerfilConfiguration(){
                     <EditPerfil newPerfilImg={newPerfilImg} newName={newName} newPerfilPhrase={newPerfilPhrase} setNewName={setNewName} setNewPerfilPhrase={setNewPerfilPhrase} setNewPerfilImg={setNewPerfilImg}/>
 
                     <button onClick={handleEdit}
-                    className=" text-white font-medium w-[180px] h-[40px] bg-greenMain hover:bg-[#30b6ad] rounded-md text-xl hover:bg-lightRed mb-3">Edit</button>
+                    className=" text-white font-medium w-[180px] h-[40px] bg-greenMain hover:bg-[#30b6ad] rounded-md text-xl hover:bg-lightRed">Edit</button>
+                    <p className="text-xl text-blue-700 my-2">{success}</p>
+                    <p className="text-xl text-red-700">{perfilEditError}</p>
                 </div>
 
                 <div className="flex flex-col items-center justify-between w-[90vw] lg:w-[25vw] min-h-[310px] border-2 border-greenMain rounded-md mt-4 lg:mt-0">
@@ -233,6 +239,7 @@ function PerfilConfiguration(){
                             <p className="text-center text-xl mb-4">You gonna be redirected to make login again</p>
                             <button onClick={handleEmailEdit}
                             className="text-white font-medium w-[180px] h-[40px] bg-greenMain hover:bg-[#30b6ad] rounded-md text-xl hover:bg-lightRed mb-3">Edit email</button>
+                            <p className="text-xl text-red-700">{emailEditError}</p>
                         </div>
                     </div>
 
@@ -283,11 +290,12 @@ function PerfilConfiguration(){
                             <p className="text-center text-xl mb-4">You gonna be redirected to make login again</p>
                             <button onClick={handlePasswordEdit}
                             className="text-white font-medium w-[180px] h-[40px] bg-greenMain hover:bg-[#30b6ad] rounded-md text-xl hover:bg-lightRed mb-3">Edit password</button>
+                            <p className="text-xl text-red-700">{passwordEditError}</p>
                         </div>
                     </div>
                 
                 
-                <div className="flex flex-col lg:flex-row lg:justify-end items-center lg:w-[100%] lg:mt-[-30px]">
+                <div className="flex flex-col lg:flex-row lg:justify-end items-center lg:w-[100%] lg:mt-[-40px]">
                     <div className="flex flex-col items-center justify-between w-[90vw] lg:w-[25vw] min-h-[310px] border-2 border-greenMain rounded-md mt-4 lg:mt-0 lg:mr-[13px]">
                         <div className="flex items-center mt-3">
                             <img className="w-[30px] h-[30px] mr-2"

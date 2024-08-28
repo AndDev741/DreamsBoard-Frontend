@@ -59,7 +59,7 @@ function EditPerfil({newPerfilImg, newName, newPerfilPhrase, setNewName, setNewP
                                 src={PerfilImg}
                                 />
                                 <div className='flex'>
-                                    <p className='text-center'>Edit you image</p>
+                                    <p className='text-center'>Edit your image</p>
                                     <img src={editIcon}
                                     className='w-[20px] h-[20px] ml-1' />
                                 </div>
