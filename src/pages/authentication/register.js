@@ -79,7 +79,8 @@ function Register(){
                             <label htmlFor="name" 
                             className="flex items-center border-solid border-2 border-greenMain rounded-[6px] hover:border-cyan-600">
                                 <img className='w-[33px] h-[33px] mx-3 cursor-pointer'
-                                src={nameIcon}/>
+                                src={nameIcon}
+                                alt='person icon'/>
                                 <input name="name"
                                 value={name}
                                 onChange={(e) => setName(e.target.value)}
@@ -94,7 +95,8 @@ function Register(){
                             <label htmlFor="email" 
                             className="flex items-center border-solid border-2 border-greenMain rounded-[6px] hover:border-cyan-600">
                                 <img className='w-[33px] h-[33px] mx-3 cursor-pointer'
-                                src={emailIcon}/>
+                                src={emailIcon}
+                                alt='letter email icon'/>
                                 <input name="email"
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
@@ -109,7 +111,8 @@ function Register(){
                             <label htmlFor="password" 
                             className="flex items-center border-solid border-2 border-greenMain rounded-[6px] hover:border-cyan-600">
                                 <img className='w-[33px] h-[33px] mx-3 cursor-pointer'
-                                src={passwordIcon} />
+                                src={passwordIcon} 
+                                alt='padlock icon'/>
                                 <input name="password"
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
@@ -120,6 +123,7 @@ function Register(){
                                 />
                                 <img className='w-[33px] h-[33px] mx-3 cursor-pointer'
                                 src={seePassword}
+                                alt='eye icon to see password'
                                 onClick={handleSeePassword}
                                 />
                             </label>

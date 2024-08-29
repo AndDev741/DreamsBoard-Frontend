@@ -2,12 +2,10 @@ import { useState, useCallback } from "react";
 import { useDropzone } from 'react-dropzone';
 
 function MainSection({background_img, setBackground_img}){
-    const [file, setFile] = useState();
     const [backgroundImage, setBackgroundImage] = useState(background_img || '');
 
     const onDrop = useCallback((acceptedFiles) => {
         const selectedFile = acceptedFiles[0];
-        setFile(selectedFile);
         setBackground_img(selectedFile)
 
         const reader = new FileReader();

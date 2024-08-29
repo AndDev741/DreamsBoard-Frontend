@@ -1,5 +1,5 @@
 import { idEnter } from "../board/dreamBoardSlice";
-import { useDispatch, UseDispatch } from "react-redux";
+import { useDispatch} from "react-redux";
 import { useNavigate } from "react-router";
 import { Link } from "react-router-dom";
 

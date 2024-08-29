@@ -60,7 +60,7 @@ function EditPerfil({newPerfilImg, newName, newPerfilPhrase, setNewName, setNewP
                                 />
                                 <div className='flex'>
                                     <p className='text-center'>Edit your image</p>
-                                    <img src={editIcon}
+                                    <img src={editIcon} alt='Pencil to edit - icon'
                                     className='w-[20px] h-[20px] ml-1' />
                                 </div>
                             </div>
@@ -71,7 +71,7 @@ function EditPerfil({newPerfilImg, newName, newPerfilPhrase, setNewName, setNewP
                                 <input className='text-[#3A807A] bg-transparent border-b-2 border-greenMain w-[50%] ml-2'
                                 value={newName}
                                 onChange={e => setNewName(e.target.value)} />
-                                <img src={editIcon}
+                                <img src={editIcon} alt='Pencil to edit - icon'
                                 className='w-[20px] h-[20px] ml-1' />
                             </div>
                         </div>
@@ -84,7 +84,7 @@ function EditPerfil({newPerfilImg, newName, newPerfilPhrase, setNewName, setNewP
                                 <input className='text-[#3A807A] bg-transparent border-b-2 border-greenMain w-[70%] mt-[-20px]'
                                 value={newName}
                                 onChange={e => setNewName(e.target.value)} />
-                                <img src={editIcon}
+                                <img src={editIcon} alt='Pencil to edit - icon'
                                 className='w-[20px] h-[20px] ml-1' />
                             </div>
                         </div>
@@ -97,7 +97,7 @@ function EditPerfil({newPerfilImg, newName, newPerfilPhrase, setNewName, setNewP
                             <input className='bg-transparent border-b-2 border-greenMain text-center text-[24px] font-ligth' 
                                 value={newPerfilPhrase}
                                 onChange={e => setNewPerfilPhrase(e.target.value)}/>
-                                <img src={editIcon}
+                                <img src={editIcon} alt='Pencil to edit - icon'
                                     className='w-[20px] h-[20px] ml-1' />
                            </div>
                         </div>

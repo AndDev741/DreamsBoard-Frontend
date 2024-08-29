@@ -54,7 +54,6 @@ function PerfilConfiguration(){
     const [newName, setNewName] = useState(name || "Put your name here!");
     const [newPerfilPhrase, setNewPerfilPhrase] = useState(perfil_phrase || "Put a nice phrase here!");
     const [newPerfilImg, setNewPerfilImg] = useState(img_link || null);
-    const [perfilImg, setPerfilImg] = useState(img_link);
 
     const [newEmail, setNewEmail] = useState('');
 
@@ -110,12 +109,10 @@ function PerfilConfiguration(){
     const handleEdit = async (e) => {
         e.preventDefault();
         let updatedImgLink = img_link;
-        console.log(updatedImgLink)
 
         try{
             if(newPerfilImg && newPerfilImg !== img_link){
                 updatedImgLink = await uploadImageToCloudinary(newPerfilImg)
-                setPerfilImg(updatedImgLink);
             }
 
             const editData = {
@@ -194,15 +191,15 @@ function PerfilConfiguration(){
             <div className="flex items-center justify-between">
                 <h1 className="text-[32px] font-medium m-4">Configuration</h1>
                 <Link to={"/dashboard"}>
-                    <img src={backIcon}
+                    <img src={backIcon} alt="Arrow pointing to the left"
                     className="w-[40px] mr-6 cursor-pointer" />
                 </Link>
             </div>
             <div className="flex flex-col lg:flex-row lg:flex-wrap lg:justify-evenly items-center lg:items-start">
                 <div className="flex flex-col items-center w-[90vw] lg:w-[45vw] min-h-[310px] border-2 border-greenMain rounded-md">
                     <div className="flex items-center mt-3">
-                        <img className="w-[30px] h-[30px] mr-2"
-                        src={perfilIcon} />
+                        <img className="w-[30px] h-[30px] mr-2" 
+                        src={perfilIcon} alt="Perfil icon"/>
                         <h2 className="text-2xl">Edit your perfil</h2>
                     </div>
                     <EditPerfil newPerfilImg={newPerfilImg} newName={newName} newPerfilPhrase={newPerfilPhrase} setNewName={setNewName} setNewPerfilPhrase={setNewPerfilPhrase} setNewPerfilImg={setNewPerfilImg}/>
@@ -216,7 +213,7 @@ function PerfilConfiguration(){
                 <div className="flex flex-col items-center justify-between w-[90vw] lg:w-[25vw] min-h-[310px] border-2 border-greenMain rounded-md mt-4 lg:mt-0">
                         <div className="flex items-center mt-3">
                             <img className="w-[30px] h-[30px] mr-2"
-                            src={editEmailIcon} />
+                            src={editEmailIcon} alt="Letter email icon" />
                             <h2 className="text-center text-2xl">Edit Email</h2>
                         </div>
                         
@@ -224,7 +221,7 @@ function PerfilConfiguration(){
                             <label htmlFor="email" 
                             className="flex items-center border-solid border-2 border-greenMain rounded-[6px] hover:border-cyan-600">
                                 <img className='w-[30px] h-[30px] mx-3 cursor-pointer'
-                                src={emailIcon}/>
+                                src={emailIcon} alt="Letter email icon"/>
                                 <input name="email"
                                 value={newEmail}
                                 onChange={(e) => setNewEmail(e.target.value)}
@@ -246,14 +243,14 @@ function PerfilConfiguration(){
                     <div className="flex flex-col items-center justify-between w-[90vw] lg:w-[25vw] min-h-[310px] border-2 border-greenMain rounded-md mt-4 lg:mt-0">
                         <div className="flex items-center mt-3">
                             <img className="w-[30px] h-[30px] mr-2"
-                            src={passwordIcon} />
+                            src={passwordIcon} alt="padlock icon"/>
                             <h2 className="text-center text-2xl">Edit password</h2>
                         </div>   
                         <form className="mt-2">
                             <label htmlFor="oldPassword" 
                             className="flex items-center border-solid border-2 border-greenMain rounded-[6px] hover:border-cyan-600">
                                 <img className='w-[30px] h-[30px] mx-3 cursor-pointer'
-                                src={oldPasswordIcon} />
+                                src={oldPasswordIcon} alt="padlock icon"/>
                                 <input name={"oldPassword"}
                                 value={oldPassword}
                                 onChange={(e) => setOldPassword(e.target.value)}
@@ -263,7 +260,7 @@ function PerfilConfiguration(){
                                 className="bg-transparent w-[55vw] sm:w-[100%] h-[60px] md:h-[50px] text-[16px] pl-4 focus:outline-none"
                                 />
                                 <img className='w-[33px] h-[33px] mx-3 cursor-pointer'
-                                src={seePassword}
+                                src={seePassword} alt="eye icon to see password"
                                 onClick={handleSeePassword}
                                 />
                             </label>
@@ -271,7 +268,7 @@ function PerfilConfiguration(){
                             <label htmlFor="newPassword" 
                             className="flex items-center border-solid border-2 border-greenMain rounded-[6px] hover:border-cyan-600 mt-3">
                                 <img className='w-[30px] h-[30px] mx-3 cursor-pointer'
-                                src={newPasswordIcon} />
+                                src={newPasswordIcon} alt="padlock icon"/>
                                 <input name={"newPassword"}
                                 value={newPassword}
                                 onChange={(e) => setNewPassword(e.target.value)}
@@ -281,7 +278,7 @@ function PerfilConfiguration(){
                                 className="bg-transparent w-[55vw] sm:w-[100%] h-[60px] md:h-[50px] text-[16px] pl-4 focus:outline-none"
                                 />
                                 <img className='w-[33px] h-[33px] mx-3 cursor-pointer'
-                                src={seePassword2}
+                                src={seePassword2} alt="eye icon to see password"
                                 onClick={handleSeePassword2}
                                 />
                             </label>
@@ -299,7 +296,7 @@ function PerfilConfiguration(){
                     <div className="flex flex-col items-center justify-between w-[90vw] lg:w-[25vw] min-h-[310px] border-2 border-greenMain rounded-md mt-4 lg:mt-0 lg:mr-[13px]">
                         <div className="flex items-center mt-3">
                             <img className="w-[30px] h-[30px] mr-2"
-                            src={logoutIcon} />
+                            src={logoutIcon} alt="open door icon"/>
                             <h2 className="text-center text-2xl">Make Logout</h2>
                         </div>                   
                         <div className="flex flex-col items-center">
@@ -312,7 +309,7 @@ function PerfilConfiguration(){
                     <div className="flex flex-col items-center justify-between w-[90vw] lg:w-[25vw] min-h-[310px] border-2 border-greenMain rounded-md mt-4 lg:mt-0 lg:mr-[13px]">
                         <div className="flex items-center mt-3">
                             <img className="w-[30px] h-[30px] mr-2"
-                            src={deleteIcon} />
+                            src={deleteIcon} alt="trash icon"/>
                             <h2 className="text-center text-2xl">Delete account</h2>
                         </div>   
                         <div className="flex flex-col items-center">

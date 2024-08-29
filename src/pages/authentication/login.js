@@ -4,7 +4,6 @@ import unSeePassIcon from '../../assets/unSeePassIcon.png';
 import seePassIcon from '../../assets/seePassIcon.png';
 import passwordIcon from '../../assets/passwordIcon.png';
 import customAxios from '../../axiosConfig';
-import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
 import {useState} from 'react'
 import { useDispatch, useSelector } from 'react-redux';
@@ -92,7 +91,8 @@ function Login(){
                             <label htmlFor="email" 
                             className="flex items-center border-solid border-2 border-greenMain rounded-[6px] hover:border-cyan-600">
                                 <img className='w-[33px] h-[33px] mx-3 cursor-pointer'
-                                src={emailIcon}/>
+                                src={emailIcon}
+                                alt='Letter icon'/>
                                 <input name="email"
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
@@ -106,7 +106,8 @@ function Login(){
                             <label htmlFor="password" 
                             className="flex items-center border-solid border-2 border-greenMain rounded-[6px] hover:border-cyan-600">
                                 <img className='w-[33px] h-[33px] mx-3 cursor-pointer'
-                                src={passwordIcon} />
+                                src={passwordIcon} 
+                                alt='padlock icon'/>
                                 <input name={"password"}
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
@@ -117,6 +118,7 @@ function Login(){
                                 />
                                 <img className='w-[33px] h-[33px] mx-3 cursor-pointer'
                                 src={seePassword}
+                                alt="Eye button to see password"
                                 onClick={handleSeePassword}
                                 />
                             </label>
