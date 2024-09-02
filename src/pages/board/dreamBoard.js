@@ -2,7 +2,7 @@ import customAxios from '../../axiosConfig';
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link, useNavigate } from 'react-router-dom';
-import { editModeEnter, userIdEnter, background_imgEnter, titleEnter, mainObjective_imgEnter, mainObjective_textEnter, objective_imgEnter, objective_textEnter, reasonTitleEnter, reasonsEnter, dreamBoardIdEnter } from './newBoard/newBoardSlice';
+import { userIdEnter, background_imgEnter, titleEnter, mainObjective_imgEnter, mainObjective_textEnter, objective_imgEnter, objective_textEnter, reasonTitleEnter, reasonsEnter, dreamBoardIdEnter } from './editBoard/editBoardSlice';
 
 function DreamBoard(){
     const navigate = useNavigate();
@@ -48,7 +48,6 @@ function DreamBoard(){
 
     const handleEdit = () => {
         dispatch(dreamBoardIdEnter(dreamboardId));
-        dispatch(editModeEnter(true));
         dispatch(userIdEnter(userId));
         dispatch(background_imgEnter(backgroundImg));
         dispatch(titleEnter(title));
@@ -59,7 +58,7 @@ function DreamBoard(){
         dispatch(reasonTitleEnter(reasonTitle));
         dispatch(reasonsEnter(reasons));
 
-        navigate("/newBoard");
+        navigate("/editBoard");
     }
 
     return(

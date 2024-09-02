@@ -1,11 +1,11 @@
 import { combineReducers } from '@reduxjs/toolkit'
 import loginSlice from './pages/authentication/loginSlice';
 import dreamBoardSlice from './pages/board/dreamBoardSlice';
-import newBoardSlice from './pages/board/newBoard/newBoardSlice';
+import editBoardSlice from './pages/board/editBoard/editBoardSlice';
 
 const rootReducer = combineReducers({
     login: loginSlice,
-    newBoard: newBoardSlice,
+    editBoard: editBoardSlice,
     dreamBoard: dreamBoardSlice
 });
 

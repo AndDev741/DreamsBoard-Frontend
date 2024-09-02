@@ -25,7 +25,6 @@ function loadState(){
 
 const initialState = loadState() || {
     dreamBoardId: null,
-    editMode: false,
     userId: null,
     background_img : null,
     title : '',
@@ -37,7 +36,7 @@ const initialState = loadState() || {
     reasons:[],
 }
 
-const newBoardSlice = createSlice({
+const editBoardSlice = createSlice({
     name: 'newBoard',
     initialState,
     reducers: {
@@ -45,11 +44,6 @@ const newBoardSlice = createSlice({
             const dreamBoardId = action.payload;
             saveState(state);
             return {...state, dreamBoardId};
-        },
-        editModeEnter(state, action){
-            const editMode = action.payload;
-            saveState(state);
-            return {...state, editMode};
         },
         userIdEnter(state, action){
             const userId = action.payload;
@@ -100,6 +94,6 @@ const newBoardSlice = createSlice({
     }
 })
 
-export const {dreamBoardIdEnter ,editModeEnter, userIdEnter, background_imgEnter, titleEnter, mainObjective_imgEnter, mainObjective_textEnter, objective_imgEnter, objective_textEnter, reasonTitleEnter, reasonsEnter} = newBoardSlice.actions;
+export const {dreamBoardIdEnter , userIdEnter, background_imgEnter, titleEnter, mainObjective_imgEnter, mainObjective_textEnter, objective_imgEnter, objective_textEnter, reasonTitleEnter, reasonsEnter} = editBoardSlice.actions;
 
-export default newBoardSlice.reducer;
+export default editBoardSlice.reducer;
