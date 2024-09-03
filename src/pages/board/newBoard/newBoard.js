@@ -59,7 +59,7 @@ function NewBoard() {
         formData.append('file', file);
         formData.append('upload_preset', 'cf6ccdpv');
         const response = await axios.post('https://api.cloudinary.com/v1_1/drplvqymz/image/upload', formData);
-        return response.data.secure_url;
+        return response.data;
     }
     const handleUpload = async (e) => {
         e.preventDefault();
@@ -70,8 +70,11 @@ function NewBoard() {
             objective_text: objective_text,
             reason_title: reasonTitle,
             background_img: null,
+            background_img_id: null,
             mainObjective_img: null,
+            mainObjective_img_id: null,
             objective_img: null,
+            objective_img_id: null,
             reasons: []
         }
         const reasons = [];
@@ -81,31 +84,34 @@ function NewBoard() {
             setLoading(true)
             if(background_img) {
                 const backgroundImgResponse = await uploadImageToCloudinary(background_img);
-                formData.background_img = backgroundImgResponse;
+                formData.background_img = backgroundImgResponse.secure_url;
+                formData.background_img_id = backgroundImgResponse.public_id;
             }
             if(mainObjective_img){
                 const mainObjectiveImgResponse = await uploadImageToCloudinary(mainObjective_img);
-                formData.mainObjective_img = mainObjectiveImgResponse;
+                formData.mainObjective_img = mainObjectiveImgResponse.secure_url;
+                formData.mainObjective_img_id = mainObjectiveImgResponse.public_id;
             }
 
             if(objective_img){
                 const objectiveImgResponse = await uploadImageToCloudinary(objective_img);
-                formData.objective_img = objectiveImgResponse;
+                formData.objective_img = objectiveImgResponse.secure_url;
+                formData.objective_img_id = objectiveImgResponse.public_id;
             }
 
             if(reasonImg1){
                 const reasonImg1Response = await uploadImageToCloudinary(reasonImg1);
-                reasons.push({title: reason1, img: reasonImg1Response, text: reasonText1})
+                reasons.push({title: reason1, img: reasonImg1Response.secure_url, img_id: reasonImg1Response.public_id,text: reasonText1});
             }
 
             if(reasonImg2 ){
                 const reasonImg2Response = await uploadImageToCloudinary(reasonImg2);
-                reasons.push({title: reason2, img:reasonImg2Response, text: reasonText2});
+                reasons.push({title: reason2, img:reasonImg2Response.secure_url, img_id: reasonImg2Response.public_id,text: reasonText2});
             }
 
             if(reasonImg3){
                 const reasonImg3Response = await uploadImageToCloudinary(reasonImg3);
-                reasons.push({title: reason3, img: reasonImg3Response, text: reasonText3});
+                reasons.push({title: reason3, img: reasonImg3Response.secure_url, img_id: reasonImg3Response.public_id,text: reasonText3});
             }
             formData.reasons = reasons;
 

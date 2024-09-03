@@ -27,17 +27,20 @@ const initialState = loadState() || {
     dreamBoardId: null,
     userId: null,
     background_img : null,
+    background_img_id : null,
     title : '',
     mainObjective_img : null,
+    mainObjective_img_id : null,
     mainObjective_textEnter : '',
     objective_img: null,
+    objective_img_id: null,
     objective_text: '',
     reasonTitle: '',
     reasons:[],
 }
 
 const editBoardSlice = createSlice({
-    name: 'newBoard',
+    name: 'editBoard',
     initialState,
     reducers: {
         dreamBoardIdEnter(state, action){
@@ -55,6 +58,11 @@ const editBoardSlice = createSlice({
             saveState(state);
             return {...state, background_img}
         },
+        background_img_idEnter(state, action){
+            const background_img_id = action.payload;
+            saveState(state);
+            return {...state, background_img_id};
+        },
         titleEnter(state, action){
             const title = action.payload;
             saveState(state);
@@ -65,6 +73,11 @@ const editBoardSlice = createSlice({
             saveState(state);
             return {...state, mainObjective_img}
         },
+        mainObjective_img_idEnter(state, action){
+            const mainObjective_img_id = action.payload;
+            saveState(state);
+            return {...state, mainObjective_img_id}
+        },
         mainObjective_textEnter(state, action){
             const mainObjective_text = action.payload;
             saveState(state);
@@ -74,6 +87,11 @@ const editBoardSlice = createSlice({
             const objective_img = action.payload;
             saveState(state);
             return {...state, objective_img};
+        },
+        objective_img_idEnter(state, action){
+            const objective_img_id = action.payload;
+            saveState(state);
+            return {...state, objective_img_id};
         },
         objective_textEnter(state, action){
             const objective_text = action.payload;
@@ -94,6 +112,6 @@ const editBoardSlice = createSlice({
     }
 })
 
-export const {dreamBoardIdEnter , userIdEnter, background_imgEnter, titleEnter, mainObjective_imgEnter, mainObjective_textEnter, objective_imgEnter, objective_textEnter, reasonTitleEnter, reasonsEnter} = editBoardSlice.actions;
+export const {dreamBoardIdEnter , userIdEnter, background_imgEnter, background_img_idEnter,titleEnter, mainObjective_imgEnter, mainObjective_img_idEnter,mainObjective_textEnter, objective_imgEnter, objective_img_idEnter,objective_textEnter, reasonTitleEnter, reasonsEnter} = editBoardSlice.actions;
 
 export default editBoardSlice.reducer;

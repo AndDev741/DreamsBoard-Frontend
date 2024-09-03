@@ -2,7 +2,7 @@ import customAxios from '../../axiosConfig';
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link, useNavigate } from 'react-router-dom';
-import { userIdEnter, background_imgEnter, titleEnter, mainObjective_imgEnter, mainObjective_textEnter, objective_imgEnter, objective_textEnter, reasonTitleEnter, reasonsEnter, dreamBoardIdEnter } from './editBoard/editBoardSlice';
+import { dreamBoardIdEnter , userIdEnter, background_imgEnter, background_img_idEnter,titleEnter, mainObjective_imgEnter, mainObjective_img_idEnter,mainObjective_textEnter, objective_imgEnter, objective_img_idEnter,objective_textEnter, reasonTitleEnter, reasonsEnter } from './editBoard/editBoardSlice';
 
 function DreamBoard(){
     const navigate = useNavigate();
@@ -12,9 +12,12 @@ function DreamBoard(){
     const userId = useSelector(state => state.login.id);
 
     const [backgroundImg, setBackgroundImg] = useState('');
+    const [backgroundImg_id, setBackgroundImg_id] = useState(null);
     const [mainObjectiveImg, setMainObjectiveImg] = useState('');
+    const [mainObjectiveImg_id, setMainObjectiveImg_id] = useState(null);
     const [mainObjectiveText, setMainObjectiveText] = useState('');
     const [objectiveImg, setObjectiveImg] = useState('');
+    const [objectiveImg_id, setObjectiveImg_id] = useState(null);
     const [objectiveText, setObjectiveText] = useState('');
     const [reasonTitle, setReasonTitle] = useState('');
     const [reasons, setReasons] = useState([]);
@@ -29,15 +32,18 @@ function DreamBoard(){
     useEffect(() => {
             async function getDreamBoard() {
                 try{
-                    const response = customAxios.get(`http://localhost:8080/dreamboard/getDreamBoard/${dreamboardId}`);
-                    setBackgroundImg((await response).data.background_img);
-                    setMainObjectiveImg((await response).data.mainObjectiveImg);
-                    setMainObjectiveText((await response).data.mainObjective_text);
-                    setObjectiveImg((await response).data.objective_img);
-                    setObjectiveText((await response).data.objective_text);
-                    setReasonTitle((await response).data.reason_title);
-                    setReasons((await response).data.reasons);
-                    setTitle((await response).data.title);
+                    const response = await customAxios.get(`http://localhost:8080/dreamboard/getDreamBoard/${dreamboardId}`);
+                    setBackgroundImg((response).data.background_img);
+                    setBackgroundImg_id((response).data.background_img_id);
+                    setMainObjectiveImg((response).data.mainObjectiveImg);
+                    setMainObjectiveImg_id((response).data.mainObjectiveImg_id);
+                    setMainObjectiveText((response).data.mainObjective_text);
+                    setObjectiveImg((response).data.objective_img);
+                    setObjectiveImg_id((response).data.objective_img_id);
+                    setObjectiveText((response).data.objective_text);
+                    setReasonTitle((response).data.reason_title);
+                    setReasons((response).data.reasons);
+                    setTitle((response).data.title);
                     setLoading(false);
                 }catch (err){
                     navigate("/");
@@ -50,10 +56,13 @@ function DreamBoard(){
         dispatch(dreamBoardIdEnter(dreamboardId));
         dispatch(userIdEnter(userId));
         dispatch(background_imgEnter(backgroundImg));
+        dispatch(background_img_idEnter(backgroundImg_id));
         dispatch(titleEnter(title));
         dispatch(mainObjective_imgEnter(mainObjectiveImg));
+        dispatch(mainObjective_img_idEnter(mainObjectiveImg_id));
         dispatch(mainObjective_textEnter(mainObjectiveText));
         dispatch(objective_imgEnter(objectiveImg));
+        dispatch(objective_img_idEnter(objectiveImg_id));
         dispatch(objective_textEnter(objectiveText));
         dispatch(reasonTitleEnter(reasonTitle));
         dispatch(reasonsEnter(reasons));

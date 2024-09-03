@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Form, Link } from 'react-router-dom';
 import customAxios from '../../../axiosConfig';
 import axios from 'axios';
-import {userIdEnter, background_imgEnter, titleEnter, mainObjective_imgEnter, mainObjective_textEnter, objective_imgEnter, objective_textEnter, reasonTitleEnter, reasonsEnter} from './editBoard';
+import CryptoJS from 'crypto-js';
 import MainSection from './mainSection';
 import MainObjectiveSection from './mainObjectiveSection';
 import ObjectiveSection from './objective';
@@ -32,18 +32,21 @@ function EditBoard() {
     const dreamBoardId = useSelector(state => state.editBoard.dreamBoardId);
 
     const editBackground_img = useSelector(state => state.editBoard.background_img);
+    const editBackground_img_id = useSelector(state => state.editBoard.background_img_id);
     const [background_img, setBackground_img] = useState(editBackground_img || null);
 
     const editTitle = useSelector(state => state.editBoard.title);
     const [title, setTitle] = useState(editTitle);
 
     const editMainObjective_img = useSelector(state => state.editBoard.mainObjective_img);
+    const editMainObjective_img_id = useSelector(state => state.editBoard.mainObjective_img_id);
     const [mainObjective_img, setMainObjective_img] = useState(editMainObjective_img);
 
     const editMainObjective_text = useSelector(state => state.editBoard.mainObjective_text);
     const [mainObjective_text, setMainObjective_text] = useState(editMainObjective_text);
 
     const editObjective_img = useSelector(state => state.editBoard.objective_img);
+    const editObjective_img_id = useSelector(state => state.editBoard.objective_img_id);
     const [objective_img, setObjective_img] = useState(editObjective_img);
 
     const editObjective_text = useSelector(state => state.editBoard.objective_text);
@@ -56,14 +59,17 @@ function EditBoard() {
 
     const [reason1, setReason1] = useState(editReasons[0].title);
     const [reasonImg1, setReasonImg1] = useState(editReasons[0].img);
+    const reasonImg1_id = editReasons[0].img_id;
     const [reasonText1, setReasonText1] = useState(editReasons[0].text);
 
     const [reason2, setReason2] = useState(editReasons[1].title);
     const [reasonImg2, setReasonImg2] = useState(editReasons[1].img);
+    const reasonImg2_id = editReasons[1].img_id;
     const [reasonText2, setReasonText2] = useState(editReasons[1].text);
 
     const [reason3, setReason3] = useState(editReasons[2].title);
     const [reasonImg3, setReasonImg3] = useState(editReasons[2].img);
+    const reasonImg3_id = editReasons[2].img_id;
     const [reasonText3, setReasonText3] = useState(editReasons[2].text);
 
     const [error, setError] = useState("");
@@ -74,7 +80,27 @@ function EditBoard() {
         formData.append('file', file);
         formData.append('upload_preset', 'cf6ccdpv');
         const response = await axios.post('https://api.cloudinary.com/v1_1/drplvqymz/image/upload', formData);
-        return response.data.secure_url;
+        return response.data;
+    }
+
+    const deleteImageFromCloudinary = async (publicId) => {
+        const timestamp = Math.floor(Date.now() / 1000);
+        const apiKey = "886949552998293"
+        const apiSecret = "wES5lpt-WcVQCo6N7jizWDXGq7E"
+
+        const signatureString = `public_id=${publicId}&timestamp=${timestamp}${apiSecret}`;
+
+        const signature = CryptoJS.SHA1(signatureString).toString();
+
+        const formData = new FormData();
+        formData.append('public_id', publicId);
+        formData.append('api_key', apiKey);
+        formData.append('timestamp', timestamp);
+        formData.append('signature', signature);
+
+    
+        const response = await axios.post("https://api.cloudinary.com/v1_1/drplvqymz/image/destroy", formData);
+        return response.data;
     }
     
     const handleUpload = async (e) => {
@@ -86,8 +112,11 @@ function EditBoard() {
             objective_text: objective_text,
             reason_title: reasonTitle,
             background_img: null,
+            background_img_id: null,
             mainObjective_img: null,
+            mainObjective_img_id: null,
             objective_img: null,
+            objective_img_id: null,
             reasons: []
         }
         const reasons = [];
@@ -95,46 +124,58 @@ function EditBoard() {
         try {
             setError("");
             setLoading(true);
-            if(background_img && background_img !== background_img) {
+            if(background_img && background_img !== editBackground_img) {
+                deleteImageFromCloudinary(editBackground_img_id);
                 const backgroundImgResponse = await uploadImageToCloudinary(background_img);
-                formData.background_img = backgroundImgResponse;
+                formData.background_img = backgroundImgResponse.secure_url;
+                formData.background_img_id = backgroundImgResponse.public_id;
             }else{
                 formData.background_img = background_img;
+                formData.background_img_id = editBackground_img_id;
             }
             
             if(mainObjective_img && mainObjective_img !== editMainObjective_img){
+                deleteImageFromCloudinary(editMainObjective_img_id);
                 const mainObjectiveImgResponse = await uploadImageToCloudinary(mainObjective_img);
-                formData.mainObjective_img = mainObjectiveImgResponse;
+                formData.mainObjective_img = mainObjectiveImgResponse.secure_url;
+                formData.mainObjective_img_id = mainObjectiveImgResponse.public_id;
             }else{
                 formData.mainObjective_img = mainObjective_img;
+                formData.mainObjective_img_id = editMainObjective_img_id;
             }
 
             if(objective_img && objective_img !== editObjective_img){
+                deleteImageFromCloudinary(editObjective_img_id);
                 const objectiveImgResponse = await uploadImageToCloudinary(objective_img);
-                formData.objective_img = objectiveImgResponse;
+                formData.objective_img = objectiveImgResponse.secure_url;
+                formData.objective_img_id = objectiveImgResponse.public_id;
             }else{
                 formData.objective_img = objective_img;
+                formData.objective_img_id = editObjective_img_id;
             }
 
             if(reasonImg1 && reasonImg1 !== editReasons[0].img){
+                deleteImageFromCloudinary(reasonImg1_id);
                 const reasonImg1Response = await uploadImageToCloudinary(reasonImg1);
-                reasons.push({title: reason1, img: reasonImg1Response, text: reasonText1})
+                reasons.push({title: reason1, img: reasonImg1Response.secure_url, img_id: reasonImg1Response.public_id,text: reasonText1});
             }else{
-                reasons.push({title: reason1, img: reasonImg1, text: reasonText1})
+                reasons.push({title: reason1, img: reasonImg1, img_id: reasonImg1_id,text: reasonText1})
             }
 
             if(reasonImg2 && reasonImg2 !== editReasons[1].img){
+                deleteImageFromCloudinary(reasonImg2_id);
                 const reasonImg2Response = await uploadImageToCloudinary(reasonImg2);
-                reasons.push({title: reason2, img:reasonImg2Response, text: reasonText2});
+                reasons.push({title: reason2, img: reasonImg2Response.secure_url, img_id: reasonImg2Response.public_id,text: reasonText2});
             }else{
-                reasons.push({title: reason2, img:reasonImg2, text: reasonText2});
+                reasons.push({title: reason2, img:reasonImg2, img_id: reasonImg2_id,text: reasonText2});
             }
 
             if(reasonImg3 && reasonImg3 !== editReasons[2].img){
+                deleteImageFromCloudinary(reasonImg3_id);
                 const reasonImg3Response = await uploadImageToCloudinary(reasonImg3);
-                reasons.push({title: reason3, img: reasonImg3Response, text: reasonText3});
+                reasons.push({title: reason3, img: reasonImg3Response.secure_url, img_id: reasonImg3Response.public_id,text: reasonText3});
             }else{
-                reasons.push({title: reason3, img: reasonImg3, text: reasonText3});
+                reasons.push({title: reason3, img: reasonImg3, img_id: reasonImg3_id,text: reasonText3});
             }
 
             formData.reasons = reasons;
@@ -162,6 +203,12 @@ function EditBoard() {
 
     const handleDelete = async () => {
         try{
+            deleteImageFromCloudinary(editBackground_img_id);
+            deleteImageFromCloudinary(editMainObjective_img_id);
+            deleteImageFromCloudinary(editObjective_img_id);
+            deleteImageFromCloudinary(reasonImg1_id);
+            deleteImageFromCloudinary(reasonImg2_id);
+            deleteImageFromCloudinary(reasonImg3_id);
             await customAxios.delete(`http://localhost:8080/dreamboard/${dreamBoardId}`);
             navigate("/dashboard");
         }catch(e){
