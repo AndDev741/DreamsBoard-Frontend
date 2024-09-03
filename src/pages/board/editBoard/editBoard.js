@@ -74,6 +74,18 @@ function EditBoard() {
 
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
+    const [deleteModal, setDeleteModal] = useState(false);
+
+    const handleConfirmDelete = () => {
+        if(deleteModal === true){
+            setDeleteModal(false);
+            document.body.style.overflow = 'auto';
+        }else if(deleteModal === false){
+            setDeleteModal(true);
+            document.body.style.overflow = 'hidden'
+        }
+        
+    }
 
     const uploadImageToCloudinary = async (file) => {
         const formData = new FormData();
@@ -202,6 +214,7 @@ function EditBoard() {
     };
 
     const handleDelete = async () => {
+        document.body.style.overflow = 'auto';
         try{
             deleteImageFromCloudinary(editBackground_img_id);
             deleteImageFromCloudinary(editMainObjective_img_id);
@@ -213,6 +226,7 @@ function EditBoard() {
             navigate("/dashboard");
         }catch(e){
             console.error("Error trying delete Dreamboard", e);
+            setError(e.response.data.error);
         }
     }
 
@@ -251,17 +265,36 @@ function EditBoard() {
                         </button>
                         <button
                             className={`flex items-center justify-evenly text-white font-bold w-[180px] h-[40px] bg-[#CD4D55] hover:bg-[#e26870] rounded-md text-xl hover:bg-lightRed my-4 `}
-                            onClick={handleDelete}
+                            onClick={handleConfirmDelete}
                         >
                             {'Delete'}
                         </button>
                     </div>
                     {loading ? <h1 className="text-3xl text-redFont font-black text-center animate-pulse mt-3">Sending data...</h1> : null}
                     <p className='text-2xl text-center text-red-900 font-semibold my-4'>{error}</p>
+                    <DeleteModal setError={setError} deleteModal={deleteModal} handleConfirmDelete={handleConfirmDelete} handleDelete={handleDelete}/>
                 </div>
             </div>
         </div>
     );
+}
+
+function DeleteModal({handleConfirmDelete, deleteModal, handleDelete}){
+    return(
+        <div className={`${deleteModal === true ? 'block' : 'hidden'} flex flex-col items-center justify-start rounded-md w-[100vw] h-[100vh] bg-white pt-12 p-3 fixed left-0 top-0`}>
+            <h2 className="mt-2 text-2xl font-bold text-center">Are you sure that you want to delete this dreamboard?</h2>
+            <div className="flex items-center justify-center mt-5">
+                <button onClick={handleConfirmDelete}
+                className="text-white mx-4 font-medium w-[180px] h-[40px] bg-red-900 rounded-md text-xl hover:bg-red-800 my-2">
+                    Cancel
+                </button>
+                <button onClick={handleDelete}
+                className="text-white mx-4 font-medium w-[180px] h-[40px] bg-red-900 rounded-md text-xl hover:bg-red-800 my-2">
+                    Delete DreamBoard
+                </button>
+            </div>
+        </div>
+    )
 }
 
 export default EditBoard;
