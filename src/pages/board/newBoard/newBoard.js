@@ -145,51 +145,62 @@ function NewBoard() {
 
         <div className="lg:flex items-center justify-center">
             <div className="pb-6 lg:w-[50vw]">
-                
+
+                {/*First Step Tutorial */}
                 <MainSection background_img={background_img} setBackground_img={setBackground_img}/>
                 <h3 className={`${background_img ? "hidden" : 'block'} text-3xl font-bold text-center mt-2 animate-pulse mb-[250px]`}>
                     Lets start chosing a image that reminds you of your dream
                 </h3>
 
                 <div className="flex flex-col items-center justify-center my-4">
-                    
-                    <div className={`${background_img ? 'block' : 'hidden'}`}>
+                    {/* Second Step - Tutorial */}
+                    {background_img && (
+                        <div>
+                            <input type={'text'}
+                            value={title}
+                            onChange={e => setTitle(e.target.value)}
+                            className={`bg-transparent text-3xl text-center text-redFont font-black underline flex-wrap w-[100%] ${title.length < 1 ? "border-b-2 border-solid border-black" : ""}`} />
 
-                    <input type={'text'}
-                    value={title}
-                    onChange={e => setTitle(e.target.value)}
-                    className={`bg-transparent text-3xl text-center text-redFont font-black underline flex-wrap w-[100%] ${title.length < 1 ? "border-b-2 border-solid border-black" : ""}`} />
+                            <h3 className={`${title === "Write here the title" ? "block" : 'hidden'} text-3xl font-bold text-center mt-4 animate-pulse mb-[250px]`}>
+                                Now, the title of your Dream
+                            </h3>
+                        </div>
+                    )}
 
-                    <h3 className={`${title === "Write here the title" ? "block" : 'hidden'} text-3xl font-bold text-center mt-4 animate-pulse mb-[250px]`}>
-                        Now, the title of your Dream
-                    </h3>
+                    {/* Third Step - Tutorial */}
+                    {title !== "Write here the title" && (
+                        <div>
+                            <MainObjectiveSection mainObjective_img={mainObjective_img} setMainObjective_img={setMainObjective_img}  mainObjective_text={mainObjective_text} setMainObjective_text={setMainObjective_text}/>
 
-                    <div className={`${title === "Write here the title" ? 'hidden' : 'block'}`}>
-
-                        <MainObjectiveSection mainObjective_img={mainObjective_img} setMainObjective_img={setMainObjective_img}  mainObjective_text={mainObjective_text} setMainObjective_text={setMainObjective_text}/>
-
-                        <h3 className={`${mainObjective_img && mainObjective_text !== "Write here your main goal!" ? 'hidden' : 'block'} text-3xl font-bold text-center mt-4 animate-pulse mb-[250px]`}>
-                            Your main goal: Choose an image that reminds you your biggest goal, and a title too!
-                        </h3>
-
-                        <div className={`${mainObjective_img && mainObjective_text === "Write here your main goal!" ? 'hidden' : 'block'} `}>
-                            <ObjectiveSection objective_img={objective_img} setObjective_img={setObjective_img} objective_text={objective_text} setObjective_text={setObjective_text}/>
-
-                            <h3 className={`${objective_img && objective_text !== "Put here a short text of what you gonna do to conquist your goal" ? "hidden" : 'block'} text-3xl font-bold text-center mt-4 animate-pulse mb-[250px]`}>
-                                What you gonna do to make this dream real?
+                            <h3 className={`${mainObjective_img && mainObjective_text !== "Write here your main goal!" ? 'hidden' : 'block'} text-3xl font-bold text-center mt-4 animate-pulse mb-[250px]`}>
+                                Your main goal: Choose an image that reminds you your biggest goal, and a title too!
                             </h3>
 
-                            <div className={`${objective_img && objective_text === "Put here a short text of what you gonna do to conquist your goal" ? "hidden" : 'block'}`}>
-                                <Reasons reasonTitle={reasonTitle} setReasonTitle={setReasonTitle}reason1={reason1}  setReason1={setReason1} reasonImg1={reasonImg1} setReasonImg1={setReasonImg1} reasonText1={reasonText1} setReasonText1={setReasonText1} reason2={reason2} setReason2={setReason2} reasonImg2={reasonImg2} setReasonImg2={setReasonImg2} reasonText2={reasonText2} setReasonText2={setReasonText2} reason3={reason3} setReason3={setReason3} reasonImg3={reasonImg3} setReasonImg3={setReasonImg3} reasonText3={reasonText3} setReasonText3={setReasonText3}/>
-                                <h3 className={`${reasonImg3 ? "hidden" : 'block'} text-3xl font-bold text-center mt-4 animate-pulse mb-[250px]`}>
-                                In this part, you can choose to put 3 big reasons to fight for your dream, or 3 big goals you want to conquist
-                                </h3>
-                            </div>
-                        </div>
-                    </div>
+                            {/* Fourth Step - tutorial */}
+                            {mainObjective_img && mainObjective_text !== "Write here your main goal!" && (
+                                <div>
+                                    <ObjectiveSection objective_img={objective_img} setObjective_img={setObjective_img} objective_text={objective_text} setObjective_text={setObjective_text}/>
 
-                    </div>
+                                    <h3 className={`${objective_img && objective_text !== "Put here a short text of what you gonna do to conquist your goal" ? "hidden" : 'block'} text-3xl font-bold text-center mt-4 animate-pulse mb-[250px]`}>
+                                        What you gonna do to make this dream real?
+                                    </h3>
 
+                                    {/* Fifth Step - tutorial */}
+                                    {objective_img && objective_img !== "Put here a short text of what you gonna do to conquist your goal" && (
+                                        <div>
+                                            <Reasons reasonTitle={reasonTitle} setReasonTitle={setReasonTitle}reason1={reason1}  setReason1={setReason1} reasonImg1={reasonImg1} setReasonImg1={setReasonImg1} reasonText1={reasonText1} setReasonText1={setReasonText1} reason2={reason2} setReason2={setReason2} reasonImg2={reasonImg2} setReasonImg2={setReasonImg2} reasonText2={reasonText2} setReasonText2={setReasonText2} reason3={reason3} setReason3={setReason3} reasonImg3={reasonImg3} setReasonImg3={setReasonImg3} reasonText3={reasonText3} setReasonText3={setReasonText3}/>
+                                            <h3 className={`${reasonImg3 ? "hidden" : 'block'} text-3xl font-bold text-center mt-4 animate-pulse mb-[250px]`}>
+                                            In this part, you can choose to put 3 big reasons to fight for your dream, or 3 big goals you want to conquist
+                                            </h3>
+                                        </div>
+                                    )}                                    
+                                </div>
+                            )}
+                        </div>                        
+                    )}
+                        
+                            
+                        
                     <div className="flex flex-wrap items-center justify-evenly w-full mt-5">
                         <Link to={'/dashboard'}>
                             <button className="text-white font-bold w-[180px] h-[40px] bg-greenMain hover:bg-[#30b6ad] rounded-md text-xl hover:bg-lightRed">

@@ -26,6 +26,7 @@ function MainSection({background_img, setBackground_img}){
         accept: {
           'image/*': ['.jpeg', '.png']   
         },
+        maxSize: 10000000,
     });
 
     return(

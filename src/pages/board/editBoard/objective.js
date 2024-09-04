@@ -20,6 +20,7 @@ function ObjectiveSection({objective_img, setObjective_img, objective_text, setO
         accept: {
           'image/*': ['.jpeg', '.png']   
         },
+        maxSize: 10000000,
     });
 
     return(

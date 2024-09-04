@@ -19,6 +19,7 @@ function MainObjectiveSection({mainObjective_img, setMainObjective_img, mainObje
         accept: {
           'image/*': ['.jpeg', '.png']   
         },
+        maxSize: 10000000,
     });
 
     return(

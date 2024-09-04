@@ -19,6 +19,7 @@ function ReasonItem({reason, setReason, reasonImg, setReasonImg, reasonText, set
         accept: {
           'image/*': ['.jpeg', '.png']   
         },
+        maxSize: 10000000,
     })
     return(
         <div>
