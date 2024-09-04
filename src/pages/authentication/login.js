@@ -7,7 +7,8 @@ import customAxios from '../../axiosConfig';
 import { Link, useNavigate } from 'react-router-dom';
 import {useState} from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { idEnter, img_linkEnter, nameEnter, perfil_phraseEnter} from './loginSlice'
+import { idEnter, img_linkEnter, nameEnter, perfil_phraseEnter} from './loginSlice';
+import * as Yup from 'yup';
 
 function Login(){
     const registerPhrase = useSelector(state => state.login.registerPhrase)
@@ -19,34 +20,49 @@ function Login(){
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
+    const validationSchema = Yup.object().shape({
+        email: Yup.string().email("Invalid Email").required("Email is necessary"),
+        password: Yup.string().min(6, "").required("password is necessary")
+    })
+
     const handleSubmit = async (e) => {
         setErrorMessage("");
         e.preventDefault();
-        sessionStorage.clear();
-        try{
-            await customAxios.post("http://localhost:8080/logout");      
-        }catch(e){
-            console.error(e);
-            setErrorMessage(e.response.data.error);
-        }
         
-        try {
-            const response = await customAxios.post('http://localhost:8080/login', {
-                email,
-                password
-            });
-            if(response.data.success){
-                dispatch(idEnter(response.data.success.id));
-                dispatch(img_linkEnter(response.data.success.img_link));
-                dispatch(nameEnter(response.data.success.name));
-                dispatch(perfil_phraseEnter(response.data.success.perfil_phrase));
-                setErrorMessage("");
-                navigate("/dashboard");
+
+        try{
+            await validationSchema.validate({email, password}, {abortEarly: false});
+
+            sessionStorage.clear();
+
+            try{
+                await customAxios.post("http://localhost:8080/logout");      
+            }catch(e){
+                console.error(e);
+                setErrorMessage(e.response.data.error);
             }
-        } catch (error) {
-                console.error('Erro durante o login: ', error);
-                setErrorMessage(error.response.data.error);
+            
+            try {
+                const response = await customAxios.post('http://localhost:8080/login', {
+                    email,
+                    password
+                });
+                if(response.data.success){
+                    dispatch(idEnter(response.data.success.id));
+                    dispatch(img_linkEnter(response.data.success.img_link));
+                    dispatch(nameEnter(response.data.success.name));
+                    dispatch(perfil_phraseEnter(response.data.success.perfil_phrase));
+                    setErrorMessage("");
+                    navigate("/dashboard");
+                }
+            }catch (error) {
+                    console.error('Erro durante o login: ', error);
+                    setErrorMessage(error.response.data.error);
             }
+
+        }catch(validationErrors) {
+            setErrorMessage(validationErrors.errors.join(', '));
+        }
         
     }
 

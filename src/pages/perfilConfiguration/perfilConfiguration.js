@@ -17,6 +17,7 @@ import newPasswordIcon from "../../assets/newPasswordIcon.png";
 import deleteIcon from "../../assets/deleteIcon.png";
 import logoutIcon from "../../assets/logoutIcon.png";
 import { img_linkEnter, nameEnter, perfil_phraseEnter } from "../authentication/loginSlice";
+import * as Yup from 'yup';
 
 function PerfilConfiguration(){
     const dispatch = useDispatch();
@@ -64,6 +65,14 @@ function PerfilConfiguration(){
     
     const [oldPassword, setOldPassword] = useState('');
     const [newPassword, setNewPassword] = useState('');
+
+    const EmailValidationSchema = Yup.object().shape({
+        email: Yup.string().email("Invalid Email").required("Email is necessary"),
+    })
+
+    const PasswordValidationSchema = Yup.object().shape({
+        password: Yup.string().min(6, "The password needs a minimum of 6 characters").required("Password is required")
+    })
 
     const handleSeePassword = () => {
         if(seePassword === seePassIcon){
@@ -144,15 +153,20 @@ function PerfilConfiguration(){
             id: id,
             newEmail: newEmail
         }
-
+        setEmailEditError("");
         try{
-            const response = await customAxios.post("/user/editEmail", editEmailData);
-            if(response.data.success){
-                navigate("/");
+            await EmailValidationSchema.validate({email: newEmail}, {abortEarly: false});
+            try{
+                const response = await customAxios.post("/user/editEmail", editEmailData);
+                if(response.data.success){
+                    navigate("/");
+                }
+            }catch(e){
+                console.error("Error trying to edit email", e);
+                setEmailEditError(e.response.data.error);
             }
-        }catch(e){
-            console.error("Error trying to edit email", e);
-            setEmailEditError(e.response.data.error);
+        }catch(validationErrors){
+            setEmailEditError(validationErrors.errors.join(", "));
         }
     }
 
@@ -164,13 +178,19 @@ function PerfilConfiguration(){
         }
 
         try{
-            const response = await customAxios.post("/user/editPassword", editPassData);
-            if(response.data.success){
-                navigate("/");
+            await PasswordValidationSchema.validate({password: newPassword}, {abortEarly: false});
+
+            try{
+                const response = await customAxios.post("/user/editPassword", editPassData);
+                if(response.data.success){
+                    navigate("/");
+                }
+            }catch(e){
+                console.error("Error trying to edit the password", e);
+                setPasswordEditError(e.response.data.error);
             }
-        }catch(e){
-            console.error("Error trying to edit the password", e);
-            setPasswordEditError(e.response.data.error);
+        }catch(validationErrors){
+            setPasswordEditError(validationErrors.errors.join(", "))
         }
     }
 
@@ -206,8 +226,8 @@ function PerfilConfiguration(){
 
                     <button onClick={handleEdit}
                     className=" text-white font-medium w-[180px] h-[40px] bg-greenMain hover:bg-[#30b6ad] rounded-md text-xl hover:bg-lightRed">Edit</button>
-                    <p className="text-xl text-blue-700 my-2">{success}</p>
-                    <p className="text-xl text-red-700">{perfilEditError}</p>
+                    <p className="text-center text-xl text-blue-700 my-2">{success}</p>
+                    <p className="text-center text-xl text-red-700">{perfilEditError}</p>
                 </div>
 
                 <div className="flex flex-col items-center justify-between w-[90vw] lg:w-[25vw] min-h-[310px] border-2 border-greenMain rounded-md mt-4 lg:mt-0">
@@ -236,7 +256,7 @@ function PerfilConfiguration(){
                             <p className="text-center text-xl mb-4">You gonna be redirected to make login again</p>
                             <button onClick={handleEmailEdit}
                             className="text-white font-medium w-[180px] h-[40px] bg-greenMain hover:bg-[#30b6ad] rounded-md text-xl hover:bg-lightRed mb-3">Edit email</button>
-                            <p className="text-xl text-red-700">{emailEditError}</p>
+                            <p className="text-center text-xl text-red-700">{emailEditError}</p>
                         </div>
                     </div>
 
@@ -287,12 +307,12 @@ function PerfilConfiguration(){
                             <p className="text-center text-xl mb-4">You gonna be redirected to make login again</p>
                             <button onClick={handlePasswordEdit}
                             className="text-white font-medium w-[180px] h-[40px] bg-greenMain hover:bg-[#30b6ad] rounded-md text-xl hover:bg-lightRed mb-2">Edit password</button>
-                            <p className="text-xl text-red-700">{passwordEditError}</p>
+                            <p className="text-center text-xl text-red-700">{passwordEditError}</p>
                         </div>
                     </div>
                 
                 
-                <div className="flex flex-col lg:flex-row lg:justify-end items-center lg:w-[100%] lg:mt-[-30px]">
+                <div className="flex flex-col lg:flex-row lg:justify-end items-center lg:w-[100%]">
                     <div className="flex flex-col items-center justify-between w-[90vw] lg:w-[25vw] min-h-[310px] border-2 border-greenMain rounded-md mt-4 lg:mt-0 lg:mr-[13px]">
                         <div className="flex items-center mt-3">
                             <img className="w-[30px] h-[30px] mr-2"

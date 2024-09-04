@@ -10,6 +10,7 @@ import { Link } from 'react-router-dom';
 import {useState} from 'react'
 import { useDispatch } from 'react-redux';
 import { registerEnter } from './loginSlice';
+import * as Yup from 'yup';
 
 function Register(){
     const dispatch = useDispatch();
@@ -21,21 +22,33 @@ function Register(){
     const [inputType ,setInputType] = useState('password');
     const [seePassword, setSeePassword] = useState(seePassIcon);
 
+    const validationSchema = Yup.object().shape({
+        name: Yup.string().min(2, "Name needs a minimum of 2 characters").required("Name is required"),
+        email: Yup.string().email("Invalid Email").required("Email is Required"),
+        password: Yup.string().min(6, "The password needs a minimum of 6 characters").required("Password is required")
+    })
+
     async function handleSubmit(e){
         e.preventDefault();
 
         const registerData = {name: name, email: email, password: password};
-
+        setErrorMessage("");
         try{
-            const response = await axios.post("http://localhost:8080/register", registerData);
-            console.log(response)
-            if(response.data.status === "success"){
-                dispatch(registerEnter("Now, use your new account to make login!"));
-                navigate("/");
+            await validationSchema.validate({name, email, password}, {abortEarly: false});
+        
+            try{
+                const response = await axios.post("http://localhost:8080/register", registerData);
+                console.log(response)
+                if(response.data.status === "success"){
+                    dispatch(registerEnter("Now, use your new account to make login!"));
+                    navigate("/");
+                }
+            }catch(err){
+                console.error(err);
+                setErrorMessage(err.response.data.error);
             }
-        }catch(err){
-            console.error(err);
-            setErrorMessage(err.response.data.error);
+        }catch(validationErrors){
+            setErrorMessage(validationErrors.errors.join(", "))
         }
     }
 
@@ -141,7 +154,7 @@ function Register(){
                                 text-white text-xl md:text-3xl font-bold rounded-lg cursor-pointer"/>
                             </div>                            
                         </div>
-                        <p className='my-2 text-2xl font-bold text-red-700'>{errorMessage}</p>
+                        <p className='text-center my-2 text-2xl font-bold text-red-700 m-2'>{errorMessage}</p>
                     </form>
                 </div>
                 <div className='flex lg:flex-col items-center justify-between lg:w-[550px] lg:h-[580px] lg:bg-greenMain lg:rounded-l-lg'>
