@@ -3,6 +3,7 @@ import emailIcon from '../../assets/emailIcon.png';
 import unSeePassIcon from '../../assets/unSeePassIcon.png';
 import seePassIcon from '../../assets/seePassIcon.png';
 import passwordIcon from '../../assets/passwordIcon.png';
+import axios from 'axios';
 import customAxios from '../../axiosConfig';
 import { Link, useNavigate } from 'react-router-dom';
 import {useState} from 'react'
@@ -17,6 +18,9 @@ function Login(){
     const [errorMessage, setErrorMessage] = useState(registerPhrase || "");
     const [inputType ,setInputType] = useState('password');
     const [seePassword, setSeePassword] = useState(seePassIcon);
+
+    const [forgotPassModal, setForgotPassModal] = useState(false);
+
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
@@ -141,7 +145,8 @@ function Login(){
                         </div>
 
                         <div>
-                            <h3 className='text-xl underline text-center text-greenMain mt-2'>Forgot your password?</h3>
+                            <h3 onClick={() => setForgotPassModal(true)}
+                            className='text-xl underline text-center text-greenMain mt-2 cursor-pointer'>Forgot your password?</h3>
                         </div>
 
                         <div className="flex items-center justify-center mt-5">
@@ -160,6 +165,8 @@ function Login(){
                     </form>
                 </div>
 
+                <ForgotPasswordModal forgotPassModal={forgotPassModal} setForgotPassModal={setForgotPassModal} />
+
                 <div className='flex lg:flex-col items-center justify-between lg:w-[550px] lg:h-[580px] lg:bg-greenMain lg:rounded-l-lg'>
                     <img src={loginPC}
                     alt="homan in a playground"
@@ -170,6 +177,78 @@ function Login(){
         </div>
 
         
+    )
+}
+
+function ForgotPasswordModal({forgotPassModal, setForgotPassModal}){
+    const [email, setEmail] = useState("");
+    const [error, setError] = useState("");
+    const [success, setSuccess] = useState("");
+    const [sending, setSending] = useState("");
+
+    const validationSchema = Yup.object().shape({
+        email: Yup.string().email("Invalid Email").required("Email is necessary"),
+    })
+
+
+    async function handleForgotPassword(e){
+        e.preventDefault();
+        setSuccess("");
+            setError("");
+        try{
+            await validationSchema.validate({email}, {abortEarly: false});
+            
+            setSending(true);
+            try{
+                const response = await axios.post(`http://localhost:8080/resetPassword`, { email });
+                setSuccess(response.data.success);
+                setSending(false);
+            }catch(e){
+                setError(e.response.data.error)
+                setSending(false)
+            }
+        }catch(validationErrors){
+            setError(validationErrors.errors.join(", "));
+        }
+
+    }
+
+    return(
+        <div className={`${forgotPassModal === true ? 'block' : 'hidden'} flex flex-col items-center justify-start pt-12 lg:mt-0 lg:justify-center w-[100vw] h-[100vh] bg-white fixed left-0 top-0 backdrop-blur lg:bg-black/30`}>
+            <div className='flex flex-col items-center justify-center w-[100vw] lg:w-[50vw] rounded-md lg:h-[50vh] lg:bg-white'>
+                <h2 className="mt-2 text-2xl font-bold text-center">Put your email to recover your password</h2>
+
+                <label htmlFor="email" 
+                className="flex items-center border-solid border-2 border-greenMain rounded-[6px] hover:border-cyan-600 my-5">
+                    <img className='w-[33px] h-[33px] mx-3 cursor-pointer'
+                    src={emailIcon}
+                    alt='Letter icon'/>
+                    <input name="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    id="email"
+                    type="text"
+                    className="bg-transparent w-[80vw] sm:w-[395px] md:w-[510px] lg:w-[395px] h-[60px] md:h-[70px] lg:h-[60px] text-2xl md:text-2xl pl-4 focus:outline-none"
+                    placeholder="email@gmail.com"/>
+                </label>
+
+                <div className="flex items-center justify-center">
+                    <button onClick={() => setForgotPassModal(false)}
+                    className="text-white mx-4 font-medium w-[180px] h-[40px] rounded-md text-xl bg-greenMain hover:bg-[#30b6ad] my-2">
+                        Cancel
+                    </button>
+                    <button onClick={handleForgotPassword}
+                    className="text-white mx-4 font-medium w-[180px] h-[40px] bg-greenMain hover:bg-[#30b6ad] rounded-md text-xl my-2">
+                        Send email
+                    </button>
+                </div>
+
+                <p className='mt-2 text-2xl font-bold text-red-800 text-center'>{error}</p>
+                <p className={`${sending === true ? 'block' : 'hidden'} mt-2 text-2xl font-bold text-green-800 text-center animate-pulse`}>Sending email...</p>
+                <p className='mt-2 text-2xl font-bold text-blue-800 text-center'>{success}</p>
+            </div>
+            
+        </div>
     )
 }
 
