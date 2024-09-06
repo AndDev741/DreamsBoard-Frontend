@@ -8,6 +8,7 @@ import NewBoard from './pages/board/newBoard/newBoard';
 import EditBoard from './pages/board/editBoard/editBoard.js';
 import DreamBoard from './pages/board/dreamBoard';
 import PerfilConfiguration from './pages/perfilConfiguration/perfilConfiguration';
+import RecoverPassword from './pages/authentication/recoverPassword/recoverPassword.js';
 
 function App() {
   return (
@@ -24,8 +25,8 @@ function App() {
           <Route path='/editBoard' element={<EditBoard/>} />
           <Route path='/dreamBoard' element={<DreamBoard/>} />
           <Route path='/configuration' element={<PerfilConfiguration/>} />
+          <Route path='/recoverPassword' element={<RecoverPassword />} />
         </Routes>
-
       </div>
     
     </BrowserRouter>
