@@ -14,7 +14,6 @@ function loadState(){
         const serializedState = sessionStorage.getItem('redux-newBoard-state');
         console.log(serializedState)
         if(serializedState === null){
-            console.log("null como?")
             return undefined;
         }
         return JSON.parse(serializedState);

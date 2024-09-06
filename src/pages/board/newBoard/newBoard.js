@@ -6,7 +6,7 @@ import MainSection from './mainSection';
 import MainObjectiveSection from './mainObjectiveSection';
 import ObjectiveSection from './objective';
 import Reasons from './reasons';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 function NewBoard() {

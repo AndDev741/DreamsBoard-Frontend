@@ -8,7 +8,7 @@ import customAxios from '../../axiosConfig';
 import { Link, useNavigate } from 'react-router-dom';
 import {useState} from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { idEnter, img_linkEnter, nameEnter, perfil_phraseEnter} from './loginSlice';
+import { idEnter, img_linkEnter, nameEnter, perfil_phraseEnter, registerEnter} from './loginSlice';
 import * as Yup from 'yup';
 
 function Login(){
@@ -40,18 +40,19 @@ function Login(){
             sessionStorage.clear();
 
             try{
-                await customAxios.post("http://localhost:8080/logout");      
+                await customAxios.post("/logout");      
             }catch(e){
                 console.error(e);
                 setErrorMessage(e.response.data.error);
             }
             
             try {
-                const response = await customAxios.post('http://localhost:8080/login', {
+                const response = await customAxios.post('/login', {
                     email,
                     password
                 });
                 if(response.data.success){
+                    dispatch(registerEnter(""));
                     dispatch(idEnter(response.data.success.id));
                     dispatch(img_linkEnter(response.data.success.img_link));
                     dispatch(nameEnter(response.data.success.name));
@@ -61,7 +62,11 @@ function Login(){
                 }
             }catch (error) {
                     console.error('Erro durante o login: ', error);
-                    setErrorMessage(error.response.data.error);
+                    if(error.response.data.error){
+                        setErrorMessage(error.response.data.error);
+                    }else{
+                        setErrorMessage("Unknown error ocurred, try again.");
+                    }
             }
 
         }catch(validationErrors) {
@@ -204,7 +209,11 @@ function ForgotPasswordModal({forgotPassModal, setForgotPassModal}){
                 setSuccess(response.data.success);
                 setSending(false);
             }catch(e){
-                setError(e.response.data.error)
+                if(e.response.data.error){
+                    setError(e.response.data.error)
+                }else{
+                    setError('Unknown error ocurred, try again.');
+                }
                 setSending(false)
             }
         }catch(validationErrors){
@@ -232,13 +241,13 @@ function ForgotPasswordModal({forgotPassModal, setForgotPassModal}){
                     placeholder="email@gmail.com"/>
                 </label>
 
-                <div className="flex items-center justify-center">
+                <div className="flex flex-wrap items-center justify-center">
                     <button onClick={() => setForgotPassModal(false)}
-                    className="text-white mx-4 font-medium w-[180px] h-[40px] rounded-md text-xl bg-greenMain hover:bg-[#30b6ad] my-2">
+                    className="text-white mx-1 lg:mx-4 font-medium w-[170px] h-[40px] rounded-md text-xl bg-greenMain hover:bg-[#30b6ad] my-2">
                         Cancel
                     </button>
                     <button onClick={handleForgotPassword}
-                    className="text-white mx-4 font-medium w-[180px] h-[40px] bg-greenMain hover:bg-[#30b6ad] rounded-md text-xl my-2">
+                    className="text-white mx-1 lg:mx-4 font-medium w-[170px] h-[40px] bg-greenMain hover:bg-[#30b6ad] rounded-md text-xl my-2">
                         Send email
                     </button>
                 </div>

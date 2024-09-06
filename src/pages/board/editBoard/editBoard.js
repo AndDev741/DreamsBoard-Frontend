@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Form, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import customAxios from '../../../axiosConfig';
 import axios from 'axios';
 import CryptoJS from 'crypto-js';
@@ -7,7 +7,7 @@ import MainSection from './mainSection';
 import MainObjectiveSection from './mainObjectiveSection';
 import ObjectiveSection from './objective';
 import Reasons from './reasons';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 function EditBoard() {
@@ -281,15 +281,15 @@ function EditBoard() {
 
 function DeleteModal({handleConfirmDelete, deleteModal, handleDelete}){
     return(
-        <div className={`${deleteModal === true ? 'block' : 'hidden'} flex flex-col items-center justify-start rounded-md w-[100vw] h-[100vh] bg-white pt-12 p-3 fixed left-0 top-0`}>
+        <div className={`${deleteModal === true ? 'block' : 'hidden'} flex flex-col items-center justify-start rounded-md w-[100vw] h-[100vh] bg-white pt-12 fixed left-0 top-0`}>
             <h2 className="mt-2 text-2xl font-bold text-center">Are you sure that you want to delete this dreamboard?</h2>
-            <div className="flex items-center justify-center mt-5">
+            <div className="flex flex-wrap items-center justify-center mt-5">
                 <button onClick={handleConfirmDelete}
-                className="text-white mx-4 font-medium w-[180px] h-[40px] bg-red-900 rounded-md text-xl hover:bg-red-800 my-2">
+                className="text-white mx-1 sm:mx-4 font-medium w-[170px] h-[40px] bg-red-900 rounded-md text-xl hover:bg-red-800 my-2">
                     Cancel
                 </button>
                 <button onClick={handleDelete}
-                className="text-white mx-4 font-medium w-[180px] h-[40px] bg-red-900 rounded-md text-xl hover:bg-red-800 my-2">
+                className="text-white mx-1 sm:mx-4 font-medium w-[180px] h-[40px] bg-red-900 rounded-md text-xl hover:bg-red-800 my-2">
                     Delete DreamBoard
                 </button>
             </div>

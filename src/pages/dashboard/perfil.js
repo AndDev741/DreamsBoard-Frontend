@@ -39,7 +39,7 @@ function Perfil({img_Link, name}){
                     <div className='flex flex-col items-center justify-center mr-5 md:mt-[-25px] cursor-pointer'>
                         <img alt='Settings icon'
                         src={settingsIcon}
-                        className="w-[50px]"/>
+                        className="w-[50px] hover:scale-90"/>
                     </div>
                 </Link>
             </div>

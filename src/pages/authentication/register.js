@@ -39,7 +39,7 @@ function Register(){
             try{
                 const response = await axios.post("http://localhost:8080/register", registerData);
                 console.log(response)
-                if(response.data.status === "success"){
+                if(response.data.success){
                     dispatch(registerEnter("Now, use your new account to make login!"));
                     navigate("/");
                 }
