@@ -99,7 +99,7 @@ function PerfilConfiguration(){
 
         sessionStorage.clear();
         try{
-            await customAxios.post("http://localhost:8080/logout");   
+            await customAxios.post("/logout");   
             navigate("/");
         }catch(e){
             console.error(e);

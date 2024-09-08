@@ -198,7 +198,7 @@ function EditBoard() {
         }
         
         try{
-            const response = await customAxios.put(`http://localhost:8080/dreamboard/${dreamBoardId}`, formData, {
+            const response = await customAxios.put(`/dreamboard/${dreamBoardId}`, formData, {
             headers: {
                 'Content-Type': 'application/json'
             }})
@@ -222,7 +222,7 @@ function EditBoard() {
             deleteImageFromCloudinary(reasonImg1_id);
             deleteImageFromCloudinary(reasonImg2_id);
             deleteImageFromCloudinary(reasonImg3_id);
-            await customAxios.delete(`http://localhost:8080/dreamboard/${dreamBoardId}`);
+            await customAxios.delete(`/dreamboard/${dreamBoardId}`);
             navigate("/dashboard");
         }catch(e){
             console.error("Error trying delete Dreamboard", e);

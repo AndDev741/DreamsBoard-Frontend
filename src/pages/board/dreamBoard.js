@@ -32,7 +32,7 @@ function DreamBoard(){
     useEffect(() => {
             async function getDreamBoard() {
                 try{
-                    const response = await customAxios.get(`http://localhost:8080/dreamboard/getDreamBoard/${dreamboardId}`);
+                    const response = await customAxios.get(`/dreamboard/getDreamBoard/${dreamboardId}`);
                     setBackgroundImg((response).data.background_img);
                     setBackgroundImg_id((response).data.background_img_id);
                     setMainObjectiveImg((response).data.mainObjectiveImg);

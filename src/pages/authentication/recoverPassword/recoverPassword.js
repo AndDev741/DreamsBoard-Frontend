@@ -56,7 +56,7 @@ function RecoverPassword(){
                     newPassword: newPassword
                 };
 
-                const response = await axios.put("http://localhost:8080/resetPassword", formData);
+                const response = await axios.put("https://dreamsboard-backend-production.up.railway.app/resetPassword", formData);
                 setSuccess(response.data.success);
 
                 setTimeout(() => {

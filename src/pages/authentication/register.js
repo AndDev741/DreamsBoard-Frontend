@@ -4,7 +4,7 @@ import emailIcon from '../../assets/emailIcon.png';
 import unSeePassIcon from '../../assets/unSeePassIcon.png';
 import seePassIcon from '../../assets/seePassIcon.png';
 import passwordIcon from '../../assets/passwordIcon.png';
-import axios from '../../axiosConfig';
+import customAxios from '../../axiosConfig';
 import { useNavigate } from 'react-router-dom'
 import { Link } from 'react-router-dom';
 import {useState} from 'react'
@@ -37,7 +37,7 @@ function Register(){
             await validationSchema.validate({name, email, password}, {abortEarly: false});
         
             try{
-                const response = await axios.post("http://localhost:8080/register", registerData);
+                const response = await customAxios.post("/register", registerData);
                 console.log(response)
                 if(response.data.success){
                     dispatch(registerEnter("Now, use your new account to make login!"));

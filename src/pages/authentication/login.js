@@ -205,7 +205,7 @@ function ForgotPasswordModal({forgotPassModal, setForgotPassModal}){
             
             setSending(true);
             try{
-                const response = await axios.post(`http://localhost:8080/resetPassword`, { email });
+                const response = await axios.post(`https://dreamsboard-backend-production.up.railway.app/resetPassword`, { email });
                 setSuccess(response.data.success);
                 setSending(false);
             }catch(e){

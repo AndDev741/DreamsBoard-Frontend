@@ -122,7 +122,7 @@ function NewBoard() {
         
 
         try{
-            const response = await customAxios.post('http://localhost:8080/dreamboard', formData, {
+            const response = await customAxios.post('/dreamboard', formData, {
                 headers: {
                     'Content-Type': 'application/json'
             }})
