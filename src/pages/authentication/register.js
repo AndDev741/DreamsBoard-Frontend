@@ -78,12 +78,12 @@ function Register(){
                     </div>
 
                     <div className="mt-2 text-4xl md:text-[40px]">
-                        <h1 className=" font-bold text-center">Welcome to DreamBoard!</h1>
+                        <h1 className=" font-bold text-center">Welcome to DreamBoards!</h1>
                     </div>
 
                     <div className="mt-2 mx-2 sm:mx-0 text-greenMain font-medium text-3xl md:text-4xl lg:text-3xl text-center">
                         <h3>Start getting inspired </h3>
-                        <h3>by creating your dreamBoards!</h3>
+                        <h3>by creating your DreamBoards!</h3>
                     </div>
 
                     <form className='flex flex-col items-center justify-center'
