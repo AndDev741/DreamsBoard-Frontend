@@ -10,8 +10,11 @@ import {useState} from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { idEnter, img_linkEnter, nameEnter, perfil_phraseEnter, registerEnter} from './loginSlice';
 import * as Yup from 'yup';
+import { useTranslation } from 'react-i18next';
+import ChangeLanguage from '../components/change/changeLanguage';
 
 function Login(){
+    const { t, i18n } = useTranslation();
     const registerPhrase = useSelector(state => state.login.registerPhrase)
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -25,8 +28,8 @@ function Login(){
     const dispatch = useDispatch();
 
     const validationSchema = Yup.object().shape({
-        email: Yup.string().email("Invalid Email").required("Email is necessary"),
-        password: Yup.string().min(6, "").required("password is necessary")
+        email: Yup.string().email(t('YupInvalidEmail')).required(t('YupNecessaryEmail')),
+        password: Yup.string().required(t('YupNecessaryPassword'))
     })
 
     const handleSubmit = async (e) => {
@@ -61,11 +64,19 @@ function Login(){
                     navigate("/dashboard");
                 }
             }catch (error) {
-                    console.error('Erro durante o login: ', error);
+                    console.error('Error in login: ', error);
                     if(error.response.data.error){
-                        setErrorMessage(error.response.data.error);
+                        if(i18n.language === 'en'){
+                            setErrorMessage(error.response.data.error);
+                        }else {
+                            setErrorMessage("Email ou senha inv")
+                        }
                     }else{
-                        setErrorMessage("Unknown error ocurred, try again.");
+                        if(i18n.language === 'en'){
+                            setErrorMessage("Unknown error ocurred, try again.");
+                        }else {
+                            setErrorMessage("Um erro desconhecido aconteceu, tente novamente");
+                        }
                     }
             }
 
@@ -88,26 +99,32 @@ function Login(){
 
     return(
         <div className="flex flex-col lg:flex-row items-center justify-start lg:bg-white min-h-screen">
+
+            <div className='hidden lg:block'>
+                <ChangeLanguage />
+            </div>
+
             <div className='flex flex-col lg:flex-row-reverse items-center justify-center w-full h-full'>
                 <div className='flex flex-col items-center justify-start w-full h-full lg:w-[550px] lg:h-[580px] lg:border-solid lg:border-2 border-greenMain lg:rounded-r-lg'>
 
                     <div className='flex items-center justify-evenly w-[100%] h-[67px]'>
-                        <h2 className='text-2xl font-semibold'>Login</h2>
-                        <Link to={"/register"}><h2 className='text-2xl'>Register</h2></Link>
+                        <h2 className='text-2xl font-semibold'>{t('Login')}</h2>
+                        <Link to={"/register"}><h2 className='text-2xl'>{t('Register')}</h2></Link>
                         
                     </div>
                     {/*Border */}
                     <div className='flex items-start justify-start w-[100%]'>
                         <div className='border-solid border-b-[3px] border-greenMain w-[50%]'></div>
                     </div>
+        
+                    
 
                     <div className="mt-5 text-4xl md:text-5xl lg:text-[45px] text-center">
-                        <h1 className="font-bold">Welcome back!</h1>
+                        <h1 className="font-bold">{t('WelcomeMessage')}</h1>
                     </div>
 
                     <div className="my-2 text-greenMain font-medium text-3xl md:text-5xl lg:text-3xl text-center">
-                        <h3>Create and manage your</h3>
-                        <h3>DreamBoards</h3>
+                        <h3 className='whitespace-pre-line'>{t('LoginMessage')}</h3>
                     </div>
 
                     <form className='flex flex-col items-center justify-center'
@@ -117,7 +134,7 @@ function Login(){
                             className="flex items-center border-solid border-2 border-greenMain rounded-[6px] hover:border-cyan-600">
                                 <img className='w-[33px] h-[33px] mx-3 cursor-pointer'
                                 src={emailIcon}
-                                alt='Letter icon'/>
+                                alt={t('EmailIconAlt')}/>
                                 <input name="email"
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
@@ -132,7 +149,7 @@ function Login(){
                             className="flex items-center border-solid border-2 border-greenMain rounded-[6px] hover:border-cyan-600">
                                 <img className='w-[33px] h-[33px] mx-3 cursor-pointer'
                                 src={passwordIcon} 
-                                alt='padlock icon'/>
+                                alt={t('PasswordIconAlt')}/>
                                 <input name={"password"}
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
@@ -143,7 +160,7 @@ function Login(){
                                 />
                                 <img className='w-[33px] h-[33px] mx-3 cursor-pointer'
                                 src={seePassword}
-                                alt="Eye button to see password"
+                                alt={t('SeePasswordIconAlt')}
                                 onClick={handleSeePassword}
                                 />
                             </label>
@@ -151,7 +168,7 @@ function Login(){
 
                         <div>
                             <h3 onClick={() => setForgotPassModal(true)}
-                            className='text-xl underline text-center text-greenMain mt-2 cursor-pointer'>Forgot your password?</h3>
+                            className='text-xl underline text-center text-greenMain mt-2 cursor-pointer'>{t('ForgotPassword')}</h3>
                         </div>
 
                         <div className="flex items-center justify-center mt-5">
@@ -159,7 +176,7 @@ function Login(){
                                 <input type="submit"
                                 id="submit"
                                 name="submit"
-                                value="Enter"
+                                value={t('EnterButton')}
                                 className="bg-greenMain hover:bg-[#30b6ad]
                                 w-[207px] md:w-[307px] lg:w-[250px] h-[51px] md:h-[70px] lg:h-[60px]
                                 text-white text-xl md:text-3xl font-bold rounded-lg cursor-pointer"/>
@@ -167,6 +184,9 @@ function Login(){
                         </div>
 
                         <p className='mt-2 text-2xl font-bold text-red-800 text-center'>{errorMessage}</p>
+                        <div className='block lg:hidden mt-3'>
+                            <ChangeLanguage/>
+                        </div>
                     </form>
                 </div>
 
@@ -176,7 +196,7 @@ function Login(){
                     <img src={loginPC}
                     alt="homan in a playground"
                     className={'w-[100vw]'}/>
-                    <p className='text-white font-extrabold text-3xl text-center w-[470px] mb-12 hidden lg:block'>The best way of manage your DreamBoards</p>
+                    <p className='text-white font-extrabold text-3xl text-center w-[470px] mb-12 hidden lg:block'>{t('LoginImgPhrase')}</p>
                 </div>
             </div>
         </div>

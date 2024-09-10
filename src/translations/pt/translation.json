@@ -1,0 +1,16 @@
+{
+    "Login": "Login",
+    "Register": "Registro",
+    "WelcomeMessage": "Bem vindo de volta!",
+    "LoginMessage": "Crie e gerencie seus \nDreamBoards",
+    "EmailIconAlt": "Ícone de carta",
+    "PasswordIconAlt": "Ícone de cadeado",
+    "SeePasswordIconAlt": "Botão com icone de olho",
+    "ForgotPassword": "Esqueceu a senha?",
+    "EnterButton": "Entrar",
+    "LoginImgPhrase": "A melhor maneira de gerir seus DreamBoards",
+    "YupInvalidEmail": "O email é invalido",
+    "YupNecessaryEmail": "O email é necessário",
+    "YupNecessaryPassword": "A senha é necessária"
+}
+  
