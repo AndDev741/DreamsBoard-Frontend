@@ -31,7 +31,18 @@
     "UserRegisterError": "Este email já está registrado!",
     "Cancel": "Cancelar",
     "SendEmail": "Enviar email",
-    "SendEmailLoading": "Enviando Email..."
+    "SendEmailLoading": "Enviando Email...",
+
+    "GoodNigth": "Boa Noite",
+    "GoodEvening": "Boa Tarde",
+    "GoodMorning": "Bom dia",
+    "ProfilePicAlt": "Sua foto de perfil",
+    "SettingsIconAlt": "Ícone de configuração",
+
+    "DashboardTitle": "Seus DreamBoards",
+    "DashboardLoading": "Carregando DreamBoards...",
+
+    "AddDreamBoard": "Adicionar DreamBoard"
     
 }
   
