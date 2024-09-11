@@ -9,8 +9,29 @@
     "ForgotPassword": "Esqueceu a senha?",
     "EnterButton": "Entrar",
     "LoginImgPhrase": "A melhor maneira de gerir seus DreamBoards",
+    "ImgAltPhrase": "Mulher feliz em um parquinho",
     "YupInvalidEmail": "O email é invalido",
     "YupNecessaryEmail": "O email é necessário",
-    "YupNecessaryPassword": "A senha é necessária"
+    "YupNecessaryPassword": "A senha é necessária",
+    "LoginError": "Email ou senha inválido",
+    "ResetPasswordSuccess": "Um email para recuperar sua senha foi enviado!",
+    "ResetPasswordError": "Erro ao tentar encontrar o email",
+    "ResetPasswordPhrase": "Coloque seu email para recuperar sua senha",
+    "UnknownErrorMessage": "Um erro desconhecido ocorreu, tente novamente!",
+
+    "WelcomeDreamBoards": "Seja bem vindo!",
+    "RegisterPhrase": "Comece a se inspirar \ncriando seus DreamBoards!",
+    "PersonIconAlt": "Ícone de pessoa",
+    "PersoNamePlaceholder": "Seu nome",
+    "CreateAccount": "Criar conta",
+    "YupMinimumName": "O nome precisa de no mínimo 2 caracteres",
+    "YupNameNecessary": "O nome é necessário",
+    "YupMinimumPassword": "A senha precisa de no mínimo 6 caracteres",
+    "UserSuccessRegister": "Agora use sua nova conta para fazer login!",
+    "UserRegisterError": "Este email já está registrado!",
+    "Cancel": "Cancelar",
+    "SendEmail": "Enviar email",
+    "SendEmailLoading": "Enviando Email..."
+    
 }
   

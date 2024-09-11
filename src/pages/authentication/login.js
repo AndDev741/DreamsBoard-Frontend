@@ -14,7 +14,7 @@ import { useTranslation } from 'react-i18next';
 import ChangeLanguage from '../components/change/changeLanguage';
 
 function Login(){
-    const { t, i18n } = useTranslation();
+    const { t } = useTranslation();
     const registerPhrase = useSelector(state => state.login.registerPhrase)
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -66,17 +66,9 @@ function Login(){
             }catch (error) {
                     console.error('Error in login: ', error);
                     if(error.response.data.error){
-                        if(i18n.language === 'en'){
-                            setErrorMessage(error.response.data.error);
-                        }else {
-                            setErrorMessage("Email ou senha inv")
-                        }
+                        setErrorMessage(t('LoginError'));
                     }else{
-                        if(i18n.language === 'en'){
-                            setErrorMessage("Unknown error ocurred, try again.");
-                        }else {
-                            setErrorMessage("Um erro desconhecido aconteceu, tente novamente");
-                        }
+                        setErrorMessage(t('UnknownErrorMessage'));
                     }
             }
 
@@ -105,7 +97,7 @@ function Login(){
             </div>
 
             <div className='flex flex-col lg:flex-row-reverse items-center justify-center w-full h-full'>
-                <div className='flex flex-col items-center justify-start w-full h-full lg:w-[550px] lg:h-[580px] lg:border-solid lg:border-2 border-greenMain lg:rounded-r-lg'>
+                <div className='flex flex-col items-center justify-start w-full h-full lg:w-[550px] lg:min-h-[580px] lg:border-solid lg:border-2 border-greenMain lg:rounded-r-lg'>
 
                     <div className='flex items-center justify-evenly w-[100%] h-[67px]'>
                         <h2 className='text-2xl font-semibold'>{t('Login')}</h2>
@@ -194,7 +186,7 @@ function Login(){
 
                 <div className='flex lg:flex-col items-center justify-between lg:w-[550px] lg:h-[580px] lg:bg-greenMain lg:rounded-l-lg'>
                     <img src={loginPC}
-                    alt="homan in a playground"
+                    alt={t('ImgAltPhrase')}
                     className={'w-[100vw]'}/>
                     <p className='text-white font-extrabold text-3xl text-center w-[470px] mb-12 hidden lg:block'>{t('LoginImgPhrase')}</p>
                 </div>
@@ -206,33 +198,34 @@ function Login(){
 }
 
 function ForgotPasswordModal({forgotPassModal, setForgotPassModal}){
+    const { t } = useTranslation();
     const [email, setEmail] = useState("");
     const [error, setError] = useState("");
     const [success, setSuccess] = useState("");
     const [sending, setSending] = useState("");
 
     const validationSchema = Yup.object().shape({
-        email: Yup.string().email("Invalid Email").required("Email is necessary"),
+        email: Yup.string().email(t('YupInvalidEmail')).required(t('YupNecessaryEmail')),
     })
 
 
     async function handleForgotPassword(e){
         e.preventDefault();
         setSuccess("");
-            setError("");
+        setError("");
         try{
             await validationSchema.validate({email}, {abortEarly: false});
             
             setSending(true);
             try{
                 const response = await axios.post(`https://dreamsboard-backend-production.up.railway.app/resetPassword`, { email });
-                setSuccess(response.data.success);
+                setSuccess(t('ResetPasswordSuccess'));
                 setSending(false);
             }catch(e){
                 if(e.response.data.error){
-                    setError(e.response.data.error)
+                    setError(t('ResetPasswordError'))
                 }else{
-                    setError('Unknown error ocurred, try again.');
+                    setError(t('UnknownErrorMessage'));
                 }
                 setSending(false)
             }
@@ -243,15 +236,15 @@ function ForgotPasswordModal({forgotPassModal, setForgotPassModal}){
     }
 
     return(
-        <div className={`${forgotPassModal === true ? 'block' : 'hidden'} flex flex-col items-center justify-start pt-12 lg:mt-0 lg:justify-center w-[100vw] h-[100vh] bg-white fixed left-0 top-0 backdrop-blur lg:bg-black/30`}>
+        <div className={`${forgotPassModal === true ? 'block' : 'hidden'} flex flex-col items-center justify-start pt-12 lg:mt-0 lg:justify-center w-[100vw] h-[100vh] bg-white fixed left-0 top-0 backdrop-blur lg:bg-black/30 `}>
             <div className='flex flex-col items-center justify-center w-[100vw] lg:w-[50vw] rounded-md lg:h-[50vh] lg:bg-white'>
-                <h2 className="mt-2 text-2xl font-bold text-center">Put your email to recover your password</h2>
+                <h2 className="mt-2 text-2xl font-bold text-center">{t('ResetPasswordPhrase')}</h2>
 
                 <label htmlFor="email" 
                 className="flex items-center border-solid border-2 border-greenMain rounded-[6px] hover:border-cyan-600 my-5">
                     <img className='w-[33px] h-[33px] mx-3 cursor-pointer'
                     src={emailIcon}
-                    alt='Letter icon'/>
+                    alt={t('EmailIconAlt')}/>
                     <input name="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
@@ -264,16 +257,16 @@ function ForgotPasswordModal({forgotPassModal, setForgotPassModal}){
                 <div className="flex flex-wrap items-center justify-center">
                     <button onClick={() => setForgotPassModal(false)}
                     className="text-white mx-1 lg:mx-4 font-medium w-[170px] h-[40px] rounded-md text-xl bg-greenMain hover:bg-[#30b6ad] my-2">
-                        Cancel
+                        {t('Cancel')}
                     </button>
                     <button onClick={handleForgotPassword}
                     className="text-white mx-1 lg:mx-4 font-medium w-[170px] h-[40px] bg-greenMain hover:bg-[#30b6ad] rounded-md text-xl my-2">
-                        Send email
+                        {t('SendEmail')}
                     </button>
                 </div>
 
                 <p className='mt-2 text-2xl font-bold text-red-800 text-center'>{error}</p>
-                <p className={`${sending === true ? 'block' : 'hidden'} mt-2 text-2xl font-bold text-green-800 text-center animate-pulse`}>Sending email...</p>
+                <p className={`${sending === true ? 'block' : 'hidden'} mt-2 text-2xl font-bold text-green-800 text-center animate-pulse`}>{t('SendEmailLoading')}</p>
                 <p className='mt-2 text-2xl font-bold text-blue-800 text-center'>{success}</p>
             </div>
             
