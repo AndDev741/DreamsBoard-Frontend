@@ -42,7 +42,33 @@
     "DashboardTitle": "Seus DreamBoards",
     "DashboardLoading": "Carregando DreamBoards...",
 
-    "AddDreamBoard": "Adicionar DreamBoard"
+    "AddDreamBoard": "Adicionar DreamBoard",
+
+    "Configuration": "Configuração",
+    "BackIconAlt": "Seta apontando para a esquerda",
+    "EditPerfilTitle": "Edite seu perfil",
+    "PerfilIconAlt": "Ícone de perfil",
+    "EditPerfilImgPhrase": "Edite sua foto",
+    "EditIconAlt": "Lápis para editar",
+    "YourPerfilPhrase": "Sua frase de perfil:",
+    "EditButton": "Editar",
+    "EditEmailText": "Editar email",
+    "EditEmailPlaceholder": "SeuNovoEmail@email.com",
+    "EditEmailAndPassPhrase": "Você será redirecionado para fazer login novamente",
+    "EditPasswordText": "Editar senha",
+    "OldPasswordPlaceholder": "Sua senha antiga",
+    "NewPasswordPlaceholder": "Sua senha atual",
+    "ChangeLanguage": "Trocar idioma",
+    "MakeLogoutText": "Sair da conta",
+    "MakeLogoutPhrase": "Você poderá fazer login depois!",
+    "LogoutText": "Sair",
+    "DeleteAccountText": "Deletar conta",
+    "DeleteAccountPhrase": "Essa ação não pode ser desfeita!",
+    "DeleteText": "Deletar",
+    "DeleteErrorMessage": "Erro ao tentar deletar a conta, tente novamente",
+    "DeleteAccountConfirmation": "Você tem certeza que quer deletar sua conta?",
+    "EditErrorMessage": "Erro ao tentar editar, tente novamente",
+    "EditEmailErrorMessage": "Erro ao editar o email, tente outro"
     
 }
   

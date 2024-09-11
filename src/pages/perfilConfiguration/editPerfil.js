@@ -1,25 +1,27 @@
 import { useCallback, useEffect, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
 import editIcon from '../../assets/editIcon.png';
+import { useTranslation } from 'react-i18next';
 
 
 function EditPerfil({newPerfilImg, newName, newPerfilPhrase, setNewName, setNewPerfilPhrase, setNewPerfilImg}){
-    const [greeting, setGreeting] = useState('');
 
     const [PerfilImg, setPerfilImg] = useState(newPerfilImg || null);
 
+    const { t } = useTranslation();
+    const [greeting, setGreeting] = useState('');
     useEffect(() => {
         const date = new Date().getHours();
         getHourMessage(date);
-    }, []);
+    }, [getHourMessage]);
 
     function getHourMessage(hour) {
         if (hour >= 18 || hour < 5) {
-            setGreeting("Good Night");
+            setGreeting(t('GoodNigth'));
         } else if (hour >= 5 && hour < 11) {
-            setGreeting("Good Morning");
+            setGreeting(t('GoodMorning'));
         } else if (hour >= 11 && hour < 18) {
-            setGreeting("Good Evening");
+            setGreeting(t('GoodEvening'));
         }
     }
 
@@ -48,19 +50,19 @@ function EditPerfil({newPerfilImg, newName, newPerfilPhrase, setNewName, setNewP
                 <div className="flex flex-col justify-center">
                     <div className="flex flex-col items-center lg:ml-3">
                         
-                        <div className='md:flex md:items-center justify-center w-[100%]'>
+                        <div className='md:flex md:items-center justify-center w-[110%]'>
                             <div {...getRootProps()}
                             className='flex flex-col items-center cursor-pointer'>
                                 <input {...getInputProps()}
                                 className='hidden' />
                                 <img
-                                alt='Profile pic'
+                                alt={t('ProfilePicAlt')}
                                 className="flex items-start w-[100px] md:w-[80px] h-[100px] md:h-[80px] rounded-full bg-cover"
                                 src={PerfilImg}
                                 />
                                 <div className='flex'>
-                                    <p className='text-center'>Edit your image</p>
-                                    <img src={editIcon} alt='Pencil to edit - icon'
+                                    <p className='text-center'>{t('EditPerfilImgPhrase')}</p>
+                                    <img src={editIcon} alt={t('EditIconAlt')}
                                     className='w-[20px] h-[20px] ml-1' />
                                 </div>
                             </div>
@@ -71,7 +73,7 @@ function EditPerfil({newPerfilImg, newName, newPerfilPhrase, setNewName, setNewP
                                 <input className='text-[#3A807A] bg-transparent border-b-2 border-greenMain w-[50%] ml-2'
                                 value={newName}
                                 onChange={e => setNewName(e.target.value)} />
-                                <img src={editIcon} alt='Pencil to edit - icon'
+                                <img src={editIcon} alt={t('EditIconAlt')}
                                 className='w-[20px] h-[20px] ml-1' />
                             </div>
                         </div>
@@ -84,7 +86,7 @@ function EditPerfil({newPerfilImg, newName, newPerfilPhrase, setNewName, setNewP
                                 <input className='text-[#3A807A] bg-transparent border-b-2 border-greenMain w-[70%] mt-[-20px]'
                                 value={newName}
                                 onChange={e => setNewName(e.target.value)} />
-                                <img src={editIcon} alt='Pencil to edit - icon'
+                                <img src={editIcon} alt={t('EditIconAlt')}
                                 className='w-[20px] h-[20px] ml-1' />
                             </div>
                         </div>
@@ -92,12 +94,12 @@ function EditPerfil({newPerfilImg, newName, newPerfilPhrase, setNewName, setNewP
                         
 
                         <div className="flex flex-col items-center justify-center mt-5">
-                            <p className='text-xl'>Your perfil phrase:</p>
+                            <p className='text-xl'>{t('YourPerfilPhrase')}</p>
                            <div className='flex items-center'>
                             <input className='bg-transparent border-b-2 border-greenMain text-center text-[24px] font-ligth' 
                                 value={newPerfilPhrase}
                                 onChange={e => setNewPerfilPhrase(e.target.value)}/>
-                                <img src={editIcon} alt='Pencil to edit - icon'
+                                <img src={editIcon} alt={t('EditIconAlt')}
                                     className='w-[20px] h-[20px] ml-1' />
                            </div>
                         </div>

@@ -9,13 +9,11 @@ import EditBoard from './pages/board/editBoard/editBoard.js';
 import DreamBoard from './pages/board/dreamBoard';
 import PerfilConfiguration from './pages/perfilConfiguration/perfilConfiguration';
 import RecoverPassword from './pages/authentication/recoverPassword/recoverPassword.js';
-import { Analytics } from "@vercel/analytics/react"
 
 function App() {
   return (
     <BrowserRouter>
       <div>
-        <Analytics/>
       </div>
       <div className='font-mainFont'>
         <Routes>

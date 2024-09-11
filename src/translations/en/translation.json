@@ -42,7 +42,32 @@
     "DashboardTitle": "Your DreamBoards",
     "DashboardLoading": "Loading DreamBoards...",
 
-    "AddDreamBoard": "Add DreamBoard"
-    
+    "AddDreamBoard": "Add DreamBoard",
+
+    "Configuration": "Configuration",
+    "BackIconAlt": "Arrow pointing to the left",
+    "EditPerfilTitle": "Edit your perfil",
+    "PerfilIconAlt": "Perfil icon",
+    "EditPerfilImgPhrase": "Edit your photo",
+    "EditIconAlt": "Pencil to edit",
+    "YourPerfilPhrase": "Your perfil phrase:",
+    "EditButton": "Edit",
+    "EditEmailText": "Edit email",
+    "EditEmailPlaceholder": "YourNewEmail@email.com",
+    "EditEmailAndPassPhrase": "You gonna be redirected to make login again",
+    "EditPasswordText": "Edit Password",
+    "OldPasswordPlaceholder": "Your actual password",
+    "NewPasswordPlaceholder": "Your new password",
+    "ChangeLanguage": "Change language",
+    "MakeLogoutText": "Make Logout",
+    "MakeLogoutPhrase": "You can make login later!",
+    "LogoutText": "Logout",
+    "DeleteAccountText": "Delete account",
+    "DeleteAccountPhrase": "This action cannot be undone!",
+    "DeleteText": "Delete",
+    "DeleteErrorMessage": "Error trying delete Account, try again",
+    "DeleteAccountConfirmation": "Are you sure that you want to delete your account?",
+    "EditErrorMessage": "Error trying to edit, try again",
+    "EditEmailErrorMessage": "Error trying to edit the email, try another one"
 }
   
