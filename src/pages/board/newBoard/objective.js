@@ -1,7 +1,9 @@
 import { useState, useCallback } from "react";
 import { useDropzone } from 'react-dropzone';
+import { useTranslation } from "react-i18next";
 
 function ObjectiveSection({objective_img, setObjective_img, objective_text, setObjective_text}){
+    const {t} = useTranslation();
     const [backgroundImage, setBackgroundImage] = useState(objective_img || null);
 
     const onDrop = useCallback((acceptedFiles) => {
@@ -29,7 +31,7 @@ function ObjectiveSection({objective_img, setObjective_img, objective_text, setO
                 <div {...getRootProps()} 
                 className="flex items-center justify-center w-[173px] lg:w-[200px] h-[270px] bg-[#31cac0] hover:bg-[#41e0d6] rounded-md bg-cover cursor-pointer ml-5 md:ml-0"
                 style={{backgroundImage: backgroundImage ? `url(${backgroundImage})` : '', border: backgroundImage ? 'none': ''}}>
-                    <p  className={`text-center text-xl text-redFont font-bold mt-2 p-1 ${backgroundImage ? 'hidden' : 'block'}`}>Add a image here</p>
+                    <p  className={`text-center text-xl text-redFont font-bold mt-2 p-1 ${backgroundImage ? 'hidden' : 'block'}`}>{t('BackgroundImagesPhrase')}</p>
                     <input {...getInputProps()} className="hidden" />
                 </div>
             </div>

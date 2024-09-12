@@ -68,7 +68,30 @@
     "DeleteErrorMessage": "Erro ao tentar deletar a conta, tente novamente",
     "DeleteAccountConfirmation": "Você tem certeza que quer deletar sua conta?",
     "EditErrorMessage": "Erro ao tentar editar, tente novamente",
-    "EditEmailErrorMessage": "Erro ao editar o email, tente outro"
+    "EditEmailErrorMessage": "Erro ao editar o email, tente outro",
+
+    "TitleInput": "Escreva aqui o título",
+    "GoalInput": "Escreva aqui sua maior meta!",
+    "ObjectiveInput": "Escreva aqui um breve texto sobre o que você vai fazer para conquistar seu sonho!",
+    "ReasonTitle": "Escreva aqui 3 grandes razões ou metas [Título]",
+    "ReasonMiniTitleInput": "Coloque um título",
+    "ReasonTextInput": "Edite aqui com um texto sobre sua razão ou meta",
+    "ErrorImage": "Por favor, inclua todas as imagens e textos necessários!",
+    "ErrorGeneric": "Um erro ocorreu, tente novamente!",
+    "BackgroundImagesPhrase": "Clique ou solte uma imagem aqui",
+    "BackgroundImgTutorial": "Vamos começar escolhendo uma imagem que te remeta ao seu sonho",
+    "MainGoalTutorial": "Sua maior meta: Escolha uma imagem que te remeta a sua maior meta neste sonho, e um título também!",
+    "ObjectiveTutorial": "O que você vai fazer para tornar este sonho uma realidade?",
+    "ReasonTutorial": "Nesta parte, você pode escolher colocar 3 grandes razões para lutar pelo seu sonho ou 3 grandes metas para conquistar!",
+    "ImageHere": "Imagem aqui",
+    "Save": "Salvar",
+    "SavingDreamBoard": "Salvando o DreamBoard...",
+
+    "Back": "Voltar",
+    "Loading": "Carregando...",
+
+    "DreamBoardEditError": "Error ao tentar editar o DreamBoard, tente novamente!",
+    "DreamBoardConfirmDelete": "Você tem certeza que quer excluir este DreamBoard?"
     
 }
   

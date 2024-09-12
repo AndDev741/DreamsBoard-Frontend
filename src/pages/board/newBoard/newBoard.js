@@ -8,8 +8,10 @@ import ObjectiveSection from './objective';
 import Reasons from './reasons';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 function NewBoard() {
+    const {t} = useTranslation();
     const navigate = useNavigate();
     const userId = useSelector(state => state.login.id)
     async function verifyLogin() {
@@ -31,24 +33,24 @@ function NewBoard() {
     
     
     const [background_img, setBackground_img] = useState(null);
-    const [title, setTitle] = useState('Write here the title');
+    const [title, setTitle] = useState(t('TitleInput'));
     const [mainObjective_img, setMainObjective_img] = useState(null);
-    const [mainObjective_text, setMainObjective_text] = useState('Write here your main goal!');
+    const [mainObjective_text, setMainObjective_text] = useState(t('GoalInput'));
     const [objective_img, setObjective_img] = useState(null);
-    const [objective_text, setObjective_text] = useState('Put here a short text of what you gonna do to conquist your goal');
-    const [reasonTitle, setReasonTitle] = useState('Write here 3 big reasons or goals');
+    const [objective_text, setObjective_text] = useState(t('ObjectiveInput'));
+    const [reasonTitle, setReasonTitle] = useState(t('ReasonTitle'));
 
-    const [reason1, setReason1] = useState('put a title');
+    const [reason1, setReason1] = useState(t('ReasonMiniTitleInput'));
     const [reasonImg1, setReasonImg1] = useState(null);
-    const [reasonText1, setReasonText1] = useState('Edit here with the text of your reason or goal');
+    const [reasonText1, setReasonText1] = useState(t('ReasonTextInput'));
 
-    const [reason2, setReason2] = useState('put a title');
+    const [reason2, setReason2] = useState(t('ReasonMiniTitleInput'));
     const [reasonImg2, setReasonImg2] = useState(null);
-    const [reasonText2, setReasonText2] = useState('Edit here with the text of your reason or goal');
+    const [reasonText2, setReasonText2] = useState(t('ReasonTextInput'));
 
-    const [reason3, setReason3] = useState('put a title');
+    const [reason3, setReason3] = useState(t('ReasonMiniTitleInput'));
     const [reasonImg3, setReasonImg3] = useState(null);
-    const [reasonText3, setReasonText3] = useState('Edit here with the text of your reason or goal');
+    const [reasonText3, setReasonText3] = useState(t('ReasonTextInput'));
 
     
     const [error, setError] = useState("");
@@ -133,9 +135,9 @@ function NewBoard() {
             setLoading(false)
             console.error(err);
             if(err.response.data.status === "errorMissing"){
-                setError("Please, include all the images and text necessaries");
+                setError(t('ErrorImage'));
             }else{
-                setError("An error ocurred trying to save the dreamBoard");
+                setError(t('ErrorGeneric'));
             }
         }
         
@@ -149,7 +151,7 @@ function NewBoard() {
                 {/*First Step Tutorial */}
                 <MainSection background_img={background_img} setBackground_img={setBackground_img}/>
                 <h3 className={`${background_img ? "hidden" : 'block'} text-3xl font-bold text-center mt-2 animate-pulse mb-[250px]`}>
-                    Lets start chosing a image that reminds you of your dream
+                    {t('BackgroundImgTutorial')}
                 </h3>
 
                 <div className="flex flex-col items-center justify-center my-4">
@@ -161,36 +163,36 @@ function NewBoard() {
                             onChange={e => setTitle(e.target.value)}
                             className={`bg-transparent text-3xl text-center text-redFont font-black underline flex-wrap w-[100%] ${title.length < 1 ? "border-b-2 border-solid border-black" : ""}`} />
 
-                            <h3 className={`${title === "Write here the title" ? "block" : 'hidden'} text-3xl font-bold text-center mt-4 animate-pulse mb-[250px]`}>
+                            <h3 className={`${title === `${t('TitleInput')}` ? "block" : 'hidden'} text-3xl font-bold text-center mt-4 animate-pulse mb-[250px]`}>
                                 Now, the title of your Dream
                             </h3>
                         </div>
                     )}
 
                     {/* Third Step - Tutorial */}
-                    {title !== "Write here the title" && (
+                    {title !== `${t('TitleInput')}` && (
                         <div>
                             <MainObjectiveSection mainObjective_img={mainObjective_img} setMainObjective_img={setMainObjective_img}  mainObjective_text={mainObjective_text} setMainObjective_text={setMainObjective_text}/>
 
-                            <h3 className={`${mainObjective_img && mainObjective_text !== "Write here your main goal!" ? 'hidden' : 'block'} text-3xl font-bold text-center mt-4 animate-pulse mb-[250px]`}>
-                                Your main goal: Choose an image that reminds you your biggest goal, and a title too!
+                            <h3 className={`${mainObjective_img && mainObjective_text !== `${t('GoalInput')}` ? 'hidden' : 'block'} text-3xl font-bold text-center mt-4 animate-pulse mb-[250px]`}>
+                                {t('MainGoalTutorial')}
                             </h3>
 
                             {/* Fourth Step - tutorial */}
-                            {mainObjective_img && mainObjective_text !== "Write here your main goal!" && (
+                            {mainObjective_img && mainObjective_text !== `${t('GoalInput')}` && (
                                 <div>
                                     <ObjectiveSection objective_img={objective_img} setObjective_img={setObjective_img} objective_text={objective_text} setObjective_text={setObjective_text}/>
 
-                                    <h3 className={`${objective_img && objective_text !== "Put here a short text of what you gonna do to conquist your goal" ? "hidden" : 'block'} text-3xl font-bold text-center mt-4 animate-pulse mb-[250px]`}>
-                                        What you gonna do to make this dream real?
+                                    <h3 className={`${objective_img && objective_text !== `${t('ObjectiveInput')}` ? "hidden" : 'block'} text-3xl font-bold text-center mt-4 animate-pulse mb-[250px]`}>
+                                        {t('ObjectiveTutorial')}
                                     </h3>
 
                                     {/* Fifth Step - tutorial */}
-                                    {objective_img && objective_img !== "Put here a short text of what you gonna do to conquist your goal" && (
+                                    {objective_img && objective_text !== `${t('ObjectiveInput')}` && (
                                         <div>
                                             <Reasons reasonTitle={reasonTitle} setReasonTitle={setReasonTitle}reason1={reason1}  setReason1={setReason1} reasonImg1={reasonImg1} setReasonImg1={setReasonImg1} reasonText1={reasonText1} setReasonText1={setReasonText1} reason2={reason2} setReason2={setReason2} reasonImg2={reasonImg2} setReasonImg2={setReasonImg2} reasonText2={reasonText2} setReasonText2={setReasonText2} reason3={reason3} setReason3={setReason3} reasonImg3={reasonImg3} setReasonImg3={setReasonImg3} reasonText3={reasonText3} setReasonText3={setReasonText3}/>
                                             <h3 className={`${reasonImg3 ? "hidden" : 'block'} text-3xl font-bold text-center mt-4 animate-pulse mb-[250px]`}>
-                                            In this part, you can choose to put 3 big reasons to fight for your dream, or 3 big goals you want to conquist
+                                            {t('ReasonTutorial')}
                                             </h3>
                                         </div>
                                     )}                                    
@@ -204,17 +206,17 @@ function NewBoard() {
                     <div className="flex flex-wrap items-center justify-evenly w-full mt-5">
                         <Link to={'/dashboard'}>
                             <button className="text-white font-bold w-[180px] h-[40px] bg-greenMain hover:bg-[#30b6ad] rounded-md text-xl hover:bg-lightRed">
-                                Cancel
+                                {t('Cancel')}
                             </button>
                         </Link>
                         <button
                             className={`${reasonImg3 ? "block" : "hidden"} text-white font-bold w-[180px] h-[40px] bg-greenMain hover:bg-[#30b6ad] rounded-md text-xl hover:bg-lightRed`}
                             onClick={handleUpload}
                         >
-                            Save
+                            {t('Save')}
                         </button>
                     </div>
-                    {loading ? <h1 className="text-3xl text-redFont font-black text-center animate-pulse mt-3">Sending data...</h1> : null}
+                    {loading ? <h1 className="text-3xl text-redFont font-black text-center animate-pulse mt-3">{t('SavingDreamBoard')}</h1> : null}
                     <p className='text-2xl text-center text-red-900 font-semibold my-4'>{error}</p>
                 </div>
             </div>

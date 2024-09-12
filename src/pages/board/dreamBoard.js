@@ -3,8 +3,10 @@ import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link, useNavigate } from 'react-router-dom';
 import { dreamBoardIdEnter , userIdEnter, background_imgEnter, background_img_idEnter,titleEnter, mainObjective_imgEnter, mainObjective_img_idEnter,mainObjective_textEnter, objective_imgEnter, objective_img_idEnter,objective_textEnter, reasonTitleEnter, reasonsEnter } from './editBoard/editBoardSlice';
+import { useTranslation } from 'react-i18next';
 
 function DreamBoard(){
+    const {t} = useTranslation();
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
@@ -116,7 +118,7 @@ function DreamBoard(){
                                     <button className="w-[60px] h-[60px] rounded-full bg-cover"
                                     style={{backgroundImage: `url(${reason.img})`}}
                                     onClick={e => index === 0 ? setModal(!modal) : index === 1 ? setModal1(!modal1) : setModal2(!modal2)}></button>
-                                    <h3 className="bg-transparent w-[85px] text-center">{reason.title}</h3>
+                                    <h3 className="bg-transparent w-[95px] text-center">{reason.title}</h3>
                                 </div>
                                 <ReasonDetails img={reason.img} text={reason.text} modal={index === 0 ? modal : index === 1 ? modal1 : modal2} />
                                 
@@ -128,16 +130,16 @@ function DreamBoard(){
                 <div className="flex items-center justify-evenly w-full mt-5">
                         <Link to={'/dashboard'}>
                             <button className="text-white font-medium w-[180px] h-[40px] bg-greenMain hover:bg-[#30b6ad] rounded-md text-xl hover:bg-lightRed">
-                                Back
+                                {t('Back')}
                             </button>
                         </Link>
                         <button onClick={handleEdit}
-                        className="text-white font-medium w-[180px] h-[40px] bg-greenMain hover:bg-[#30b6ad] rounded-md text-xl hover:bg-lightRed">Edit</button>
+                        className="text-white font-medium w-[180px] h-[40px] bg-greenMain hover:bg-[#30b6ad] rounded-md text-xl hover:bg-lightRed">{t('EditButton')}</button>
                 </div>
 
             </div>
             ) : (
-                <h1>Loading...</h1>
+                <h1>{t('Loading')}</h1>
             )}
         </div>
             

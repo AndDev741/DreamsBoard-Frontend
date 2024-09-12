@@ -9,8 +9,10 @@ import ObjectiveSection from './objective';
 import Reasons from './reasons';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 function EditBoard() {
+    const {t} = useTranslation();
     const navigate = useNavigate();
     const userId = useSelector(state => state.login.id);
     async function verifyLogin() {
@@ -254,20 +256,20 @@ function EditBoard() {
                     <div className="flex flex-wrap items-center justify-evenly w-full mt-5">
                         <Link to={'/dashboard'}>
                             <button className="text-white font-bold w-[180px] h-[40px] bg-greenMain hover:bg-[#30b6ad] rounded-md text-xl hover:bg-lightRed">
-                                Cancel
+                                {t('Cancel')}
                             </button>
                         </Link>
                         <button
                             className={`text-white font-bold w-[180px] h-[40px] bg-greenMain hover:bg-[#30b6ad] rounded-md text-xl hover:bg-lightRed`}
                             onClick={handleUpload}
                         >
-                            {'Edit'}
+                            {t('EditButton')}
                         </button>
                         <button
                             className={`flex items-center justify-evenly text-white font-bold w-[180px] h-[40px] bg-[#CD4D55] hover:bg-[#e26870] rounded-md text-xl hover:bg-lightRed my-4 `}
                             onClick={handleConfirmDelete}
                         >
-                            {'Delete'}
+                            {t('DeleteText')}
                         </button>
                     </div>
                     {loading ? <h1 className="text-3xl text-redFont font-black text-center animate-pulse mt-3">Sending data...</h1> : null}
@@ -280,17 +282,18 @@ function EditBoard() {
 }
 
 function DeleteModal({handleConfirmDelete, deleteModal, handleDelete}){
+    const {t} = useTranslation();
     return(
         <div className={`${deleteModal === true ? 'block' : 'hidden'} flex flex-col items-center justify-start rounded-md w-[100vw] h-[100vh] bg-white pt-12 fixed left-0 top-0`}>
-            <h2 className="mt-2 text-2xl font-bold text-center">Are you sure that you want to delete this dreamboard?</h2>
+            <h2 className="mt-2 text-2xl font-bold text-center">{t('DreamBoardConfirmDelete')}</h2>
             <div className="flex flex-wrap items-center justify-center mt-5">
                 <button onClick={handleConfirmDelete}
                 className="text-white mx-1 sm:mx-4 font-medium w-[170px] h-[40px] bg-red-900 rounded-md text-xl hover:bg-red-800 my-2">
-                    Cancel
+                    {t('Cancel')}
                 </button>
                 <button onClick={handleDelete}
                 className="text-white mx-1 sm:mx-4 font-medium w-[180px] h-[40px] bg-red-900 rounded-md text-xl hover:bg-red-800 my-2">
-                    Delete DreamBoard
+                    {t('DeleteText')}
                 </button>
             </div>
         </div>

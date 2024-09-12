@@ -68,6 +68,29 @@
     "DeleteErrorMessage": "Error trying delete Account, try again",
     "DeleteAccountConfirmation": "Are you sure that you want to delete your account?",
     "EditErrorMessage": "Error trying to edit, try again",
-    "EditEmailErrorMessage": "Error trying to edit the email, try another one"
+    "EditEmailErrorMessage": "Error trying to edit the email, try another one",
+
+    "TitleInput": "Write here the title",
+    "GoalInput": "Write here your main goal!",
+    "ObjectiveInput": "Put here a short text of what you gonna do to conquist your goal",
+    "ReasonTitle": "Write here 3 big reasons or goals [TITLE]",
+    "ReasonMiniTitleInput": "put a title",
+    "ReasonTextInput": "Edit here with the text of your reason or goal",
+    "ErrorImage": "Please, include all the images and text necessaries",
+    "ErrorGeneric": "An error ocurred trying to save the dreamBoard, try again!",
+    "BackgroundImagesPhrase": "Click or drop here the image",
+    "BackgroundImgTutorial": "Lets start chosing a image that reminds you of your dream",
+    "MainGoalTutorial": "Your main goal: Choose an image that reminds you your biggest goal, and a title too!",
+    "ObjectiveTutorial": "What you gonna do to make this dream real?",
+    "ReasonTutorial": "In this part, you can choose to put 3 big reasons to fight for your dream, or 3 big goals you want to conquist!",
+    "ImageHere": "Image here",
+    "Save": "Save",
+    "SavingDreamBoard": "Saving DreamBoard...",
+
+    "Back": "Back",
+    "Loading": "Loading...",
+
+    "DreamBoardEditError": "Error trying do edit DreamBoard, try again!",
+    "DreamBoardConfirmDelete": "Are you sure that you want to delete this dreamboard?"
 }
   
